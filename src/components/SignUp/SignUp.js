@@ -1,8 +1,11 @@
-import * as React from "react";
+import React from "react";
+
+import Copyright from "../Copyright/Copyright";
+import signup from "../../API/signup";
+import SignUpSchema from "./SignUp.schema";
+
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -10,19 +13,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Copyright from "../Copyright/Copyright";
+import { AppForm, AppFormField, SubmitButton } from "../forms";
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const signupHandler = async (user) => {
+    try {
+      await signup(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -40,49 +41,54 @@ export default function SignUp() {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography sx={{ mb: 3 }} component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
+
+          <AppForm
+            initialValues={{
+              email: "",
+              firstName: "",
+              lastName: "",
+              password: "",
+              phoneNumber: "",
+            }}
+            validationSchema={SignUpSchema}
+            onSubmit={signupHandler}
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <AppFormField
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <AppFormField
+                  autoComplete="family-name"
+                  name="lastName"
                   required
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <AppFormField
+                  autoComplete="phone"
+                  name="phoneNumber"
                   required
                   fullWidth
                   id="phone"
                   label="Phone Number"
-                  name="phone"
-                  autoComplete="phone"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <AppFormField
                   required
                   fullWidth
                   id="email"
@@ -92,7 +98,7 @@ export default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <AppFormField
                   required
                   fullWidth
                   name="password"
@@ -103,14 +109,7 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
+            <SubmitButton title="Sign Up" />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="Signin" variant="body2">
@@ -118,7 +117,7 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-          </Box>
+          </AppForm>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>

@@ -15,10 +15,10 @@ import { Link } from "react-router-dom";
 import login from "../../API/login";
 
 export default function Login(props) {
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    await login(data.get("email"), data.get("password"));
+    login(data.get("email"), data.get("password"));
   };
 
   return (
