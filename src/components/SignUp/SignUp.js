@@ -1,7 +1,6 @@
 import React from "react";
 
 import Copyright from "../Copyright/Copyright";
-import signup from "../../API/signup";
 import SignUpSchema from "./SignUp.schema";
 
 import Avatar from "@mui/material/Avatar";
@@ -14,16 +13,34 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AppForm, AppFormField, SubmitButton } from "../forms";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  get_signup_error,
+  setLoading,
+  setSignupError,
+} from "../../redux/reducers/signInUp";
+import { API_Call } from "../../redux/middlewares/api";
+import { setUser } from "../../redux/reducers/user";
+import { FormHelperText } from "@mui/material";
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const signupHandler = async (user) => {
-    try {
-      await signup(user);
-    } catch (error) {
-      console.log(error);
-    }
+  const dispatch = useDispatch();
+  const error = useSelector(get_signup_error);
+
+  const signupHandler = async (data) => {
+    dispatch(setSignupError(undefined));
+    dispatch(
+      API_Call({
+        url: "signup",
+        method: "post",
+        data,
+        beforeAll: setLoading,
+        onSuccess: setUser,
+        onError: setSignupError,
+      })
+    );
   };
 
   return (
@@ -109,15 +126,18 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+
+            {error && <FormHelperText error={true}>{error}</FormHelperText>}
+
             <SubmitButton title="Sign Up" />
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="Signin" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </AppForm>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link href="Signin" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>

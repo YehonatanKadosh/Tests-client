@@ -1,34 +1,29 @@
-import { TextField } from "@mui/material";
-import { ErrorMessage, useFormikContext } from "formik";
+import { FormHelperText, TextField } from "@mui/material";
+import { useFormikContext } from "formik";
 import React from "react";
 
-function AppFormField({
-  name,
-  required,
-  autoComplete,
-  fullWidth,
-  id,
-  label,
-  type,
-}) {
+function AppFormField(props) {
   const { handleChange, setFieldTouched, errors, touched } = useFormikContext();
   return (
     <>
       <TextField
-        autoComplete={autoComplete}
-        name={name}
-        required={required}
-        fullWidth={fullWidth}
-        id={id}
-        label={label}
-        type={type}
-        onChange={handleChange(name)}
+        margin={props.margin}
+        autoComplete={props.autoComplete}
+        name={props.name}
+        required={props.required}
+        fullWidth={props.fullWidth}
+        id={props.id}
+        label={props.label}
+        type={props.type}
+        onChange={handleChange(props.name)}
         onBlur={() => {
-          setFieldTouched(name);
+          setFieldTouched(props.name);
         }}
-        error={touched[name] && errors[name] ? true : false}
+        error={touched[props.name] && errors[props.name] ? true : false}
       />
-      <ErrorMessage name={name} />
+      {touched[props.name] && errors[props.name] && (
+        <FormHelperText error={true}>{errors[props.name]}</FormHelperText>
+      )}
     </>
   );
 }
