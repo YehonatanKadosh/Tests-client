@@ -1,36 +1,42 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
 
-import Login from "../Login/Login";
 import "./App.css";
-import SignUp from "../SignUp/SignUp";
-import PasswordRecovery from "../PasswordRecovery/PasswordRecovery";
 import { API_Call } from "../../redux/middlewares/api";
 import { setLoading } from "../../redux/reducers/signInUp";
-import { setUser } from "../../redux/reducers/user";
-import Cookies from "js-cookie";
+import {
+  get_user_logged,
+  get_user_role,
+  setUser,
+} from "../../redux/reducers/user";
+import { roles } from "../../enums";
+import UserMainPage from "../UserMainPage/UserMainPage";
+import LoginRouts from "../../routes/Login.routs";
+import AdminRouts from "../../routes/Admin.routs";
 
 function App() {
   const dispatch = useDispatch();
+  const logged = useSelector(get_user_logged);
+  const role = useSelector(get_user_role);
+
   useEffect(() => {
-    dispatch(
-      API_Call({
-        url: "login",
-        method: "get",
-        beforeAll: setLoading,
-        onSuccess: setUser,
-      })
-    );
+    if (localStorage.getItem(process.env.REACT_APP_JWTHeaderName))
+      dispatch(
+        API_Call({
+          url: "login",
+          method: "get",
+          beforeAll: setLoading,
+          onSuccess: setUser,
+        })
+      );
   }, [dispatch]);
 
-  return (
-    <Routes>
-      <Route path="Signin" element={<Login />} />
-      <Route path="PasswordRecovery" element={<PasswordRecovery />} />
-      <Route path="Signup" element={<SignUp />} />
-      <Route path="*" element={<Login />} />
-    </Routes>
+  return !logged ? (
+    <LoginRouts />
+  ) : role === roles.Admin ? (
+    <AdminRouts /> // AdminRouts
+  ) : (
+    <UserMainPage /> // UserRouts
   );
 }
 

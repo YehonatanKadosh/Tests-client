@@ -2,7 +2,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { useFormikContext } from "formik";
 import React from "react";
 
-function AppFormCheckbox({ label, name }) {
+function AppFormCheckbox({ label, name, checked }) {
   const { setFieldValue, values } = useFormikContext();
 
   return (
@@ -12,6 +12,7 @@ function AppFormCheckbox({ label, name }) {
           onChange={() => setFieldValue(name, !values[name])}
           value={name}
           color="primary"
+          checked={values[name]}
         />
       }
       label={label}

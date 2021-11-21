@@ -1,0 +1,19 @@
+.admin_page_container {
+  height: 100%;
+  display: flex !important;
+  flex-direction: column;
+}
+
+.admin_page_actions {
+  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  flex: 1;
+  justify-content: center;
+}
+
+.admin_page_button {
+  height: 100px;
+  margin: 1% !important;
+}

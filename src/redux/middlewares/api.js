@@ -1,6 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export const API_Call = createAction("api");
 

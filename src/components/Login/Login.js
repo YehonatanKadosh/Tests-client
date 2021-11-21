@@ -7,7 +7,7 @@ import { AppForm, AppFormField, SubmitButton } from "../forms";
 import LoginSchema from "./Login.schema";
 import AppFormCheckbox from "../forms/AppFormCheckbox";
 import { API_Call } from "../../redux/middlewares/api";
-import { get_user_logged, setUser } from "../../redux/reducers/user";
+import { setUser } from "../../redux/reducers/user";
 import {
   get_login_error,
   setLoading,
@@ -26,7 +26,6 @@ import { FormHelperText } from "@mui/material";
 export default function Login(props) {
   const dispatch = useDispatch();
   const error = useSelector(get_login_error);
-  const logged = useSelector(get_user_logged);
 
   const loginHandler = async (data) => {
     dispatch(setLoginError(undefined));
@@ -47,7 +46,6 @@ export default function Login(props) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      {logged ? "loged" : "not"}
       <Box
         sx={{
           marginTop: 8,
@@ -67,7 +65,7 @@ export default function Login(props) {
           initialValues={{
             email: "",
             password: "",
-            rememberMe: false,
+            rememberMe: true,
           }}
           validationSchema={LoginSchema}
           onSubmit={loginHandler}

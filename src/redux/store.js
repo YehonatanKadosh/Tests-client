@@ -7,7 +7,12 @@ import login from "./reducers/signInUp";
 const appReducer = combineReducers({ user, login });
 
 const rootReducer = (state, action) => {
-  if (action.type === "log-out") state = undefined;
+  if (action.type === "log-out") {
+    state = undefined;
+    const tokenName = process.env.REACT_APP_JWTHeaderName;
+    if (sessionStorage.getItem(tokenName)) sessionStorage.removeItem(tokenName);
+    if (localStorage.getItem(tokenName)) localStorage.removeItem(tokenName);
+  }
   return appReducer(state, action);
 };
 
