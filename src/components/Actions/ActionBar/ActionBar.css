@@ -1,0 +1,8 @@
+.admin_page_actions {
+  width: 80%;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  flex: 1;
+  justify-content: center;
+}

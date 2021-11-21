@@ -12,7 +12,7 @@ import {
 import { roles } from "../../enums";
 import UserMainPage from "../UserMainPage/UserMainPage";
 import LoginRouts from "../../routes/Login.routs";
-import AdminRouts from "../../routes/Admin.routs";
+import AdminMainPage from "../AdminMainPage/AdminMainPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ function App() {
   return !logged ? (
     <LoginRouts />
   ) : role === roles.Admin ? (
-    <AdminRouts /> // AdminRouts
+    <AdminMainPage /> // AdminRouts
   ) : (
     <UserMainPage /> // UserRouts
   );
