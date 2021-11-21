@@ -4,8 +4,9 @@ import API_Middleware from "./middlewares/api";
 import user from "./reducers/user";
 import login from "./reducers/signInUp";
 import actions from "./reducers/actions";
+import questions from "./reducers/questions";
 
-const appReducer = combineReducers({ user, login, actions });
+const appReducer = combineReducers({ user, login, actions, questions });
 
 const rootReducer = (state, action) => {
   if (action.type === "log-out") {

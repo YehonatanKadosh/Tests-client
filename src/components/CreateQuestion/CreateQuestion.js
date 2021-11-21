@@ -1,7 +1,7 @@
 import React from "react";
 
 function CreateQuestion() {
-  return <div>Creating a question here</div>;
+  return <div>Create new Question</div>;
 }
 
 export default CreateQuestion;

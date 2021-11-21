@@ -2,12 +2,13 @@ import React from "react";
 import { AppBar, Button, IconButton, Toolbar, Typography } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 function MainBar() {
   const dispatch = useDispatch();
   const handleLogOut = () => dispatch({ type: "log-out" });
   const navigate = useNavigate();
+  const location = useLocation().pathname.split("/").at(-1);
 
   return (
     <AppBar position="static">
@@ -23,7 +24,7 @@ function MainBar() {
           <Home />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Queezy
+          {`Queezy${location && `'s ${location}`}`}
         </Typography>
         <Button color="inherit" onClick={handleLogOut}>
           Log Out
