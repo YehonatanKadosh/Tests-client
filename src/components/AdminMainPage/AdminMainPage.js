@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AdminRouts from "../../routes/Admin.routs";
 import "./AdminMainPage.css";
-import MainBar from "../MainBar/MainBar";
+import MainBar from "../layout/MainBar/MainBar";
 import { useDispatch } from "react-redux";
 import { loadTopics, setTopics } from "../../redux/reducers/topic";
 import { loadTags, setTags } from "../../redux/reducers/tag";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Copyright from "../Copyright/Copyright";
+import Copyright from "../layout/Copyright/Copyright";
 import SignUpSchema from "./SignUp.schema";
 
 import Avatar from "@mui/material/Avatar";

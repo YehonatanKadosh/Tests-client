@@ -4,7 +4,7 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filter = createFilterOptions();
 
-export default function AppAutoComplete(props) {
+const AppAutoComplete = (props) => {
   return (
     <React.Fragment>
       <Autocomplete
@@ -37,4 +37,6 @@ export default function AppAutoComplete(props) {
       />
     </React.Fragment>
   );
-}
+};
+
+export default AppAutoComplete;
