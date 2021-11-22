@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppForm, AppFormField, SubmitButton } from "../forms";
+import { AppForm, AppFormField, SubmitButton } from "../AppUiElements/forms";
 import { useDispatch, useSelector } from "react-redux";
 import {
   get_signup_error,

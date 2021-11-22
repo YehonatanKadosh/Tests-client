@@ -6,8 +6,8 @@ import { get_questions } from "../../redux/reducers/questions";
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Link } from "react-router-dom";
-import TopicSelector from "../selectors/TopicSelector";
-import TagSelector from "../selectors/TagSelector";
+import TopicSelector from "../AppUiElements/selectors/TopicSelector";
+import TagSelector from "../AppUiElements/selectors/TagSelector";
 
 function QuestionSearch() {
   const questions = useSelector(get_questions);

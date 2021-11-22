@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { API_Call } from "../../redux/middlewares/api";
-import { requestAnswered, requestSent } from "../../redux/reducers/request";
+import { API_Call } from "../../../redux/middlewares/api";
+import { requestAnswered, requestSent } from "../../../redux/reducers/request";
 import {
   get_topics,
   get_topics_status,
   newTopic,
-} from "../../redux/reducers/topic";
+} from "../../../redux/reducers/topic";
 import AppAutoComplete from "../AppAutoComplete";
 
 function TopicSelector({ state }) {

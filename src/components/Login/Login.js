@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import Copyright from "../layout/Copyright/Copyright";
-import { AppForm, AppFormField, SubmitButton } from "../forms";
+import {
+  AppForm,
+  AppFormField,
+  SubmitButton,
+  AppFormCheckbox,
+} from "../AppUiElements/forms";
 import LoginSchema from "./Login.schema";
-import AppFormCheckbox from "../forms/AppFormCheckbox";
 import { API_Call } from "../../redux/middlewares/api";
 import { setUser } from "../../redux/reducers/user";
 import {

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import { API_Call } from "../../redux/middlewares/api";
-import { requestAnswered, requestSent } from "../../redux/reducers/request";
-import { get_tags, get_tags_status, newTag } from "../../redux/reducers/tag";
+import { API_Call } from "../../../redux/middlewares/api";
+import { requestAnswered, requestSent } from "../../../redux/reducers/request";
+import { get_tags, get_tags_status, newTag } from "../../../redux/reducers/tag";
 import AppAutoComplete from "../AppAutoComplete";
 
 function TagSelector({ state, topic }) {
