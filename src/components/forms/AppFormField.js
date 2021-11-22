@@ -7,6 +7,7 @@ function AppFormField(props) {
   return (
     <>
       <TextField
+        autoFocus={props.autoFocus}
         margin={props.margin}
         autoComplete={props.autoComplete}
         name={props.name}

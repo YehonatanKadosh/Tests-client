@@ -10,7 +10,8 @@ const API_Middleware =
   (next) =>
   (action) => {
     if (action.type !== API_Call.type) return next(action);
-    const { url, method, data, beforeAll, onSuccess, onError } = action.payload;
+    const { url, method, data, beforeAll, onSuccess, onError, afterAll } =
+      action.payload;
     if (beforeAll) dispatch({ type: beforeAll });
     axios
       .request({
@@ -40,6 +41,7 @@ const API_Middleware =
         if (onError)
           dispatch({ type: onError, payload: reason.response?.data });
       });
+    if (afterAll) dispatch({ type: afterAll });
   };
 
 export default API_Middleware;

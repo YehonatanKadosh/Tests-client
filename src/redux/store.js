@@ -5,8 +5,19 @@ import user from "./reducers/user";
 import login from "./reducers/signInUp";
 import actions from "./reducers/actions";
 import questions from "./reducers/questions";
+import topics from "./reducers/topic";
+import tags from "./reducers/tag";
+import request from "./reducers/request";
 
-const appReducer = combineReducers({ user, login, actions, questions });
+const appReducer = combineReducers({
+  user,
+  login,
+  actions,
+  questions,
+  topics,
+  tags,
+  request,
+});
 
 const rootReducer = (state, action) => {
   if (action.type === "log-out") {
