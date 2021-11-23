@@ -12,7 +12,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppForm, AppFormField, SubmitButton } from "../AppUiElements/forms";
+import {
+  AppForm,
+  AppFormError,
+  AppFormField,
+  SubmitButton,
+} from "../AppUiElements/forms";
 import { useDispatch, useSelector } from "react-redux";
 import {
   get_signup_error,
@@ -83,6 +88,7 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                 />
+                <AppFormError name="firstName" />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <AppFormField
@@ -93,6 +99,7 @@ export default function SignUp() {
                   id="lastName"
                   label="Last Name"
                 />
+                <AppFormError name="lastName" />
               </Grid>
               <Grid item xs={12}>
                 <AppFormField
@@ -103,6 +110,7 @@ export default function SignUp() {
                   id="phone"
                   label="Phone Number"
                 />
+                <AppFormError name="phoneNumber" />
               </Grid>
               <Grid item xs={12}>
                 <AppFormField
@@ -113,6 +121,7 @@ export default function SignUp() {
                   name="email"
                   autoComplete="email"
                 />
+                <AppFormError name="email" />
               </Grid>
               <Grid item xs={12}>
                 <AppFormField
@@ -124,6 +133,7 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                 />
+                <AppFormError name="password" />
               </Grid>
             </Grid>
 

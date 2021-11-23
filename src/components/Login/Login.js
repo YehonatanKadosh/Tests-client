@@ -8,6 +8,7 @@ import {
   AppFormField,
   SubmitButton,
   AppFormCheckbox,
+  AppFormError,
 } from "../AppUiElements/forms";
 import LoginSchema from "./Login.schema";
 import { API_Call } from "../../redux/middlewares/api";
@@ -87,6 +88,8 @@ export default function Login(props) {
                 id="email"
                 label="Email Address"
               />
+              <AppFormError name="email" />
+
               <AppFormField
                 margin="normal"
                 autoComplete="current-password"
@@ -97,7 +100,10 @@ export default function Login(props) {
                 type="password"
                 label="Password"
               />
+              <AppFormError name="password" />
+
               <AppFormCheckbox label="Remember me" name="rememberMe" />
+              <AppFormError name="rememberMe" />
 
               {error && <FormHelperText error={true}>{error}</FormHelperText>}
 

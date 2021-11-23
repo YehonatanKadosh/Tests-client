@@ -1,15 +1,3 @@
-import { Add, Delete } from "@mui/icons-material";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-  Button,
-  Paper,
-  IconButton,
-  InputBase,
-  FormHelperText,
-} from "@mui/material";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { questionTypes } from "../../enums";
@@ -18,14 +6,14 @@ import {
   AppFormField,
   AppFormFieldArray,
   AccordionBase,
+  AppFormListBuilder,
 } from "../AppUiElements/forms";
 import TopicSelector from "../AppUiElements/selectors/TopicSelector";
-import question_validator from "./Question.schema";
+import question_validator from "./schemas/Question.schema";
 // import TagSelector from "../AppUiElements/selectors/TagSelector";
 import "./Questions.css";
 
 function CreateQuestion() {
-  const [answers, setAnswers] = useState([]);
   const [expanded, setExpanded] = useState("topic");
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -81,7 +69,6 @@ function CreateQuestion() {
                 className="w-100"
                 rows={4}
                 multiline
-                extraErrordisabled
               />
             }
           />
@@ -98,60 +85,16 @@ function CreateQuestion() {
                 className="w-100"
                 rows={4}
                 multiline
-                extraErrordisabled
               />
             }
           />
-
-          <Accordion
-            expanded={expanded === "answers"}
-            onChange={handleChange("answers")}
-          >
-            <AccordionSummary
-              aria-controls="answers-content"
-              id="answers-header"
-            >
-              <Typography>Answers: {answers.length}</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              {answers.map((answer, index) => (
-                <Paper
-                  variant="outlined"
-                  key={index}
-                  sx={{ display: "flex", width: "100%", m: 1 }}
-                >
-                  <IconButton>{index + 1}</IconButton>
-                  <InputBase
-                    sx={{ ml: 1, flex: 1 }}
-                    placeholder={`Answer no. ${index + 1}`}
-                    inputProps={{ "aria-label": "search google maps" }}
-                    onChange={(e) => {
-                      answers[index] = e.target.value;
-                      setAnswers(answers);
-                    }}
-                    value={answer}
-                  />
-                  <IconButton
-                    type="submit"
-                    sx={{ p: "10px" }}
-                    aria-label="search"
-                    onClick={(e) => {
-                      answers.splice(index, 1);
-                      setAnswers(answers);
-                    }}
-                  >
-                    <Delete />
-                  </IconButton>
-                </Paper>
-              ))}
-              <Button
-                onClick={() => setAnswers([...answers, ""])}
-                sx={{ width: "100%" }}
-              >
-                <Add />
-              </Button>
-            </AccordionDetails>
-          </Accordion>
+          <AppFormListBuilder
+            expanded={expanded}
+            title="Answers"
+            handleChange={handleChange}
+            name="answers"
+            placeHolder="New answer"
+          />
         </>
       )}
     </Formik>
