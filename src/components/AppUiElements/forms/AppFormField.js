@@ -3,28 +3,27 @@ import { useFormikContext } from "formik";
 import React from "react";
 
 function AppFormField(props) {
-  const { handleChange, setFieldTouched, errors, touched } = useFormikContext();
+  const { setFieldValue, setFieldTouched, errors, touched } =
+    useFormikContext();
   return (
     <>
       <TextField
-        autoFocus={props.autoFocus}
-        margin={props.margin}
-        autoComplete={props.autoComplete}
-        name={props.name}
-        required={props.required}
-        fullWidth={props.fullWidth}
-        id={props.id}
-        label={props.label}
-        type={props.type}
-        onChange={handleChange(props.name)}
+        {...props}
+        onChange={(e) => setFieldValue(props.name, e.target.value.trim())}
         onBlur={() => {
           setFieldTouched(props.name);
         }}
-        error={touched[props.name] && errors[props.name] ? true : false}
+        error={
+          touched[props.name] && errors[props.name]
+            ? errors[props.name]
+            : undefined
+        }
       />
-      {touched[props.name] && errors[props.name] && (
-        <FormHelperText error={true}>{errors[props.name]}</FormHelperText>
-      )}
+      {!props.extraErrordisabled &&
+        touched[props.name] &&
+        errors[props.name] && (
+          <FormHelperText error={true}>{errors[props.name]}</FormHelperText>
+        )}
     </>
   );
 }

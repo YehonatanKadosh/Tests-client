@@ -7,3 +7,7 @@
 .questions_list {
   flex: 1;
 }
+
+.MuiAccordionSummary-content {
+  justify-content: space-between;
+}

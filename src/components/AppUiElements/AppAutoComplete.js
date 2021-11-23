@@ -8,15 +8,13 @@ const AppAutoComplete = (props) => {
   return (
     <React.Fragment>
       <Autocomplete
-        disabled={props.disabled || false}
-        value={props.value}
         onChange={(event, newValue) => {
           if (newValue) {
             const newChoice = (
               newValue.startsWith("Add ") ? newValue.split(`"`)[1] : newValue
             ).trim();
             props.setValue(newChoice);
-            if (!props.collection.includes(newChoice)) {
+            if (!props.options.includes(newChoice)) {
               props.handleSubmit(newChoice);
             }
             if (props.onSelected) props.onSelected(newChoice);
@@ -28,8 +26,7 @@ const AppAutoComplete = (props) => {
             filtered.push(`Add "${params.inputValue}"`);
           return filtered;
         }}
-        id={props.id}
-        options={props.collection}
+        options={props.options}
         selectOnFocus
         handleHomeEndKeys
         renderOption={(props, option) => <li {...props}>{option}</li>}

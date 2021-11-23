@@ -11,8 +11,8 @@ import TagSelector from "../AppUiElements/selectors/TagSelector";
 
 function QuestionSearch() {
   const questions = useSelector(get_questions);
-  const tag = useState("");
-  const topic = useState("");
+  const [tag, setTag] = useState("");
+  const [topic, setTopic] = useState("");
 
   const filteredQuestion = () => {
     let predicate;
@@ -28,8 +28,8 @@ function QuestionSearch() {
     <>
       <div className="container-fluid questions_container p-3">
         <div className="row">
-          <TopicSelector state={topic} />
-          <TagSelector state={tag} topic={topic[0]} />
+          <TopicSelector onSelected={setTopic} />
+          <TagSelector onSelected={setTag} topic={topic} />
         </div>
         <div className="row questions_list">
           <QuestionsTable items={filteredQuestion()} />
