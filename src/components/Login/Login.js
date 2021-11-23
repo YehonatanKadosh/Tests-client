@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import Copyright from "../layout/Copyright/Copyright";
+import Copyright from "../AppUiElements/Copyright/Copyright";
 import {
   AppForm,
   AppFormField,

@@ -8,7 +8,7 @@ import {
 } from "../../../redux/reducers/topic";
 import AppAutoComplete from "../AppAutoComplete";
 
-function TopicSelector({ state }) {
+function TopicSelector({ state, onSelected }) {
   const [topic, setTopic] = state;
   const topics = useSelector(get_topics);
   const loadingTopics = useSelector(get_topics_status);
@@ -35,6 +35,7 @@ function TopicSelector({ state }) {
       id="topic"
       label={!loadingTopics ? "Topics" : "Loading topics"}
       handleSubmit={handleAdd}
+      onSelected={onSelected}
     />
   );
 }

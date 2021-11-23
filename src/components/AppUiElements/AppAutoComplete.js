@@ -16,8 +16,10 @@ const AppAutoComplete = (props) => {
               newValue.startsWith("Add ") ? newValue.split(`"`)[1] : newValue
             ).trim();
             props.setValue(newChoice);
-            if (!props.collection.includes(newChoice))
+            if (!props.collection.includes(newChoice)) {
               props.handleSubmit(newChoice);
+            }
+            if (props.onSelected) props.onSelected(newChoice);
           } else props.setValue("");
         }}
         filterOptions={(options, params) => {
