@@ -6,17 +6,12 @@ import {
   Typography,
 } from "@mui/material";
 import { useFormikContext } from "formik";
-import React from "react";
+import React, { useContext } from "react";
+import { AccordionContext } from "../../../Question/Question.create";
 
-function AccordionBase({
-  expanded,
-  title,
-  handleChange,
-  name,
-  headerContent,
-  detailsContent,
-}) {
+function AccordionBase({ title, name, headerContent, detailsContent }) {
   const { touched, errors, setFieldTouched } = useFormikContext();
+  const { expanded, handleChange } = useContext(AccordionContext);
   return (
     <Accordion
       onFocus={() => setFieldTouched(name)}
@@ -29,7 +24,11 @@ function AccordionBase({
           {headerContent}
         </Typography>
         {touched[name] && errors[name] && (
-          <FormHelperText error={true}>{errors[name]}</FormHelperText>
+          <FormHelperText error={true}>
+            {typeof errors[name] === "string"
+              ? errors[name]
+              : "missing information"}
+          </FormHelperText>
         )}
       </AccordionSummary>
       <AccordionDetails>{detailsContent}</AccordionDetails>

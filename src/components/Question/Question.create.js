@@ -1,20 +1,31 @@
-import { Formik } from "formik";
-import React, { useState } from "react";
-import { questionTypes } from "../../enums";
+import { FieldArray, Formik } from "formik";
+import React, { createContext, useState } from "react";
+import { orientationTypes, questionTypes } from "../../enums";
 import {
   AppFormChoiceList,
+  AppFormError,
   AppFormField,
-  AppFormFieldArray,
-  AccordionBase,
   AppFormListBuilder,
+  SubmitButton,
 } from "../AppUiElements/forms";
-import TopicSelector from "../AppUiElements/selectors/TopicSelector";
 import question_validator from "./schemas/Question.schema";
 // import TagSelector from "../AppUiElements/selectors/TagSelector";
 import "./Questions.css";
+import { get_topics } from "../../redux/reducers/topic";
+import { get_request_status } from "../../redux/reducers/request";
+import AppMultipleSelector from "../AppUiElements/selectors/AppMultipleSelector";
+import {
+  AddTagApiCall,
+  AddTopicApiCall,
+} from "../AppUiElements/selectors/SelectorsAddHandlers";
+import { get_tags, get_tags_status } from "../../redux/reducers/tag";
+import { Button } from "@mui/material";
+
+export const AccordionContext = createContext();
 
 function CreateQuestion() {
   const [expanded, setExpanded] = useState("topic");
+  const [contextVisable, setContextVisable] = useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -25,79 +36,128 @@ function CreateQuestion() {
   };
 
   return (
-    <Formik
-      initialValues={{
-        topics: [],
-        type: undefined,
-        question: undefined,
-        context: undefined,
-        orientation: undefined,
-        lastUpdated: undefined,
-        answers: [],
-        tags: [],
-        version: undefined,
-      }}
-      onSubmit={submitQuestion}
-      validationSchema={question_validator}
-    >
-      {({ values }) => (
-        <>
-          <AppFormFieldArray
-            Selector={TopicSelector}
-            expanded={expanded}
-            title="Choose Topics"
-            handleChange={handleChange}
-            name="topics"
-          />
-          <AppFormChoiceList
-            expanded={expanded}
-            title="Choose Type"
-            handleChange={handleChange}
-            name="type"
-            enum={questionTypes}
-          />
-          <AccordionBase
-            expanded={expanded}
-            title="Question"
-            handleChange={handleChange}
-            name="question"
-            headerContent={`: ${values.question}`}
-            detailsContent={
+    <AccordionContext.Provider value={{ expanded, handleChange }}>
+      <Formik
+        initialValues={{
+          topics: [],
+          type: Object.values(questionTypes)[0],
+          question: "",
+          context: "",
+          answers: [],
+          orientation: Object.values(orientationTypes)[0],
+          lastUpdated: undefined,
+          tags: [],
+          version: undefined,
+        }}
+        onSubmit={submitQuestion}
+        validationSchema={question_validator}
+      >
+        {({ values }) => (
+          <div className="create_question_container">
+            <div className="row topics_tags_container">
+              <div className="col">
+                <FieldArray
+                  name="topics"
+                  render={({ push }) => (
+                    <AppMultipleSelector
+                      name="topics"
+                      valuesSelector={get_topics}
+                      valuesStatusSelector={get_request_status}
+                      multiple
+                      apiCall={(topic) =>
+                        AddTopicApiCall(topic, (Ntopic) => push(Ntopic))
+                      }
+                    />
+                  )}
+                />
+                <AppFormError name="topics" />
+              </div>
+              <div className="col">
+                <FieldArray
+                  name="tags"
+                  render={({ push }) => (
+                    <AppMultipleSelector
+                      name="tags"
+                      valuesSelector={get_tags(values.topics)}
+                      valuesStatusSelector={get_tags_status}
+                      multiple
+                      disabled={values.topics.length ? false : true}
+                      disabledPlaceholder="Choose Topic First"
+                      apiCall={(tag) =>
+                        AddTagApiCall(tag, values.topics, (Ntag) => push(Ntag))
+                      }
+                    />
+                  )}
+                />
+                <AppFormError name="tags" />
+              </div>
+            </div>
+
+            <div className="my-1">
               <AppFormField
                 name="question"
-                label="Content"
+                label="Question"
                 className="w-100"
                 rows={4}
                 multiline
               />
-            }
-          />
-          <AccordionBase
-            expanded={expanded}
-            title="Context"
-            handleChange={handleChange}
-            name="context"
-            headerContent={`: ${values.context}`}
-            detailsContent={
-              <AppFormField
-                name="context"
-                label="Content"
-                className="w-100"
-                rows={4}
-                multiline
+              <AppFormError name="question" />
+            </div>
+
+            {contextVisable && (
+              <div className="my-1">
+                <AppFormField
+                  name="context"
+                  label="Content"
+                  className="w-100"
+                  rows={4}
+                  multiline
+                />
+              </div>
+            )}
+
+            <div className="my-1">
+              <AppFormListBuilder
+                title="Answers"
+                name="answers"
+                placeHolder="New answer"
               />
-            }
-          />
-          <AppFormListBuilder
-            expanded={expanded}
-            title="Answers"
-            handleChange={handleChange}
-            name="answers"
-            placeHolder="New answer"
-          />
-        </>
-      )}
-    </Formik>
+            </div>
+
+            <div className="row text-center align-items-center my-1">
+              <div className="col">
+                <AppFormChoiceList
+                  title="Choose Type"
+                  name="type"
+                  Enum={questionTypes}
+                />
+              </div>
+              <div className="col">
+                <Button
+                  onClick={() => setContextVisable(!contextVisable)}
+                  variant="contained"
+                  sx={{ height: "fit-content", alignSelf: "center" }}
+                >
+                  {!contextVisable ? "Add Context" : "Remove Context"}
+                </Button>
+              </div>
+              <div className="col">
+                <AppFormChoiceList
+                  title="Choose Orientation"
+                  name="orientation"
+                  className="col"
+                  Enum={orientationTypes}
+                />
+              </div>
+            </div>
+
+            <div className="row px-3">
+              <SubmitButton title="Save Question" />
+            </div>
+          </div>
+        )}
+      </Formik>
+    </AccordionContext.Provider>
   );
 }
 

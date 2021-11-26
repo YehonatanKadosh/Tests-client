@@ -3,7 +3,7 @@ import { useFormikContext } from "formik";
 import React from "react";
 
 function AppFormField(props) {
-  const { setFieldValue, setFieldTouched, errors, touched } =
+  const { values, setFieldValue, setFieldTouched, errors, touched } =
     useFormikContext();
   return (
     <TextField
@@ -13,6 +13,7 @@ function AppFormField(props) {
         setFieldTouched(props.name);
       }}
       error={touched[props.name] && errors[props.name] ? true : false}
+      value={values[props.name]}
     />
   );
 }

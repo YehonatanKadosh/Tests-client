@@ -10,8 +10,16 @@ const API_Middleware =
   (next) =>
   (action) => {
     if (action.type !== API_Call.type) return next(action);
-    const { url, method, data, beforeAll, onSuccess, onError, afterAll } =
-      action.payload;
+    const {
+      url,
+      method,
+      data,
+      beforeAll,
+      onSuccess,
+      onError,
+      afterAll,
+      callback,
+    } = action.payload;
     if (beforeAll) dispatch({ type: beforeAll });
     axios
       .request({
@@ -36,6 +44,7 @@ const API_Middleware =
           if (action.payload.saveToken) localStorage.setItem(headerName, token);
           else sessionStorage.setItem(headerName, token);
         if (onSuccess) dispatch({ type: onSuccess, payload: res.data });
+        if (callback) callback(res.data);
       })
       .catch((reason) => {
         if (onError)

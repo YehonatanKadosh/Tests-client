@@ -1,37 +1,27 @@
-import { Delete } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box } from "@mui/system";
 import { useFormikContext } from "formik";
 import React from "react";
-import AccordionBase from "./AccordionBase";
 
-function AppFormChoiceList(props) {
+function AppFormChoiceList({ name, Enum }) {
   const { values, setFieldValue } = useFormikContext();
   return (
-    <AccordionBase
-      {...props}
-      headerContent={
-        values[props.name] && (
-          <Button
-            className="mx-1"
-            variant="contained"
-            endIcon={<Delete />}
-            onClick={() => setFieldValue(props.name, "")}
-          >
-            {values[props.name]}
-          </Button>
-        )
-      }
-      detailsContent={Object.values(props.enum).map((element) => (
-        <Button
-          className="mx-1"
-          variant="outlined"
-          key={element}
-          onClick={() => setFieldValue(props.name, element)}
+    <Box sx={{ p: 1 }}>
+      <FormControl>
+        <InputLabel>{name}</InputLabel>
+        <Select
+          value={values[name]}
+          label={name}
+          onChange={(event) => setFieldValue(name, event.target.value)}
         >
-          {element}
-        </Button>
-      ))}
-    />
+          {Object.values(Enum).map((element) => (
+            <MenuItem key={element} value={element}>
+              {element}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </Box>
   );
 }
 
