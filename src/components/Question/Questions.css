@@ -18,9 +18,9 @@
   display: contents;
 }
 
-.max_width_vertically {
-  max-width: 50%;
-  min-width: 25%;
+.css-j204z7-MuiFormControlLabel-root {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .questions_list {

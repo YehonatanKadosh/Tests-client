@@ -11,7 +11,7 @@ const question_validator = Yup.object().shape({
   orientation: Yup.string().oneOf(Object.values(orientationTypes)).required(),
   tags: Yup.array().of(Yup.object()).required().min(1, "at least 1 tag"),
   topics: Yup.array().of(Yup.object()).required().min(1, "at least 1 topic"),
-  lastUpdated: Yup.date().required(),
+  lastUpdated: Yup.date(),
   version: Yup.number().default(1),
 });
 

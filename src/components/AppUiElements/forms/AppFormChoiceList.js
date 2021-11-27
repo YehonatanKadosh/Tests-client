@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { useFormikContext } from "formik";
 import React from "react";
 
-function AppFormChoiceList({ name, Enum }) {
+function AppFormChoiceList({ name, Enum, onChange }) {
   const { values, setFieldValue } = useFormikContext();
   return (
     <Box sx={{ p: 1 }}>
@@ -12,7 +12,10 @@ function AppFormChoiceList({ name, Enum }) {
         <Select
           value={values[name]}
           label={name}
-          onChange={(event) => setFieldValue(name, event.target.value)}
+          onChange={(event) => {
+            setFieldValue(name, event.target.value);
+            if (onChange) onChange(event.target.value);
+          }}
         >
           {Object.values(Enum).map((element) => (
             <MenuItem key={element} value={element}>

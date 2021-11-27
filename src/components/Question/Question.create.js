@@ -52,8 +52,9 @@ function CreateQuestion() {
         onSubmit={submitQuestion}
         validationSchema={question_validator}
       >
-        {({ values }) => (
+        {({ values, errors }) => (
           <div className="create_question_container">
+            {console.log(errors)}
             <div className="row topics_tags_container">
               <div className="col">
                 <FieldArray
@@ -130,6 +131,12 @@ function CreateQuestion() {
                   title="Choose Type"
                   name="type"
                   Enum={questionTypes}
+                  onChange={(newType) => {
+                    if (newType === questionTypes.SingleChoice)
+                      values.answers.forEach((answer) => {
+                        answer.isRight = false;
+                      });
+                  }}
                 />
               </div>
               <div className="col">
@@ -160,5 +167,4 @@ function CreateQuestion() {
     </AccordionContext.Provider>
   );
 }
-
 export default CreateQuestion;
