@@ -1,0 +1,4 @@
+.horizontal {
+  flex-direction: row !important;
+  justify-content: space-around;
+}

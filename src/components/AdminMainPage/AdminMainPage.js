@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { loadTopics, setTopics } from "../../redux/reducers/topic";
 import { loadTags, setTags } from "../../redux/reducers/tag";
 import { API_Call } from "../../redux/middlewares/api";
+import { loadQuestions, setQuestions } from "../../redux/reducers/questions";
 
 function AdminMainPage(props) {
   const dispatch = useDispatch();
@@ -24,6 +25,14 @@ function AdminMainPage(props) {
         method: "get",
         beforeAll: loadTags,
         onSuccess: setTags,
+      })
+    );
+    dispatch(
+      API_Call({
+        url: "question",
+        method: "get",
+        beforeAll: loadQuestions,
+        onSuccess: setQuestions,
       })
     );
   }, [dispatch]);

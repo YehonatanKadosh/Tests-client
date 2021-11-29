@@ -17,12 +17,21 @@ import {
   AddTopicApiCall,
 } from "../AppUiElements/selectors/SelectorsAddHandlers";
 import { get_tags, get_tags_status } from "../../redux/reducers/tag";
-import { Button, FormHelperText } from "@mui/material";
+import { Button, Dialog, FormHelperText } from "@mui/material";
 import { question_validator } from "queezy-common";
+import { useDispatch } from "react-redux";
+import { API_Call } from "../../redux/middlewares/api";
+import { setNewQuestion } from "../../redux/reducers/questions";
+import { requestAnswered, requestSent } from "../../redux/reducers/request";
+import { useNavigate } from "react-router-dom";
+import QuestionShow from "./Question.show";
 
 function CreateQuestion({ version, update }) {
+  const [open, setOpen] = useState(false);
   const [contextVisable, setContextVisable] = useState(false);
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitQuestion = (question) => {
     let answered = false;
@@ -31,11 +40,21 @@ function CreateQuestion({ version, update }) {
     );
     if (!answered) setError("At least one answer must be marked");
     else {
+      setError("");
       question.lastUpdated = new Date();
       question.version =
         version && update ? version + 1 : version ? version : 1;
-      setError("");
-      console.log(question); // you did it !
+      dispatch(
+        API_Call({
+          url: "question",
+          method: "post",
+          data: question,
+          beforeAll: requestSent,
+          onSuccess: setNewQuestion,
+          afterAll: requestAnswered,
+          callback: () => navigate("/"),
+        })
+      );
     }
   };
 
@@ -168,6 +187,10 @@ function CreateQuestion({ version, update }) {
           <div className="row px-3">
             <SubmitButton title="Save Question" />
           </div>
+          <Button onClick={() => setOpen(true)}>Preview</Button>
+          <Dialog onClose={() => setOpen(false)} open={open}>
+            <QuestionShow forShow {...values} />
+          </Dialog>
         </div>
       )}
     </Formik>
