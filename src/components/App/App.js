@@ -9,7 +9,7 @@ import {
   get_user_role,
   setUser,
 } from "../../redux/reducers/user";
-import { roles } from "../../enums";
+import { roles } from "queezy-common";
 import UserMainPage from "../UserMainPage/UserMainPage";
 import LoginRouts from "../../routes/Login.routs";
 import AdminMainPage from "../AdminMainPage/AdminMainPage";

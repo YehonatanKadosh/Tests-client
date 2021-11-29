@@ -10,7 +10,7 @@ import {
   AppFormCheckbox,
   AppFormError,
 } from "../AppUiElements/forms";
-import LoginSchema from "./Login.schema";
+import { login_validator } from "queezy-common";
 import { API_Call } from "../../redux/middlewares/api";
 import { setUser } from "../../redux/reducers/user";
 import {
@@ -76,7 +76,7 @@ export default function Login(props) {
                 password: "",
                 rememberMe: true,
               }}
-              validationSchema={LoginSchema}
+              validationSchema={login_validator}
               onSubmit={loginHandler}
             >
               <AppFormField

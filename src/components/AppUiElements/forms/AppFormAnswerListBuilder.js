@@ -7,15 +7,14 @@ import {
   FormHelperText,
   IconButton,
   InputBase,
-  Paper,
   Radio,
   RadioGroup,
 } from "@mui/material";
 import { FieldArray, useFormikContext } from "formik";
 import React from "react";
-import { questionTypes } from "../../../enums";
+import { questionTypes } from "queezy-common";
 
-function AppFormListBuilder(props) {
+function AppFormAnswerListBuilder(props) {
   const { values, errors, touched } = useFormikContext();
   const SingleChoice = values["type"] === questionTypes.SingleChoice;
 
@@ -134,4 +133,4 @@ function AppFormListBuilder(props) {
   );
 }
 
-export default AppFormListBuilder;
+export default AppFormAnswerListBuilder;

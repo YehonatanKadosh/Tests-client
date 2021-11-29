@@ -1,7 +1,7 @@
 import React from "react";
 
 import Copyright from "../AppUiElements/Copyright/Copyright";
-import SignUpSchema from "./SignUp.schema";
+import { signup_validator } from "queezy-common";
 
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -75,7 +75,7 @@ export default function SignUp() {
               password: "",
               phoneNumber: "",
             }}
-            validationSchema={SignUpSchema}
+            validationSchema={signup_validator}
             onSubmit={signupHandler}
           >
             <Grid container spacing={2}>

@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
-import { useFormikContext } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createFilterOptions } from "@mui/base";
+import { useFormikContext } from "formik";
 
 const filter = createFilterOptions();
 
@@ -9,38 +9,61 @@ function AppSelector({
   name,
   valuesSelector,
   valuesStatusSelector,
-  addHandler,
   disabled,
+  disabledPlaceholder,
+  multiple,
+  apiCall,
+  onEmpty,
 }) {
-  const values = useSelector(valuesSelector);
+  const options = useSelector(valuesSelector);
   const loadingValues = useSelector(valuesStatusSelector);
-  const { setFieldValue } = useFormikContext();
+  const { values, setFieldValue, errors, touched } = useFormikContext();
+  const dispatch = useDispatch();
 
   return (
     <Autocomplete
       onChange={(event, newValue) => {
-        if (typeof lastAddedValue === "string") addHandler(lastAddedValue);
-        else setFieldValue(name, newValues);
+        if (multiple) {
+          if (newValue.length) {
+            const lastAddedValue = newValue[newValue.length - 1];
+            if (typeof lastAddedValue === "string")
+              dispatch(apiCall(lastAddedValue));
+            else setFieldValue(name, newValue);
+          } else {
+            setFieldValue(name, []);
+            if (onEmpty) onEmpty();
+          }
+        } else {
+          if (typeof newValue === "string") dispatch(apiCall(newValue));
+          else setFieldValue(name, newValue);
+        }
       }}
       filterOptions={(options, params) => {
         const filtered = filter(options, params);
-        if (params.inputValue && !options.includes(params.inputValue))
+        if (
+          apiCall &&
+          params.inputValue.trim() &&
+          !options.includes(params.inputValue)
+        )
           filtered.push({ name: `Add "${params.inputValue}"` });
         return filtered;
       }}
-      options={values}
+      options={options}
       disabled={loadingValues || disabled}
       selectOnFocus
+      value={values[name]}
       handleHomeEndKeys
-      renderOption={(props, option) => (
-        <li key={option._id} {...props}>
-          {option.name}
-        </li>
-      )}
-      sx={{ width: "50%", p: 1 }}
+      renderOption={(props, option) => <li {...props}>{option.name}</li>}
+      multiple={multiple}
       freeSolo
-      getOptionLabel={(option) => option.name}
-      renderInput={(params) => <TextField {...params} label={name} />}
+      getOptionLabel={(option) => option.name || ""}
+      renderInput={(params) => (
+        <TextField
+          error={touched[name] && errors[name] ? true : false}
+          {...params}
+          label={disabled && disabledPlaceholder ? disabledPlaceholder : name}
+        />
+      )}
     />
   );
 }

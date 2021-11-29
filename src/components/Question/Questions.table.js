@@ -6,9 +6,24 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { useFormikContext } from "formik";
 import React from "react";
 
 function QuestionsTable({ items }) {
+  const { values } = useFormikContext();
+
+  const filteredQuestion = () => {
+    const tag = values.tag;
+    const topic = values.topic;
+    let predicate;
+    if (tag && topic)
+      predicate = (Q) => Q.tags.includes(tag) && Q.topic.includes(topic);
+    else if (tag) predicate = (Q) => Q.tags.includes(tag);
+    else if (topic) predicate = (Q) => Q.topic.includes(topic);
+    else return items;
+    return items.filter(predicate);
+  };
+
   return (
     <TableContainer>
       <Table stickyHeader aria-label="sticky table">
@@ -22,7 +37,7 @@ function QuestionsTable({ items }) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {items.map((Q) => (
+          {filteredQuestion().map((Q) => (
             <TableRow>
               <TableCell>{Q.question}</TableCell>
               <TableCell>{Q.tags}</TableCell>

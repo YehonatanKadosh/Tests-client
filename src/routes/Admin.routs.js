@@ -8,7 +8,7 @@ import QuestionRouts from "./Question.routs";
 function AdminRouts() {
   return (
     <Routes>
-      <Route path="/" element={<ActionBar />} />
+      <Route path="*" element={<ActionBar />} />
       <Route path="Questions/*" element={<QuestionRouts />} />
       <Route path="Queezes" element={<CreateQueez />} />
       <Route path="Reports" element={<Reports />} />

@@ -20,7 +20,8 @@ export const { setTags, newTag, loadTags } = slice.actions;
 
 export default slice.reducer;
 export const get_tags = (topics) => (state) => {
-  if (topics) {
+  if (topics[0] !== null) {
+    console.log(topics);
     const topicIds = topics.map((t) => t._id);
     const filteredTags = [];
 

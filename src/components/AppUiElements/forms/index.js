@@ -4,4 +4,4 @@ export { default as AppFormError } from "./AppFormError";
 export { default as SubmitButton } from "./SubmitButton";
 export { default as AppFormCheckbox } from "./AppFormCheckbox";
 export { default as AppFormChoiceList } from "./AppFormChoiceList";
-export { default as AppFormListBuilder } from "./AppFormListBuilder";
+export { default as AppFormAnswerListBuilder } from "./AppFormAnswerListBuilder";
