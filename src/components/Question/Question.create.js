@@ -21,14 +21,20 @@ import { Button, Dialog, FormHelperText } from "@mui/material";
 import { question_validator } from "queezy-common";
 import { useDispatch } from "react-redux";
 import { API_Call } from "../../redux/middlewares/api";
-import { setNewQuestion } from "../../redux/reducers/questions";
+import {
+  removeQuestion,
+  setNewQuestion,
+  updateQuestion,
+} from "../../redux/reducers/questions";
 import { requestAnswered, requestSent } from "../../redux/reducers/request";
 import { useNavigate } from "react-router-dom";
 import QuestionShow from "./Question.show";
 
-function CreateQuestion({ version, update }) {
+function CreateQuestion({ update, Q, CB }) {
   const [open, setOpen] = useState(false);
-  const [contextVisable, setContextVisable] = useState(false);
+  const [contextVisable, setContextVisable] = useState(
+    Q?.context ? true : false
+  );
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -42,39 +48,41 @@ function CreateQuestion({ version, update }) {
     else {
       setError("");
       question.lastUpdated = new Date();
-      question.version =
-        version && update ? version + 1 : version ? version : 1;
+      question.version = update ? Q?.version + 1 : Q?.version || 1;
       dispatch(
         API_Call({
           url: "question",
-          method: "post",
+          method: Q && !update ? "put" : "post",
           data: question,
           beforeAll: requestSent,
-          onSuccess: setNewQuestion,
+          onSuccess: Q && !update ? updateQuestion : setNewQuestion,
           afterAll: requestAnswered,
-          callback: () => navigate("/"),
+          callback: CB ? CB : () => navigate("/Questions"),
         })
       );
+      if (update) dispatch(removeQuestion({ _id: Q._id }));
     }
   };
 
   return (
     <Formik
-      initialValues={{
-        topics: [],
-        type: Object.values(questionTypes)[0],
-        question: "",
-        context: "",
-        answers: [],
-        orientation: Object.values(orientationTypes)[0],
-        lastUpdated: undefined,
-        tags: [],
-        version: undefined,
-      }}
+      initialValues={
+        Q || {
+          topics: [],
+          type: Object.values(questionTypes)[0],
+          question: "",
+          context: "",
+          answers: [],
+          orientation: Object.values(orientationTypes)[0],
+          lastUpdated: undefined,
+          tags: [],
+          version: undefined,
+        }
+      }
       onSubmit={submitQuestion}
       validationSchema={question_validator}
     >
-      {({ values }) => (
+      {({ values, setFieldValue }) => (
         <div className="create_question_container">
           <div className="row topics_tags_container">
             <div className="col">
@@ -167,7 +175,10 @@ function CreateQuestion({ version, update }) {
             </div>
             <div className="col">
               <Button
-                onClick={() => setContextVisable(!contextVisable)}
+                onClick={() => {
+                  if (contextVisable) setFieldValue("context", "");
+                  setContextVisable(!contextVisable);
+                }}
                 variant="contained"
                 sx={{ height: "fit-content", alignSelf: "center" }}
               >

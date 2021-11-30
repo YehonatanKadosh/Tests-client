@@ -8,7 +8,7 @@ function AppFormField(props) {
   return (
     <TextField
       {...props}
-      onChange={(e) => setFieldValue(props.name, e.target.value.trim())}
+      onChange={(e) => setFieldValue(props.name, e.target.value)}
       onBlur={() => {
         setFieldTouched(props.name);
       }}

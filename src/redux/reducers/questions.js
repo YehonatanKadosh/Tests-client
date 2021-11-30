@@ -11,12 +11,26 @@ const slice = createSlice({
       state.items = action.payload;
       state.status = false;
     },
+    updateQuestion: (state, action) => {
+      const Q = state.items.find((Q) => Q._id === action.payload._id);
+      Object.assign(Q, action.payload);
+    },
     loadQuestions: (state, action) => {
       state.status = true;
     },
+    removeQuestion: (state, action) => {
+      const removedQ = state.items.find((q) => q._id === action.payload._id);
+      if (removedQ) state.items.splice(state.items.indexOf(removedQ), 1);
+    },
   },
 });
-export const { setNewQuestion, setQuestions, loadQuestions } = slice.actions;
+export const {
+  updateQuestion,
+  setNewQuestion,
+  setQuestions,
+  loadQuestions,
+  removeQuestion,
+} = slice.actions;
 
 export default slice.reducer;
 export const get_questions = (state) => state.questions.items;

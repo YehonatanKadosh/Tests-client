@@ -28,13 +28,13 @@ const API_Middleware =
         data,
         method,
         credentials: "same-origin",
-        headers: sessionStorage.getItem(headerName)
-          ? {
-              [`${headerName}`]: sessionStorage.getItem(headerName),
-            }
-          : localStorage.getItem(headerName)
+        headers: localStorage.getItem(headerName)
           ? {
               [`${headerName}`]: localStorage.getItem(headerName),
+            }
+          : sessionStorage.getItem(headerName)
+          ? {
+              [`${headerName}`]: sessionStorage.getItem(headerName),
             }
           : undefined,
       })
