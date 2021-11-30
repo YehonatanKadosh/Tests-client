@@ -60,8 +60,8 @@ function QuestionsTable({ items }) {
         <TableHead>
           <TableRow>
             <TableCell>Question</TableCell>
-            <TableCell>Tags</TableCell>
             <TableCell>Topics</TableCell>
+            <TableCell>Tags</TableCell>
             <TableCell>Last Update</TableCell>
             <TableCell>Version</TableCell>
             <TableCell>Show</TableCell>
@@ -75,13 +75,13 @@ function QuestionsTable({ items }) {
             <TableRow key={Q._id} hover>
               <TableCell>{Q.question}</TableCell>
               <TableCell>
-                {Q.tags.map((tag, index) => (
-                  <div key={index}>{tag?.name}</div>
+                {Q.topics.map((topic, index) => (
+                  <div key={index}>{topic?.name}</div>
                 ))}
               </TableCell>
               <TableCell>
-                {Q.topics.map((topic, index) => (
-                  <div key={index}>{topic?.name}</div>
+                {Q.tags.map((tag, index) => (
+                  <div key={index}>{tag?.name}</div>
                 ))}
               </TableCell>
               <TableCell>{Q.lastUpdated}</TableCell>
