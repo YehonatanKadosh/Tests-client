@@ -34,13 +34,13 @@ function AppSelector({
           } else {
             setFieldValue(name, []);
             if (onEmpty) onEmpty();
-            if (onChange) onChange(newValue);
           }
         } else {
           if (typeof newValue === "string") dispatch(apiCall(newValue));
           else {
             setFieldValue(name, newValue);
-            if (onChange) onChange(newValue);
+            if (!newValue && onEmpty) onEmpty();
+            if (newValue && onChange) onChange(newValue);
           }
         }
       }}

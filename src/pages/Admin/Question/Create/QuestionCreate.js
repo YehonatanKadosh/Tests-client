@@ -29,7 +29,8 @@ import {
   get_topics,
   get_topics_status,
 } from "../../../../redux/reducers/topic";
-import { get_tags, get_tags_status } from "../../../../redux/reducers/tag";
+import { get_all_tags, get_tags_status } from "../../../../redux/reducers/tag";
+
 function QuestionCreate({ update, Q, CB }) {
   const [open, setOpen] = useState(false);
   const [contextVisable, setContextVisable] = useState(
@@ -102,14 +103,14 @@ function QuestionCreate({ update, Q, CB }) {
               />
               <AppFormError name="topics" />
             </div>
-            {values.topics.length && (
+            {values.topics.length ? (
               <div className="col">
                 <FieldArray
                   name="tags"
                   render={({ push }) => (
                     <AppSelector
                       name="tags"
-                      valuesSelector={get_tags(values.topics)}
+                      valuesSelector={get_all_tags}
                       valuesStatusSelector={get_tags_status}
                       multiple
                       apiCall={(tag) =>
@@ -120,7 +121,7 @@ function QuestionCreate({ update, Q, CB }) {
                 />
                 <AppFormError name="tags" />
               </div>
-            )}
+            ) : null}
           </div>
 
           <div className="my-1">

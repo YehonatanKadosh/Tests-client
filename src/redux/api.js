@@ -50,11 +50,20 @@ export const getTags = (params) =>
     onSuccess: setTags,
   });
 
-export const getQuestions = (topic) =>
+export const getQuestionsByTopic = (topic) =>
   API_Call({
     url: "question",
     method: "get",
     params: { topic: topic._id },
+    beforeAll: loadQuestions,
+    onSuccess: setQuestions,
+  });
+
+export const getQuestionsByTopicAndTag = (topic, tag) =>
+  API_Call({
+    url: "question",
+    method: "get",
+    params: { topic: topic._id, tag: tag._id },
     beforeAll: loadQuestions,
     onSuccess: setQuestions,
   });

@@ -14,6 +14,11 @@ html,
   height: 100%;
 }
 
+/* bootstrap fidjeting */
+.row {
+  align-items: center;
+}
+
 /*  mui fidjeting */
 .MuiFormControlLabel-label {
   display: contents;

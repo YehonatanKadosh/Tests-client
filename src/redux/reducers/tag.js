@@ -5,7 +5,7 @@ const slice = createSlice({
   initialState: { items: [], status: false },
   reducers: {
     setTags: (state, action) => {
-      Object.assign(state.items, action.payload);
+      state.items = action.payload;
       state.status = false;
     },
     newTag: (state, action) => {
@@ -14,26 +14,13 @@ const slice = createSlice({
     loadTags: (state, action) => {
       state.status = true;
     },
+    wipeAllTags: (state, action) => {
+      state.items = [];
+    },
   },
 });
-export const { setTags, newTag, loadTags } = slice.actions;
+export const { setTags, newTag, loadTags, wipeAllTags } = slice.actions;
 
 export default slice.reducer;
 export const get_all_tags = (state) => state.tags.items;
-export const get_tags = (topics) => (state) => {
-  if (topics[0] !== null) {
-    const topicIds = topics.map((t) => t._id);
-    const filteredTags = [];
-
-    topicIds.forEach((topicId) => {
-      const filtered = state.tags.items.filter((tag) =>
-        tag.topics?.includes(topicId)
-      );
-      filtered.forEach((filteredTag) => {
-        if (!filteredTags.includes(filteredTag)) filteredTags.push(filteredTag);
-      });
-    });
-    return filteredTags;
-  } else return [];
-};
 export const get_tags_status = (state) => state.tags.status;

@@ -20,8 +20,8 @@ function AdminRouts() {
       <Routes>
         <Route path="*" element={<AdminPage />} />
         <Route path="Questions/*" element={<QuestionRouts />} />
-        <Route path="Queezes" element={<QueezRouts />} />
-        <Route path="Reports" element={<ReportRouts />} />
+        <Route path="Queezes/*" element={<QueezRouts />} />
+        <Route path="Reports/*" element={<ReportRouts />} />
       </Routes>
     </div>
   );

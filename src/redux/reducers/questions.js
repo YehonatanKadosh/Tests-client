@@ -22,6 +22,9 @@ const slice = createSlice({
       const removedQ = state.items.find((q) => q._id === action.payload._id);
       if (removedQ) state.items.splice(state.items.indexOf(removedQ), 1);
     },
+    wipeAllQuestions: (state, action) => {
+      state.items = [];
+    },
   },
 });
 export const {
@@ -30,6 +33,7 @@ export const {
   setQuestions,
   loadQuestions,
   removeQuestion,
+  wipeAllQuestions,
 } = slice.actions;
 
 export default slice.reducer;

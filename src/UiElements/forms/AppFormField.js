@@ -14,6 +14,7 @@ function AppFormField(props) {
       }}
       error={touched[props.name] && errors[props.name] ? true : false}
       value={values[props.name]}
+      type={props.type}
     />
   );
 }
