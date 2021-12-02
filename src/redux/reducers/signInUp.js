@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const slice = createSlice({
-  name: "login",
+  name: "signInUp",
   initialState: {
     login_error: undefined,
     signup_error: undefined,
@@ -16,14 +16,14 @@ const slice = createSlice({
       state.loading = false;
       state.signup_error = action.payload;
     },
-    setLoading: (state) => {
+    setLogin: (state) => {
       state.loading = true;
     },
   },
 });
-export const { setLoginError, setSignupError, setLoading } = slice.actions;
+export const { setLoginError, setSignupError, setLogin } = slice.actions;
 
 export default slice.reducer;
-export const get_login_error = (state) => state.login.login_error;
-export const get_signup_error = (state) => state.login.signup_error;
-export const get_request_status = (state) => state.login.loading;
+export const get_login_error = (state) => state.signInUp.login_error;
+export const get_signup_error = (state) => state.signInUp.signup_error;
+export const get_login_status = (state) => state.signInUp.loading;

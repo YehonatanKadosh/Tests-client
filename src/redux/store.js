@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import API_Middleware from "./middlewares/api";
 import user from "./reducers/user";
-import login from "./reducers/signInUp";
+import signInUp from "./reducers/signInUp";
 import questions from "./reducers/questions";
 import topics from "./reducers/topic";
 import tags from "./reducers/tag";
@@ -10,7 +10,7 @@ import request from "./reducers/request";
 
 const appReducer = combineReducers({
   user,
-  login,
+  signInUp,
   questions,
   topics,
   tags,
@@ -26,7 +26,6 @@ const rootReducer = (state, action) => {
   }
   return appReducer(state, action);
 };
-
 export default configureStore({
   reducer: rootReducer,
   middleware: [API_Middleware],

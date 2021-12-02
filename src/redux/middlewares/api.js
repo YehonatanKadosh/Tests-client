@@ -19,6 +19,7 @@ const API_Middleware =
       onError,
       afterAll,
       callback,
+      params,
     } = action.payload;
     if (beforeAll) dispatch({ type: beforeAll });
     axios
@@ -27,6 +28,7 @@ const API_Middleware =
         url,
         data,
         method,
+        params,
         credentials: "same-origin",
         headers: localStorage.getItem(headerName)
           ? {

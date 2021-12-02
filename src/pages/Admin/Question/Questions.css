@@ -1,0 +1,12 @@
+.MuiFormControlLabel-label {
+  display: contents;
+}
+
+.css-j204z7-MuiFormControlLabel-root {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.MuiAccordionSummary-content {
+  justify-content: space-between;
+}
