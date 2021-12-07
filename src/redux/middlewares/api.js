@@ -21,6 +21,7 @@ const API_Middleware =
       callback,
       params,
     } = action.payload;
+
     if (beforeAll) dispatch({ type: beforeAll });
     axios
       .request({

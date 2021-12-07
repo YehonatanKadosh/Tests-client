@@ -51,6 +51,7 @@ function QuestionSearch({ onClick, onAdd }) {
             onChange={(topic) => {
               dispatch(getTags({ topics: [topic._id] }));
               dispatch(getQuestionsByTopic(topic));
+              setFieldValue("tag", "");
             }}
             onEmpty={() => {
               dispatch(wipeAllTags());
