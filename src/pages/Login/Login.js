@@ -22,12 +22,12 @@ import Container from "@mui/material/Container";
 import { CircularProgress, FormHelperText } from "@mui/material";
 import { login } from "../../redux/api";
 import { get_login_error, setLoginError } from "../../redux/reducers/signInUp";
-import { get_request_status } from "../../redux/reducers/request";
+import { get_request_loading } from "../../redux/reducers/request";
 
 export default function Login(props) {
   const dispatch = useDispatch();
   const error = useSelector(get_login_error);
-  const loading = useSelector(get_request_status);
+  const loading = useSelector(get_request_loading);
 
   const loginHandler = async (data) => {
     if (error) dispatch(setLoginError(undefined));

@@ -11,7 +11,8 @@ function App() {
   const role = useSelector(get_user_role);
 
   useEffect(() => {
-    if (localStorage.getItem(process.env.REACT_APP_JWTHeaderName))
+    const JWT_Name = process.env.REACT_APP_JWTHeaderName;
+    if (localStorage.getItem(JWT_Name) || sessionStorage.getItem(JWT_Name))
       dispatch(tryLogin);
   }, [dispatch]);
 

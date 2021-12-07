@@ -1,5 +1,12 @@
 import { API_Call } from "./middlewares/api";
 import {
+  loadQueezs,
+  removeQueez,
+  setNewQueez,
+  setQueezs,
+  updateQueez,
+} from "./reducers/queezs";
+import {
   loadQuestions,
   removeQuestion,
   setNewQuestion,
@@ -59,6 +66,15 @@ export const getQuestionsByTopic = (topic) =>
     onSuccess: setQuestions,
   });
 
+export const getQueezByTopic = (topic) =>
+  API_Call({
+    url: "queez",
+    method: "get",
+    params: { topic: topic._id },
+    beforeAll: loadQueezs,
+    onSuccess: setQueezs,
+  });
+
 export const getQuestionsByTopicAndTag = (topic, tag) =>
   API_Call({
     url: "question",
@@ -68,7 +84,7 @@ export const getQuestionsByTopicAndTag = (topic, tag) =>
     onSuccess: setQuestions,
   });
 
-export const deleteQuestion = (_id) => {
+export const deleteQuestion = (_id) =>
   API_Call({
     url: "question",
     method: "delete",
@@ -77,7 +93,16 @@ export const deleteQuestion = (_id) => {
     onSuccess: removeQuestion,
     afterAll: requestAnswered,
   });
-};
+
+export const deleteQueez = (_id) =>
+  API_Call({
+    url: "queez",
+    method: "delete",
+    data: { _id },
+    beforeAll: requestSent,
+    onSuccess: removeQueez,
+    afterAll: requestAnswered,
+  });
 
 export const createUpdateQuestion = (oldQ, newQ, update, callback) =>
   API_Call({
@@ -86,6 +111,17 @@ export const createUpdateQuestion = (oldQ, newQ, update, callback) =>
     data: newQ,
     beforeAll: requestSent,
     onSuccess: oldQ && !update ? updateQuestion : setNewQuestion,
+    afterAll: requestAnswered,
+    callback,
+  });
+
+export const createUpdateQueez = (oldQ, newQ, update, callback) =>
+  API_Call({
+    url: "queez",
+    method: oldQ && !update ? "put" : "post",
+    data: newQ,
+    beforeAll: requestSent,
+    onSuccess: oldQ && !update ? updateQueez : setNewQueez,
     afterAll: requestAnswered,
     callback,
   });

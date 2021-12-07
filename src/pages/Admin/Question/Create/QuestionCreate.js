@@ -1,6 +1,5 @@
 import { question_validator } from "queezy-common";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { FieldArray, Formik } from "formik";
 import React, { useState } from "react";
 import { orientationTypes, questionTypes } from "queezy-common";
@@ -27,18 +26,17 @@ import "./QuestionCreate.css";
 import { removeQuestion } from "../../../../redux/reducers/questions";
 import {
   get_topics,
-  get_topics_status,
+  get_topics_loading,
 } from "../../../../redux/reducers/topic";
-import { get_all_tags, get_tags_status } from "../../../../redux/reducers/tag";
+import { get_all_tags, get_tags_loading } from "../../../../redux/reducers/tag";
 
-function QuestionCreate({ update, Q, CB }) {
+function QuestionCreate({ update, Q, navigate }) {
   const [open, setOpen] = useState(false);
   const [contextVisable, setContextVisable] = useState(
     Q?.context ? true : false
   );
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const submitQuestion = (question) => {
     let answered = false;
@@ -50,14 +48,7 @@ function QuestionCreate({ update, Q, CB }) {
       setError("");
       question.lastUpdated = new Date();
       question.version = update ? Q?.version + 1 : Q?.version || 1;
-      dispatch(
-        createUpdateQuestion(
-          Q,
-          question,
-          update,
-          CB ? CB : () => navigate("/Questions")
-        )
-      );
+      dispatch(createUpdateQuestion(Q, question, update, navigate));
       if (update) dispatch(removeQuestion({ _id: Q._id }));
     }
   };
@@ -90,7 +81,7 @@ function QuestionCreate({ update, Q, CB }) {
                   <AppSelector
                     name="topics"
                     valuesSelector={get_topics}
-                    valuesStatusSelector={get_topics_status}
+                    valuesStatusSelector={get_topics_loading}
                     multiple
                     apiCall={(topic) =>
                       addTopic(topic, (Ntopic) => push(Ntopic))
@@ -111,7 +102,7 @@ function QuestionCreate({ update, Q, CB }) {
                     <AppSelector
                       name="tags"
                       valuesSelector={get_all_tags}
-                      valuesStatusSelector={get_tags_status}
+                      valuesStatusSelector={get_tags_loading}
                       multiple
                       apiCall={(tag) =>
                         addTag(tag, values.topics, (Ntag) => push(Ntag))

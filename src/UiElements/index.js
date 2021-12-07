@@ -3,6 +3,7 @@ export { default as AppAnswerList } from "./AppAnswerList/AppAnswerList";
 export { default as Copyright } from "./Copyright/Copyright";
 export { default as AppNavBar } from "./AppNavBar/AppNavBar";
 export { default as AppSelector } from "./AppSelector/AppSelector";
+export { default as AppTable } from "./AppTable/AppTable";
 
 // forms
 export { default as AppForm } from "./forms/AppForm";

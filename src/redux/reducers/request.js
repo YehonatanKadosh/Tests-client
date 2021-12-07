@@ -3,18 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
   name: "request",
   initialState: {
-    status: false,
+    loading: false,
   },
   reducers: {
     requestSent: (state) => {
-      state.status = true;
+      state.loading = true;
     },
     requestAnswered: (state) => {
-      state.status = false;
+      state.loading = false;
     },
   },
 });
 export const { requestSent, requestAnswered } = slice.actions;
 
 export default slice.reducer;
-export const get_request_status = (state) => state.request.status;
+export const get_request_loading = (state) => state.request.loading;

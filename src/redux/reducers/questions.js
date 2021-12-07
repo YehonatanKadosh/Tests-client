@@ -2,21 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const slice = createSlice({
   name: "questions",
-  initialState: { items: [], status: false },
+  initialState: { items: [], loading: false },
   reducers: {
     setNewQuestion: (state, action) => {
       state.items.push(action.payload);
     },
     setQuestions: (state, action) => {
       state.items = action.payload;
-      state.status = false;
+      state.loading = false;
     },
     updateQuestion: (state, action) => {
-      const Q = state.items.find((Q) => Q._id === action.payload._id);
-      Object.assign(Q, action.payload);
+      let Question = state.items.find((Q) => Q._id === action.payload._id);
+      if (Question) Question = action.payload;
     },
     loadQuestions: (state, action) => {
-      state.status = true;
+      state.loading = true;
     },
     removeQuestion: (state, action) => {
       const removedQ = state.items.find((q) => q._id === action.payload._id);
@@ -38,6 +38,6 @@ export const {
 
 export default slice.reducer;
 export const get_questions = (state) => state.questions.items;
-export const get_questions_status = (state) => state.questions.status;
+export const get_questions_loading = (state) => state.questions.loading;
 export const get_question_by_id = (id) => (state) =>
   state.questions.items.filter((q) => q._id === id);

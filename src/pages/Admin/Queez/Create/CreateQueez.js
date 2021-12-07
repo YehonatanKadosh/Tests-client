@@ -9,8 +9,11 @@ import { Checkbox, Dialog } from "@mui/material";
 import { Formik } from "formik";
 import { queez_validator, languages } from "queezy-common";
 import React, { createContext, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { QuestionCreatePage } from "../../..";
+import { createUpdateQueez } from "../../../../redux/api";
+import { removeQueez } from "../../../../redux/reducers/queezs";
 import {
   AppFormChoiceList,
   AppFormError,
@@ -22,17 +25,20 @@ import QuestionSearch from "../../Question/Search/QuestionSearch";
 
 export const AccordionContext = createContext();
 
-function CreateQueez({ Q }) {
+function CreateQueez({ Q, update, navigate }) {
   const location = useLocation();
   const [expanded, setExpanded] = useState("Formalities");
   const [selectedQuestion, setSelectedQuestion] = useState(undefined);
+  const dispatch = useDispatch();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const submitQueez = (Q) => {
-    console.log(Q);
+  const submitQueez = (queez) => {
+    queez.version = update ? Q?.version + 1 : Q?.version || 1;
+    dispatch(createUpdateQueez(Q, queez, update, navigate));
+    if (update) dispatch(removeQueez({ _id: Q._id }));
   };
 
   return (
@@ -138,8 +144,14 @@ function CreateQueez({ Q }) {
             >
               <QuestionSearch
                 onAdd={() => setSelectedQuestion(<QuestionCreatePage />)}
-                Builder
+                onClick={(question) => console.log(question)}
               />
+              {/* () => {
+                      if (Builder) {
+                        if (!values[name].includes(item)) push(item._id);
+                        else remove(values[name].indexOf(item));
+                      }
+                    } */}
             </AppAccordion>
 
             <AppAccordion

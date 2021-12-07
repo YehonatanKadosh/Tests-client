@@ -26,4 +26,4 @@ export const { setLoginError, setSignupError, setLogin } = slice.actions;
 export default slice.reducer;
 export const get_login_error = (state) => state.signInUp.login_error;
 export const get_signup_error = (state) => state.signInUp.signup_error;
-export const get_login_status = (state) => state.signInUp.loading;
+export const get_login_loading = (state) => state.signInUp.loading;

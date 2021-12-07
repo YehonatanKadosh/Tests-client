@@ -1,44 +1,50 @@
 import { Link } from "react-router-dom";
-import { Formik, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import QuestionsTable from "./QuestionsTable";
-import { AppSelector } from "../../../../UiElements";
+import { AppSelector, AppTable } from "../../../../UiElements";
 import {
   addTag,
   addTopic,
+  deleteQuestion,
   getQuestionsByTopic,
   getQuestionsByTopicAndTag,
   getTags,
 } from "../../../../redux/api";
 import "./QuestionSearch.css";
-import { wipeAllQuestions } from "../../../../redux/reducers/questions";
 import {
-  get_tags_status,
+  get_questions,
+  get_questions_loading,
+  wipeAllQuestions,
+} from "../../../../redux/reducers/questions";
+import {
+  get_tags_loading,
   get_all_tags,
   wipeAllTags,
 } from "../../../../redux/reducers/tag";
 import {
   get_topics,
-  get_topics_status,
+  get_topics_loading,
 } from "../../../../redux/reducers/topic";
 
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import QuestionShow from "../Show/QuestionShow";
+import { QuestionCreatePage } from "../../..";
 
-function QuestionSearch({ onAdd, Builder }) {
+function QuestionSearch({ onClick, onAdd }) {
   const dispatch = useDispatch();
-  const FormikBuilder = useFormikContext();
+  const { values, setFieldValue } = useFormikContext();
 
-  const SearchContent = ({ values, setFieldValue }) => (
+  return (
     <div className="container-fluid questions_container p-3">
       <div className="row">
         <div className="col">
           <AppSelector
             name="topic"
             valuesSelector={get_topics}
-            valuesStatusSelector={get_topics_status}
+            valuesStatusSelector={get_topics_loading}
             apiCall={(topic) =>
               addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
             }
@@ -49,10 +55,8 @@ function QuestionSearch({ onAdd, Builder }) {
             onEmpty={() => {
               dispatch(wipeAllTags());
               dispatch(wipeAllQuestions());
-              if (Builder) {
-                setFieldValue("questions", []);
-                setFieldValue("topic", "");
-              }
+              setFieldValue("tag", "");
+              setFieldValue("questions", []);
             }}
           />
         </div>
@@ -61,7 +65,7 @@ function QuestionSearch({ onAdd, Builder }) {
             <AppSelector
               name="tag"
               valuesSelector={get_all_tags}
-              valuesStatusSelector={get_tags_status}
+              valuesStatusSelector={get_tags_loading}
               apiCall={(tag) =>
                 addTag(tag, values.topic, (Ntag) => setFieldValue("tag", Ntag))
               }
@@ -70,38 +74,56 @@ function QuestionSearch({ onAdd, Builder }) {
               }
               onEmpty={() => {
                 dispatch(getQuestionsByTopic(values.topic));
-                if (Builder) {
-                  setFieldValue("questions", []);
-                  setFieldValue("tag", "");
-                }
+                setFieldValue("questions", []);
               }}
             />
           </div>
         )}
       </div>
-      <div className="row questions_list">
-        <QuestionsTable Builder={Builder} />
-      </div>
-      <div className="row">
-        {!onAdd ? (
-          <Link to="Create">
-            <Button sx={{ width: "100%" }}>
-              <Add />
-            </Button>
-          </Link>
-        ) : (
-          <Button onClick={onAdd} sx={{ width: "100%" }}>
-            <Add />
-          </Button>
-        )}
-      </div>
+      {values.topic && (
+        <>
+          <div className="row questions_list justify-content-center">
+            <AppTable
+              onClick={onClick}
+              loadingSelector={get_questions_loading}
+              collectionSelector={get_questions}
+              onShow={(Q) => <QuestionShow forShow {...Q} />}
+              onEdit={(Q) => <QuestionCreatePage Q={Q} />}
+              onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
+              onDelete={(Q) => dispatch(deleteQuestion(Q._id))}
+              name="questions"
+              headerCells={[
+                "Question",
+                "Topics",
+                "Tags",
+                "Last Update",
+                "Version",
+              ]}
+              bodyCells={[
+                "question",
+                (q) => q.topics.map((t) => <div key={t._id}>{t.name}</div>),
+                (q) => q.tags.map((t) => <div key={t._id}>{t.name}</div>),
+                "lastUpdated",
+                "version",
+              ]}
+            />
+          </div>
+          <div className="row">
+            {!onAdd ? (
+              <Link to="Create">
+                <Button sx={{ width: "100%" }}>
+                  <Add />
+                </Button>
+              </Link>
+            ) : (
+              <Button onClick={onAdd} sx={{ width: "100%" }}>
+                <Add />
+              </Button>
+            )}
+          </div>
+        </>
+      )}
     </div>
-  );
-
-  return Builder ? (
-    SearchContent(FormikBuilder)
-  ) : (
-    <Formik initialValues={{ topic: "", tag: "" }}>{SearchContent}</Formik>
   );
 }
 

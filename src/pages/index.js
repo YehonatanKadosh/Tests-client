@@ -15,11 +15,14 @@ export { default as AdminPage } from "./Admin/Actions/ActionBar/ActionBar";
 // --Question
 //   ---Create
 export { default as QuestionCreatePage } from "./Admin/Question/Create/QuestionCreate";
-//   ---Seatch
+//   ---Search
 export { default as QuestionSearchPage } from "./Admin/Question/Search/QuestionSearch";
 //   ---Show
 export { default as QuestionShowPage } from "./Admin/Question/Show/QuestionShow";
 // --Report
 export { default as ReportPage } from "./Admin/Report/Reports";
 // --Queez
+//   ---Create
 export { default as CreateQueezPage } from "./Admin/Queez/Create/CreateQueez";
+//   ---Search
+export { default as SearchQueezPage } from "./Admin/Queez/Search/SearchQueez";
