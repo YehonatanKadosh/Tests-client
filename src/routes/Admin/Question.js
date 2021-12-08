@@ -10,8 +10,7 @@ function QuestionRouts() {
     <Routes>
       <Route
         path="Create"
-        element={<QuestionCreatePage />}
-        navigate={() => navigate("/Questions")}
+        element={<QuestionCreatePage navigate={() => navigate("/Questions")} />}
       />
       <Route
         path="*"

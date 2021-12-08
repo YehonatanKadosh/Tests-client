@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Delete, DocumentScanner, Edit, Upgrade } from "@mui/icons-material";
+import {
+  Add,
+  Delete,
+  DocumentScanner,
+  Edit,
+  Upgrade,
+} from "@mui/icons-material";
 import {
   CircularProgress,
   Dialog,
@@ -14,9 +19,9 @@ import {
 } from "@mui/material";
 
 function AppTable({
-  onClick,
-  collectionSelector,
-  loadingSelector,
+  onSelected,
+  collection,
+  loading,
   headerCells,
   bodyCells,
   onShow,
@@ -25,14 +30,13 @@ function AppTable({
   onDelete,
 }) {
   const [selectedItem, setSelectedItem] = useState(undefined);
-  const collection = useSelector(collectionSelector);
-  const collectionLoading = useSelector(loadingSelector);
 
-  return !collectionLoading ? (
+  return !loading ? (
     <TableContainer className="h-100">
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
+            {onSelected && <TableCell>Add</TableCell>}
             {headerCells.map((name, index) => (
               <TableCell key={index}>{name}</TableCell>
             ))}
@@ -45,10 +49,17 @@ function AppTable({
         <TableBody>
           {collection?.map((item) => (
             <TableRow
-              onClick={onClick ? () => onClick(item) : undefined}
+              sx={!onSelected ? { backgroundColor: "lightgreen" } : {}}
               key={item._id}
-              hover
+              hover={!onSelected ? false : true}
             >
+              {onSelected && (
+                <TableCell>
+                  <IconButton onClick={() => onSelected(item)}>
+                    <Add />
+                  </IconButton>
+                </TableCell>
+              )}
               {bodyCells.map((cell, index) => (
                 <TableCell key={index}>
                   {typeof cell === "string" ? item[cell] : cell(item)}

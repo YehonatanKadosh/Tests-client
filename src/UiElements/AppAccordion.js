@@ -2,6 +2,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  FormHelperText,
   Typography,
 } from "@mui/material";
 import React, { useContext } from "react";
@@ -22,7 +23,9 @@ function AppAccordion({ icon, title, errors, children }) {
           {icon}
           {" " + title}
         </Typography>
-        {errors}
+        {errors && (
+          <FormHelperText error={true}>Missing information</FormHelperText>
+        )}
       </AccordionSummary>
       <AccordionDetails>{children}</AccordionDetails>
     </Accordion>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useFormikContext } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AppSelector, AppTable } from "../../../../UiElements";
 import {
@@ -33,9 +33,29 @@ import { Add } from "@mui/icons-material";
 import QuestionShow from "../Show/QuestionShow";
 import { QuestionCreatePage } from "../../..";
 
-function QuestionSearch({ onClick, onAdd }) {
+function QuestionSearch({ onSelected, onAdd }) {
   const dispatch = useDispatch();
   const { values, setFieldValue } = useFormikContext();
+  const questions = useSelector(get_questions);
+  const questionsLoading = useSelector(get_questions_loading);
+
+  const filterQuestions = () =>
+    values.questions
+      ? questions.filter((q) => !values.questions.find((Q) => Q._id === q._id))
+      : questions;
+
+  const onTopicChange = (topic) => {
+    dispatch(getTags({ topics: [topic._id] }));
+    dispatch(getQuestionsByTopic(topic));
+    setFieldValue("tag", "");
+  };
+
+  const onTopicEmpty = () => {
+    dispatch(wipeAllTags());
+    dispatch(wipeAllQuestions());
+    setFieldValue("tag", "");
+    if (!onSelected) setFieldValue("questions", []);
+  };
 
   return (
     <div className="container-fluid questions_container p-3">
@@ -48,17 +68,8 @@ function QuestionSearch({ onClick, onAdd }) {
             apiCall={(topic) =>
               addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
             }
-            onChange={(topic) => {
-              dispatch(getTags({ topics: [topic._id] }));
-              dispatch(getQuestionsByTopic(topic));
-              setFieldValue("tag", "");
-            }}
-            onEmpty={() => {
-              dispatch(wipeAllTags());
-              dispatch(wipeAllQuestions());
-              setFieldValue("tag", "");
-              setFieldValue("questions", []);
-            }}
+            onChange={onTopicChange}
+            onEmpty={onTopicEmpty}
           />
         </div>
         {values.topic && (
@@ -75,7 +86,7 @@ function QuestionSearch({ onClick, onAdd }) {
               }
               onEmpty={() => {
                 dispatch(getQuestionsByTopic(values.topic));
-                setFieldValue("questions", []);
+                if (!onSelected) setFieldValue("questions", []);
               }}
             />
           </div>
@@ -85,14 +96,13 @@ function QuestionSearch({ onClick, onAdd }) {
         <>
           <div className="row questions_list justify-content-center">
             <AppTable
-              onClick={onClick}
-              loadingSelector={get_questions_loading}
-              collectionSelector={get_questions}
+              collection={filterQuestions()}
+              loading={questionsLoading}
+              onSelected={onSelected}
               onShow={(Q) => <QuestionShow forShow {...Q} />}
               onEdit={(Q) => <QuestionCreatePage Q={Q} />}
               onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
               onDelete={(Q) => dispatch(deleteQuestion(Q._id))}
-              name="questions"
               headerCells={[
                 "Question",
                 "Topics",

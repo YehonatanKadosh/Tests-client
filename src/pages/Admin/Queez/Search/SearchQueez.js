@@ -2,8 +2,9 @@ import { Add } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { Formik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { CreateQueezPage } from "../../..";
 import { addTopic, deleteQueez, getQueezByTopic } from "../../../../redux/api";
 import {
   get_queezs,
@@ -15,10 +16,12 @@ import {
   get_topics_loading,
 } from "../../../../redux/reducers/topic";
 import { AppSelector, AppTable } from "../../../../UiElements";
-import CreateQueez from "../Create/CreateQueez";
 
 function SearchQueez() {
   const dispatch = useDispatch();
+  const queezes = useSelector(get_queezs);
+  const queezesLoading = useSelector(get_queezs_loading);
+
   return (
     <Formik initialValues={{ topic: "", queez: [] }}>
       {({ setFieldValue, values }) => (
@@ -38,13 +41,12 @@ function SearchQueez() {
 
           <div className="row questions_list">
             <AppTable
-              loadingSelector={get_queezs_loading}
-              collectionSelector={get_queezs}
+              collection={queezes}
+              loading={queezesLoading}
               // onShow={(Q) => <QuestionShow forShow {...Q} />}
-              onEdit={(Q) => <CreateQueez Q={Q} />}
-              onUpdate={(Q) => <CreateQueez update Q={Q} />}
+              onEdit={(Q) => <CreateQueezPage Q={Q} />}
+              onUpdate={(Q) => <CreateQueezPage update Q={Q} />}
               onDelete={(Q) => dispatch(deleteQueez(Q._id))}
-              name="queezes"
               headerCells={["Name", "Topic", "Language", "Version"]}
               bodyCells={["name", (q) => q.topic.name, "language", "version"]}
             />

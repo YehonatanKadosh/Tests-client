@@ -8,8 +8,7 @@ function QueezRouts() {
     <Routes>
       <Route
         path="Create"
-        element={<CreateQueezPage />}
-        navigate={() => navigate("/Queezes")}
+        element={<CreateQueezPage navigate={() => navigate("/Queezes")} />}
       />
       <Route path="*" element={<SearchQueezPage />} />
     </Routes>

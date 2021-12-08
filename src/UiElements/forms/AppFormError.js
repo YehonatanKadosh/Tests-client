@@ -6,7 +6,7 @@ function AppFormError({ name }) {
   const { errors, touched } = useFormikContext();
 
   return touched[name] && errors[name] ? (
-    <FormHelperText error={true}>{errors[name]}</FormHelperText>
+    <FormHelperText error={true}>{errors[name].toString()}</FormHelperText>
   ) : (
     ""
   );

@@ -38,7 +38,7 @@ function AppSelector({
         } else {
           if (typeof newValue === "string") dispatch(apiCall(newValue));
           else {
-            setFieldValue(name, newValue || "");
+            setFieldValue(name, newValue);
             if (!newValue && onEmpty) onEmpty();
             if (newValue && onChange) onChange(newValue);
           }

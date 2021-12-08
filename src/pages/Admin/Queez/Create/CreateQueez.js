@@ -6,12 +6,12 @@ import {
   QuestionAnswer,
 } from "@mui/icons-material";
 import { Checkbox, Dialog } from "@mui/material";
-import { Formik } from "formik";
+import { FieldArray, Formik } from "formik";
 import { queez_validator, languages } from "queezy-common";
 import React, { createContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
-import { QuestionCreatePage } from "../../..";
+import { QuestionCreatePage, QuestionShowPage } from "../../..";
 import { createUpdateQueez } from "../../../../redux/api";
 import { removeQueez } from "../../../../redux/reducers/queezs";
 import {
@@ -19,6 +19,7 @@ import {
   AppFormError,
   AppFormField,
   AppFormSubmitButton,
+  AppTable,
 } from "../../../../UiElements";
 import AppAccordion from "../../../../UiElements/AppAccordion";
 import QuestionSearch from "../../Question/Search/QuestionSearch";
@@ -71,12 +72,10 @@ function CreateQueez({ Q, update, navigate }) {
           <div className="create_question_container">
             <AppAccordion
               errors={
-                <div>
-                  <AppFormError name="name" />
-                  <AppFormError name="passingScore" />
-                  <AppFormError name="language" />
-                  <AppFormError name="answersReview" />
-                </div>
+                errors.name ||
+                errors.passingScore ||
+                errors.answersReview ||
+                errors.language
               }
               icon={<Flag />}
               title="Formalities"
@@ -87,6 +86,7 @@ function CreateQueez({ Q, update, navigate }) {
                 className="w-100"
                 rows={1}
               />
+              <AppFormError name="name" />
               <div className="row text-center my-1">
                 <div className="col">
                   <AppFormField
@@ -96,7 +96,9 @@ function CreateQueez({ Q, update, navigate }) {
                     type="number"
                     rows={1}
                   />
+                  <AppFormError name="passingScore" />
                 </div>
+
                 <div className="col">
                   <AppFormChoiceList
                     title="Choose Language"
@@ -104,7 +106,9 @@ function CreateQueez({ Q, update, navigate }) {
                     className="col"
                     Enum={languages}
                   />
+                  <AppFormError name="language" />
                 </div>
+
                 <div className="col">
                   {!values.answersReview && "Dont"} Show Correct Answers After
                   Submission
@@ -114,12 +118,13 @@ function CreateQueez({ Q, update, navigate }) {
                       setFieldValue("answersReview", !values.answersReview)
                     }
                   />
+                  <AppFormError name="answersReview" />
                 </div>
               </div>
             </AppAccordion>
 
             <AppAccordion
-              errors={<AppFormError name="introduction" />}
+              errors={errors.introduction}
               icon={<PlayArrow />}
               title="Introduction"
             >
@@ -130,37 +135,79 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={4}
                 multiline
               />
+              <AppFormError name="introduction" />
             </AppAccordion>
 
             <AppAccordion
-              errors={
-                <div>
-                  <AppFormError name="topic" />
-                  <AppFormError name="questions" />
-                </div>
-              }
+              errors={errors.topic || errors.questions}
               icon={<QuestionAnswer />}
               title="Questions"
             >
-              <QuestionSearch
-                onAdd={() => setSelectedQuestion(<QuestionCreatePage />)}
-                onClick={(question) => console.log(question)}
-              />
-              {/* () => {
-                      if (Builder) {
-                        if (!values[name].includes(item)) push(item._id);
-                        else remove(values[name].indexOf(item));
+              <FieldArray name="questions">
+                {({ push, remove }) => (
+                  <>
+                    <QuestionSearch
+                      onAdd={() =>
+                        setSelectedQuestion(
+                          <QuestionCreatePage
+                            navigate={() => setSelectedQuestion(undefined)}
+                          />
+                        )
                       }
-                    } */}
+                      onSelected={(question) => {
+                        const Q = values.questions.find(
+                          (q) => q._id === question._id
+                        );
+                        if (!Q) push(question);
+                      }}
+                    />
+                    {values.questions.length ? (
+                      <>
+                        <h6>Selected Questions</h6>
+                        <AppTable
+                          collection={values.questions}
+                          onShow={(Q) => <QuestionShowPage forShow {...Q} />}
+                          onEdit={(Q) => <QuestionCreatePage Q={Q} />}
+                          onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
+                          onDelete={(question) => {
+                            const Q = values.questions.find(
+                              (q) => q._id === question._id
+                            );
+                            if (Q) remove(values.questions.indexOf(Q));
+                          }}
+                          headerCells={[
+                            "Question",
+                            "Topics",
+                            "Tags",
+                            "Last Update",
+                            "Version",
+                          ]}
+                          bodyCells={[
+                            "question",
+                            (q) =>
+                              q.topics.map((t) => (
+                                <div key={t._id}>{t.name}</div>
+                              )),
+                            (q) =>
+                              q.tags.map((t) => (
+                                <div key={t._id}>{t.name}</div>
+                              )),
+                            "lastUpdated",
+                            "version",
+                          ]}
+                        />
+                      </>
+                    ) : (
+                      ""
+                    )}
+                    <AppFormError name="questions" />
+                  </>
+                )}
+              </FieldArray>
             </AppAccordion>
 
             <AppAccordion
-              errors={
-                <div>
-                  <AppFormError name="successMessage" />
-                  <AppFormError name="failMessage" />
-                </div>
-              }
+              errors={errors.successMessage || errors.failMessage}
               icon={<DoneAll />}
               title="Summary"
             >
@@ -171,6 +218,7 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={4}
                 multiline
               />
+              <AppFormError name="successMessage" />
 
               <AppFormField
                 name="failMessage"
@@ -179,17 +227,16 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={4}
                 multiline
               />
+              <AppFormError name="failMessage" />
             </AppAccordion>
 
             <AppAccordion
               errors={
-                <div>
-                  <AppFormError name="queezenerEmail" />
-                  <AppFormError name="successEmailSubject" />
-                  <AppFormError name="successEmailMessage" />
-                  <AppFormError name="failEmailSubject" />
-                  <AppFormError name="failEmailMessage" />
-                </div>
+                errors.queezenerEmail ||
+                errors.successEmailSubject ||
+                errors.successEmailMessage ||
+                errors.failEmailSubject ||
+                errors.failEmailMessage
               }
               icon={<Email />}
               title="Email"
@@ -201,12 +248,16 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={1}
                 type="email"
               />
+              <AppFormError name="queezenerEmail" />
+
               <AppFormField
                 name="successEmailSubject"
                 label="Success Email Subject"
                 className="w-100 mt-3"
                 rows={1}
               />
+              <AppFormError name="successEmailSubject" />
+
               <AppFormField
                 name="successEmailMessage"
                 label="Success Email Message"
@@ -214,12 +265,16 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={4}
                 multiline
               />
+              <AppFormError name="successEmailMessage" />
+
               <AppFormField
                 name="failEmailSubject"
                 label="Fail Email Subject"
                 className="w-100 mt-3"
                 rows={1}
               />
+              <AppFormError name="failEmailSubject" />
+
               <AppFormField
                 name="failEmailMessage"
                 label="Fail Email Message"
@@ -227,6 +282,7 @@ function CreateQueez({ Q, update, navigate }) {
                 rows={4}
                 multiline
               />
+              <AppFormError name="failEmailMessage" />
             </AppAccordion>
 
             <div className="row px-2">
