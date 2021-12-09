@@ -91,48 +91,48 @@ function QuestionSearch({ onSelected, onAdd }) {
           </div>
         )}
       </div>
-      {values.topic && (
-        <>
-          <div className="row questions_list justify-content-center">
-            <AppTable
-              collection={filterQuestions()}
-              loading={questionsLoading}
-              onSelected={onSelected}
-              onShow={(Q) => <QuestionShowPage forShow {...Q} />}
-              onEdit={(Q) => <QuestionCreatePage Q={Q} />}
-              onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
-              onDelete={(Q) => dispatch(deleteQuestion(Q._id))}
-              headerCells={[
-                "Question",
-                "Topics",
-                "Tags",
-                "Last Update",
-                "Version",
-              ]}
-              bodyCells={[
-                "question",
-                (q) => q.topics.map((t) => <div key={t._id}>{t.name}</div>),
-                (q) => q.tags.map((t) => <div key={t._id}>{t.name}</div>),
-                "lastUpdated",
-                "version",
-              ]}
-            />
-          </div>
-          <div className="row">
-            {!onAdd ? (
-              <Link to="Create">
-                <Button sx={{ width: "100%" }}>
-                  <Add />
-                </Button>
-              </Link>
-            ) : (
-              <Button onClick={onAdd} sx={{ width: "100%" }}>
-                <Add />
-              </Button>
-            )}
-          </div>
-        </>
+      {questions.length ? (
+        <div className="row questions_list justify-content-center">
+          <AppTable
+            collection={filterQuestions()}
+            loading={questionsLoading}
+            onSelected={onSelected}
+            onShow={(Q) => <QuestionShowPage forShow {...Q} />}
+            onEdit={(Q) => <QuestionCreatePage Q={Q} />}
+            onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
+            onDelete={(Q) => dispatch(deleteQuestion(Q._id))}
+            headerCells={[
+              "Question",
+              "Topics",
+              "Tags",
+              "Last Update",
+              "Version",
+            ]}
+            bodyCells={[
+              "question",
+              (q) => q.topics.map((t) => <div key={t._id}>{t.name}</div>),
+              (q) => q.tags.map((t) => <div key={t._id}>{t.name}</div>),
+              "lastUpdated",
+              "version",
+            ]}
+          />
+        </div>
+      ) : (
+        <div className="row questions_list"></div>
       )}
+      <div className="row">
+        {!onAdd ? (
+          <Link to="Create">
+            <Button variant="contained" sx={{ width: "100%" }}>
+              <Add />
+            </Button>
+          </Link>
+        ) : (
+          <Button variant="contained" onClick={onAdd} sx={{ width: "100%" }}>
+            <Add />
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

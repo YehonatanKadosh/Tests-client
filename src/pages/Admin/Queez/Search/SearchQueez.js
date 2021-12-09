@@ -43,46 +43,54 @@ function SearchQueez() {
             />
           </div>
 
-          <div className="row questions_list">
-            <AppTable
-              collection={queezes}
-              loading={queezesLoading}
-              onShow={(Q) => {
-                dispatch(setQueez(Q));
-                return <ShowQueez forShow />;
-              }}
-              onEdit={(Q) => <CreateQueezPage Q={Q} />}
-              onUpdate={(Q) => <CreateQueezPage update Q={Q} />}
-              onDelete={(Q) => dispatch(deleteQueez(Q._id))}
-              headerCells={["Name", "Topic", "Language", "Link"]}
-              bodyCells={[
-                "name",
-                (q) => q.topic.name,
-                "language",
-                (q) => (
-                  <CopyToClipboard
-                    onCopy={() => setSnackBarOpen(`'${q.name}' link copied`)}
-                    text={`${process.env.REACT_APP_Client_Address}/${q._id}`}
-                  >
-                    <IconButton>
-                      <ContentCopy />
-                    </IconButton>
-                  </CopyToClipboard>
-                ),
-              ]}
-            />
-          </div>
+          {queezes.length ? (
+            <>
+              <div className="row questions_list">
+                <AppTable
+                  collection={queezes}
+                  loading={queezesLoading}
+                  onShow={(Q) => {
+                    dispatch(setQueez(Q));
+                    return <ShowQueez forShow />;
+                  }}
+                  onEdit={(Q) => <CreateQueezPage Q={Q} />}
+                  onUpdate={(Q) => <CreateQueezPage update Q={Q} />}
+                  onDelete={(Q) => dispatch(deleteQueez(Q._id))}
+                  headerCells={["Name", "Topic", "Language", "Link"]}
+                  bodyCells={[
+                    "name",
+                    (q) => q.topic.name,
+                    "language",
+                    (q) => (
+                      <CopyToClipboard
+                        onCopy={() =>
+                          setSnackBarOpen(`'${q.name}' link copied`)
+                        }
+                        text={`${process.env.REACT_APP_Client_Address}/${q._id}`}
+                      >
+                        <IconButton>
+                          <ContentCopy />
+                        </IconButton>
+                      </CopyToClipboard>
+                    ),
+                  ]}
+                />
+              </div>
 
-          <Snackbar
-            open={snackBarOpen ? true : false}
-            autoHideDuration={3000}
-            onClose={() => setSnackBarOpen(undefined)}
-            message={snackBarOpen}
-          />
+              <Snackbar
+                open={snackBarOpen ? true : false}
+                autoHideDuration={3000}
+                onClose={() => setSnackBarOpen(undefined)}
+                message={snackBarOpen}
+              />
+            </>
+          ) : (
+            <div className="row questions_list"></div>
+          )}
 
           <div className="row">
             <Link to="Create">
-              <Button sx={{ width: "100%" }}>
+              <Button variant="contained" sx={{ width: "100%" }}>
                 <Add />
               </Button>
             </Link>
