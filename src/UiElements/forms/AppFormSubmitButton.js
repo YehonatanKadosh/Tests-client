@@ -11,7 +11,7 @@ function AppFormSubmitButton({ title, className }) {
       type="submit"
       onClick={handleSubmit}
       variant="contained"
-      sx={{ mt: 3, mb: 2, alignSelf: "center" }}
+      sx={{ mt: 3, mb: 1, alignSelf: "center" }}
       disabled={!(dirty && isValid) && isSubmitting}
     >
       {title}

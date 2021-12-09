@@ -20,6 +20,7 @@ import {
 
 function AppTable({
   onSelected,
+  selections,
   collection,
   loading,
   headerCells,
@@ -49,9 +50,9 @@ function AppTable({
         <TableBody>
           {collection?.map((item) => (
             <TableRow
-              sx={!onSelected ? { backgroundColor: "lightgreen" } : {}}
+              sx={selections ? { backgroundColor: "lightgreen" } : {}}
               key={item._id}
-              hover={!onSelected ? false : true}
+              hover={selections ? false : true}
             >
               {onSelected && (
                 <TableCell>

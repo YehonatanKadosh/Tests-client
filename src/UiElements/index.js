@@ -1,9 +1,10 @@
-export { default as AppAnswerList } from "./AppAnswerList/AppAnswerList";
 // export { default as AppTable } from "./AppTable/AppTable";
 export { default as Copyright } from "./Copyright/Copyright";
 export { default as AppNavBar } from "./AppNavBar/AppNavBar";
 export { default as AppSelector } from "./AppSelector/AppSelector";
 export { default as AppTable } from "./AppTable/AppTable";
+export { default as AppSlider } from "./AppSlider/AppSlider";
+export { default as AppArrow } from "./AppArrow/Arrow";
 
 // forms
 export { default as AppForm } from "./forms/AppForm";

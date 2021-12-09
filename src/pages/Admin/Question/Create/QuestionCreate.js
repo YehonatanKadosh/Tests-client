@@ -18,7 +18,6 @@ import {
   createUpdateQuestion,
   getTags,
 } from "../../../../redux/api";
-import QuestionShow from "../Show/QuestionShow";
 
 import { Button, Dialog, FormHelperText } from "@mui/material";
 
@@ -29,6 +28,7 @@ import {
   get_topics_loading,
 } from "../../../../redux/reducers/topic";
 import { get_all_tags, get_tags_loading } from "../../../../redux/reducers/tag";
+import { QuestionShowPage } from "../../..";
 
 function QuestionCreate({ update, Q, navigate }) {
   const [open, setOpen] = useState(false);
@@ -191,9 +191,11 @@ function QuestionCreate({ update, Q, navigate }) {
             <AppFormSubmitButton title="Save Question" />
           </div>
           <Button onClick={() => setOpen(true)}>Preview</Button>
-          <Dialog onClose={() => setOpen(false)} open={open}>
-            <QuestionShow forShow {...values} />
-          </Dialog>
+          {open && (
+            <Dialog onClose={() => setOpen(false)} open={open}>
+              <QuestionShowPage forShow {...values} />
+            </Dialog>
+          )}
         </div>
       )}
     </Formik>

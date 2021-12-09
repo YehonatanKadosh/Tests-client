@@ -5,7 +5,7 @@ import {
   PlayArrow,
   QuestionAnswer,
 } from "@mui/icons-material";
-import { Checkbox, Dialog } from "@mui/material";
+import { Button, Checkbox, Dialog } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import { queez_validator, languages } from "queezy-common";
 import React, { createContext, useState } from "react";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import { QuestionCreatePage, QuestionShowPage } from "../../..";
 import { createUpdateQueez } from "../../../../redux/api";
+import { setQueez } from "../../../../redux/reducers/queez";
 import { removeQueez } from "../../../../redux/reducers/queezs";
 import {
   AppFormChoiceList,
@@ -23,13 +24,14 @@ import {
 } from "../../../../UiElements";
 import AppAccordion from "../../../../UiElements/AppAccordion";
 import QuestionSearch from "../../Question/Search/QuestionSearch";
+import ShowQueez from "../Show/ShowQueez";
 
 export const AccordionContext = createContext();
 
 function CreateQueez({ Q, update, navigate }) {
   const location = useLocation();
   const [expanded, setExpanded] = useState("Formalities");
-  const [selectedQuestion, setSelectedQuestion] = useState(undefined);
+  const [dialogContent, setDialogContent] = useState(undefined);
   const dispatch = useDispatch();
 
   const handleChange = (panel) => (event, newExpanded) => {
@@ -122,7 +124,6 @@ function CreateQueez({ Q, update, navigate }) {
                 </div>
               </div>
             </AppAccordion>
-
             <AppAccordion
               errors={errors.introduction}
               icon={<PlayArrow />}
@@ -137,7 +138,6 @@ function CreateQueez({ Q, update, navigate }) {
               />
               <AppFormError name="introduction" />
             </AppAccordion>
-
             <AppAccordion
               errors={errors.topic || errors.questions}
               icon={<QuestionAnswer />}
@@ -148,9 +148,9 @@ function CreateQueez({ Q, update, navigate }) {
                   <>
                     <QuestionSearch
                       onAdd={() =>
-                        setSelectedQuestion(
+                        setDialogContent(
                           <QuestionCreatePage
-                            navigate={() => setSelectedQuestion(undefined)}
+                            navigate={() => setDialogContent(undefined)}
                           />
                         )
                       }
@@ -175,6 +175,7 @@ function CreateQueez({ Q, update, navigate }) {
                             );
                             if (Q) remove(values.questions.indexOf(Q));
                           }}
+                          selections
                           headerCells={[
                             "Question",
                             "Topics",
@@ -205,7 +206,6 @@ function CreateQueez({ Q, update, navigate }) {
                 )}
               </FieldArray>
             </AppAccordion>
-
             <AppAccordion
               errors={errors.successMessage || errors.failMessage}
               icon={<DoneAll />}
@@ -229,7 +229,6 @@ function CreateQueez({ Q, update, navigate }) {
               />
               <AppFormError name="failMessage" />
             </AppAccordion>
-
             <AppAccordion
               errors={
                 errors.queezenerEmail ||
@@ -284,17 +283,26 @@ function CreateQueez({ Q, update, navigate }) {
               />
               <AppFormError name="failEmailMessage" />
             </AppAccordion>
-
-            <div className="row px-2">
+            <div className="row">
               <AppFormSubmitButton title="Save Queez" />
+              <Button
+                onClick={() => {
+                  dispatch(setQueez(Q || values));
+                  setDialogContent(<ShowQueez forShow />);
+                }}
+                variant="contained"
+              >
+                Preview
+              </Button>
             </div>
           </div>
-          {selectedQuestion && (
+
+          {dialogContent && (
             <Dialog
-              onClose={() => setSelectedQuestion(undefined)}
-              open={selectedQuestion ? true : false}
+              onClose={() => setDialogContent(undefined)}
+              open={dialogContent ? true : false}
             >
-              {selectedQuestion}
+              {dialogContent}
             </Dialog>
           )}
         </AccordionContext.Provider>

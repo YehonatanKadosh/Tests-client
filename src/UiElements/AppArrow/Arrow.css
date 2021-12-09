@@ -1,0 +1,9 @@
+.arrow-left {
+  position: absolute;
+  left: 0;
+}
+
+.arrow-right {
+  position: absolute;
+  right: 0;
+}

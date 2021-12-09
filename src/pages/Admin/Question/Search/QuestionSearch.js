@@ -30,8 +30,7 @@ import {
 
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import QuestionShow from "../Show/QuestionShow";
-import { QuestionCreatePage } from "../../..";
+import { QuestionCreatePage, QuestionShowPage } from "../../..";
 
 function QuestionSearch({ onSelected, onAdd }) {
   const dispatch = useDispatch();
@@ -99,7 +98,7 @@ function QuestionSearch({ onSelected, onAdd }) {
               collection={filterQuestions()}
               loading={questionsLoading}
               onSelected={onSelected}
-              onShow={(Q) => <QuestionShow forShow {...Q} />}
+              onShow={(Q) => <QuestionShowPage forShow {...Q} />}
               onEdit={(Q) => <QuestionCreatePage Q={Q} />}
               onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
               onDelete={(Q) => dispatch(deleteQuestion(Q._id))}

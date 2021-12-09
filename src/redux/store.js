@@ -8,6 +8,7 @@ import topics from "./reducers/topic";
 import tags from "./reducers/tag";
 import request from "./reducers/request";
 import queezs from "./reducers/queezs";
+import queez from "./reducers/queez";
 
 const appReducer = combineReducers({
   user,
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   tags,
   request,
   queezs,
+  queez,
 });
 
 const rootReducer = (state, action) => {
