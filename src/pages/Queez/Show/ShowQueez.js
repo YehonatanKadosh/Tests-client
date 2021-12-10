@@ -2,13 +2,13 @@ import { LinearProgress, Typography, Button } from "@mui/material";
 import { typography } from "@mui/system";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { QuestionShowPage } from "../../..";
+import { QuestionShowPage } from "../..";
 import {
   changeAnswer,
   get_answered_questions_amount,
   get_queez,
-} from "../../../../redux/reducers/queez";
-import { AppSlider } from "../../../../UiElements";
+} from "../../../redux/reducers/queez";
+import { AppSlider } from "../../../UiElements";
 import IntroductionPage from "./IntroductionPage";
 import "./queez.css";
 import SummaryPage from "./SummaryPage";
@@ -43,7 +43,7 @@ function ShowQueez({ forShow }) {
                   />
                 ))
               : []),
-            forShow ? <div>This exam is for show only</div> : <SummaryPage />,
+            <SummaryPage forShow={forShow} />,
           ]}
         />
       </div>

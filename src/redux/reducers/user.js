@@ -20,4 +20,5 @@ export default slice.reducer;
 export const get_user_name = (state) =>
   `${state.user.firstName} ${state.user.lastName}`;
 export const get_user_role = (state) => state.user.role;
+export const get_user = (state) => state.user;
 export const get_user_logged = (state) => state.user.logged;

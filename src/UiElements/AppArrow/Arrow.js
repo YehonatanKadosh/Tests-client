@@ -6,7 +6,9 @@ import "./Arrow.css";
 function Arrow({ direction, clickFunction }) {
   return (
     <IconButton
-      className={direction === "left" ? "arrow-left" : "arrow-right"}
+      className={
+        "arrow" + (direction === "left" ? " arrow-left" : " arrow-right")
+      }
       onClick={clickFunction}
     >
       {direction === "left" ? (

@@ -1,9 +1,13 @@
-.arrow-left {
+.arrow {
+  height: fit-content;
+  align-self: center;
   position: absolute;
+}
+
+.arrow-left {
   left: 0;
 }
 
 .arrow-right {
-  position: absolute;
   right: 0;
 }

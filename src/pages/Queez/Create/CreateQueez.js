@@ -11,19 +11,22 @@ import { queez_validator, languages } from "queezy-common";
 import React, { createContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
-import { QuestionCreatePage, QuestionShowPage } from "../../..";
-import { createUpdateQueez } from "../../../../redux/api";
-import { setQueez } from "../../../../redux/reducers/queez";
-import { removeQueez } from "../../../../redux/reducers/queezs";
+import {
+  QuestionCreatePage,
+  QuestionShowPage,
+  QuestionSearchPage,
+} from "../..";
+import { createUpdateQueez } from "../../../redux/api";
+import { setQueez } from "../../../redux/reducers/queez";
+import { removeQueez } from "../../../redux/reducers/queezs";
 import {
   AppFormChoiceList,
   AppFormError,
   AppFormField,
   AppFormSubmitButton,
   AppTable,
-} from "../../../../UiElements";
-import AppAccordion from "../../../../UiElements/AppAccordion";
-import QuestionSearch from "../../Question/Search/QuestionSearch";
+} from "../../../UiElements";
+import AppAccordion from "../../../UiElements/AppAccordion";
 import ShowQueez from "../Show/ShowQueez";
 
 export const AccordionContext = createContext();
@@ -153,7 +156,7 @@ function CreateQueez({ Q, update, navigate }) {
               <FieldArray name="questions">
                 {({ push, remove }) => (
                   <>
-                    <QuestionSearch
+                    <QuestionSearchPage
                       onAdd={() =>
                         setDialogContent(
                           <QuestionCreatePage

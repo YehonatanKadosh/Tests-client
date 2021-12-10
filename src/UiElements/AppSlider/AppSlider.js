@@ -25,28 +25,21 @@ function AppSlider({ items }) {
 
   return (
     <div className="app-slider">
-      <div className="row queez-slider-main">
-        <div className="col">
-          {index > 0 && (
-            <Arrow
-              direction="left"
-              clickFunction={() => onArrowClick("left")}
-            />
-          )}
-        </div>
-        <div className="col slider-main">
+      <div className="queez-slider-main">
+        {index > 0 && (
+          <Arrow direction="left" clickFunction={() => onArrowClick("left")} />
+        )}
+        <div className="slider-main">
           <Slide in={slideIn} direction={slideDirection}>
             <div>{items[index]}</div>
           </Slide>
         </div>
-        <div className="col">
-          {index < numSlides - 1 && (
-            <Arrow
-              direction="right"
-              clickFunction={() => onArrowClick("right")}
-            />
-          )}
-        </div>
+        {index < numSlides - 1 && (
+          <Arrow
+            direction="right"
+            clickFunction={() => onArrowClick("right")}
+          />
+        )}
       </div>
       <div className="queez-stepper">
         <Stepper

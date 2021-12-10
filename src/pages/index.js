@@ -23,6 +23,6 @@ export { default as QuestionShowPage } from "./Admin/Question/Show/QuestionShow"
 export { default as ReportPage } from "./Admin/Report/Reports";
 // --Queez
 //   ---Create
-export { default as CreateQueezPage } from "./Admin/Queez/Create/CreateQueez";
+export { default as CreateQueezPage } from "./Queez/Create/CreateQueez";
 //   ---Search
-export { default as SearchQueezPage } from "./Admin/Queez/Search/SearchQueez";
+export { default as SearchQueezPage } from "./Queez/Search/SearchQueez";

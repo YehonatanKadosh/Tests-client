@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 import {
   get_answered_questions_amount,
   get_queez,
-} from "../../../../redux/reducers/queez";
+} from "../../../redux/reducers/queez";
 
-function SummaryPage() {
+function SummaryPage({ forShow }) {
   const { questions, passingScore } = useSelector(get_queez);
   const answeredQuestions = useSelector(get_answered_questions_amount);
 
@@ -28,8 +28,11 @@ function SummaryPage() {
         <SportsScore />
         Passing Score: {passingScore}
       </Typography>
-
-      <Button variant="contained">Submit</Button>
+      {forShow ? (
+        <Typography>This exam is for show only</Typography>
+      ) : (
+        <Button variant="contained">Submit</Button>
+      )}
     </div>
   );
 }

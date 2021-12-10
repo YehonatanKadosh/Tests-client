@@ -4,19 +4,16 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CreateQueezPage } from "../../..";
-import { addTopic, deleteQueez, getQueezByTopic } from "../../../../redux/api";
-import { setQueez } from "../../../../redux/reducers/queez";
+import { CreateQueezPage } from "../..";
+import { addTopic, deleteQueez, getQueezByTopic } from "../../../redux/api";
+import { setQueez } from "../../../redux/reducers/queez";
 import {
   get_queezs,
   get_queezs_loading,
   wipeAllQueezs,
-} from "../../../../redux/reducers/queezs";
-import {
-  get_topics,
-  get_topics_loading,
-} from "../../../../redux/reducers/topic";
-import { AppSelector, AppTable } from "../../../../UiElements";
+} from "../../../redux/reducers/queezs";
+import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
+import { AppSelector, AppTable } from "../../../UiElements";
 import ShowQueez from "../Show/ShowQueez";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 

@@ -9,6 +9,7 @@
 
 .queez-slider-main {
   flex: 1;
+  display: flex;
 }
 
 .navigation-container {
@@ -28,4 +29,5 @@
 .slider-main {
   flex: 10;
   overflow: hidden;
+  align-self: center;
 }
