@@ -2,6 +2,7 @@ import { Slide, Step, StepButton, Stepper } from "@mui/material";
 import React, { useState } from "react";
 import "./AppSlider.css";
 import Arrow from "../AppArrow/Arrow";
+import { FirstPage, LastPage } from "@mui/icons-material";
 
 function AppSlider({ items }) {
   const [index, setIndex] = useState(0);
@@ -26,19 +27,23 @@ function AppSlider({ items }) {
   return (
     <div className="app-slider">
       <div className="quiz-slider-main">
-        {index > 0 && (
+        {index > 0 ? (
           <Arrow direction="left" clickFunction={() => onArrowClick("left")} />
+        ) : (
+          <FirstPage className="align-self-center" />
         )}
         <div className="slider-main">
           <Slide in={slideIn} direction={slideDirection}>
             <div>{items[index]}</div>
           </Slide>
         </div>
-        {index < numSlides - 1 && (
+        {index < numSlides - 1 ? (
           <Arrow
             direction="right"
             clickFunction={() => onArrowClick("right")}
           />
+        ) : (
+          <LastPage className="align-self-center" />
         )}
       </div>
       <div className="quiz-stepper">

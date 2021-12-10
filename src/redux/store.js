@@ -9,6 +9,7 @@ import tags from "./reducers/tag";
 import request from "./reducers/request";
 import quizs from "./reducers/quizs";
 import quiz from "./reducers/quiz";
+import quizRecord from "./reducers/quizRecord";
 
 const appReducer = combineReducers({
   user,
@@ -19,6 +20,7 @@ const appReducer = combineReducers({
   request,
   quizs,
   quiz,
+  quizRecord,
 });
 
 const rootReducer = (state, action) => {

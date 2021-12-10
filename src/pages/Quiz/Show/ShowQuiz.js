@@ -7,15 +7,17 @@ import {
   get_answered_questions_amount,
   get_quiz,
 } from "../../../redux/reducers/quiz";
+import { get_quizRecord } from "../../../redux/reducers/quizRecord";
 import { AppSlider } from "../../../UiElements";
 import IntroductionPage from "./IntroductionPage";
 import "./quiz.css";
 import SummaryPage from "./SummaryPage";
 
 function ShowQuiz({ forShow }) {
-  const { questions, name } = useSelector(get_quiz);
+  const { questions, name, answersReview } = useSelector(get_quiz);
   const dispatch = useDispatch();
   const answeredQuestions = useSelector(get_answered_questions_amount);
+  const { quiz } = useSelector(get_quizRecord);
 
   return questions || name ? (
     <div className="quiz-show-container">
@@ -30,20 +32,28 @@ function ShowQuiz({ forShow }) {
       )}
       <div className="quiz-slider">
         <AppSlider
-          items={[
-            <IntroductionPage />,
-            ...(questions
-              ? questions.map((question) => (
-                  <QuestionShowPage
-                    onAnswersChange={(payload) =>
-                      dispatch(changeAnswer(payload))
-                    }
-                    {...question}
-                  />
-                ))
-              : []),
-            <SummaryPage forShow={forShow} />,
-          ]}
+          items={
+            answersReview
+              ? [
+                  <IntroductionPage />,
+                  ...(questions
+                    ? questions.map((question, index) => (
+                        <QuestionShowPage
+                          key={index}
+                          onAnswersChange={(payload) =>
+                            dispatch(changeAnswer(payload))
+                          }
+                          rightAnswers={
+                            quiz ? quiz.questions[index].answers : undefined
+                          }
+                          {...question}
+                        />
+                      ))
+                    : []),
+                  <SummaryPage forShow={forShow} />,
+                ]
+              : [<SummaryPage />]
+          }
         />
       </div>
       {questions && answeredQuestions ? (

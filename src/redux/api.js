@@ -19,6 +19,7 @@ import { setLogin, setLoginError, setSignupError } from "./reducers/signInUp";
 import { loadTags, newTag, setTags } from "./reducers/tag";
 import { loadTopics, newTopic, setTopics } from "./reducers/topic";
 import { setUser } from "./reducers/user";
+import { setQuizRecord } from "./reducers/quizRecord";
 
 export const addTopic = (name, callback) =>
   API_Call({
@@ -162,5 +163,15 @@ export const tryGettingQuiz = (id) =>
     params: { id },
     beforeAll: requestSent,
     onSuccess: setQuiz,
+    afterAll: requestAnswered,
+  });
+
+export const submitQuiz = (data) =>
+  API_Call({
+    url: "quizRecord",
+    method: "post",
+    data,
+    beforeAll: requestSent,
+    onSuccess: setQuizRecord,
     afterAll: requestAnswered,
   });

@@ -15,6 +15,7 @@ function QuestionShow({
   type,
   orientation,
   answers,
+  rightAnswers,
   question,
   context,
   onAnswersChange,
@@ -28,15 +29,23 @@ function QuestionShow({
         <React.Fragment key={index}>
           <FormControlLabel
             className="justify-content-between"
+            sx={
+              rightAnswers
+                ? { color: rightAnswers[index].isRight ? "green" : "red" }
+                : {}
+            }
             control={
               <Checkbox
                 checked={answer.isRight}
-                onChange={() =>
-                  onAnswersChange({
-                    questionId: _id,
-                    answerId: answer._id || index,
-                    type,
-                  })
+                onChange={
+                  !rightAnswers
+                    ? () =>
+                        onAnswersChange({
+                          questionId: _id,
+                          answerId: answer._id || index,
+                          type,
+                        })
+                    : undefined
                 }
               />
             }
@@ -56,16 +65,24 @@ function QuestionShow({
       {answers.map((answer, index) => (
         <React.Fragment key={index}>
           <FormControlLabel
+            sx={
+              rightAnswers
+                ? { color: rightAnswers[index].isRight ? "green" : "red" }
+                : {}
+            }
             value={index}
             control={
               <Radio
                 checked={answer.isRight}
-                onChange={() =>
-                  onAnswersChange({
-                    questionId: _id,
-                    answerId: answer._id || index,
-                    type,
-                  })
+                onChange={
+                  !rightAnswers
+                    ? () =>
+                        onAnswersChange({
+                          questionId: _id,
+                          answerId: answer._id || index,
+                          type,
+                        })
+                    : undefined
                 }
               />
             }
