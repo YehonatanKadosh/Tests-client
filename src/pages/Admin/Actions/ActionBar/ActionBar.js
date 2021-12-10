@@ -7,7 +7,7 @@ function ActionBar() {
   return (
     <div className="admin_page_actions row">
       <div className="row">
-        <ActionButton name="Qeezes" rout="Queezes" icon={<MenuBook />} />
+        <ActionButton name="Quizes" rout="Quizes" icon={<MenuBook />} />
         <ActionButton
           name="Questions"
           rout="Questions"

@@ -6,7 +6,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { orientationTypes, questionTypes } from "queezy-common";
+import { orientationTypes, questionTypes } from "quizy-yk-common";
 import React from "react";
 import "./QuestionShow.css";
 

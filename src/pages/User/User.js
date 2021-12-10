@@ -2,20 +2,21 @@ import { CircularProgress, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
-import { tryGettingQueez } from "../../redux/api";
-import { get_queez } from "../../redux/reducers/queez";
+import { tryGettingQuiz } from "../../redux/api";
+import { get_quiz } from "../../redux/reducers/quiz";
 import { get_request_loading } from "../../redux/reducers/request";
 import { AppNavBar } from "../../UiElements";
-import ShowQueez from "../Queez/Show/ShowQueez";
+import ShowQuiz from "../Quiz/Show/ShowQuiz";
+import "./User.css";
 
 function User() {
   const dispatch = useDispatch();
   const location = useLocation();
   const loading = useSelector(get_request_loading);
-  const { _id } = useSelector(get_queez);
+  const { _id } = useSelector(get_quiz);
 
   useEffect(() => {
-    dispatch(tryGettingQueez(location.pathname.substr(1)));
+    dispatch(tryGettingQuiz(location.pathname.substr(1)));
   }, [dispatch, location.pathname]);
 
   return (
@@ -23,12 +24,12 @@ function User() {
       <AppNavBar />
       {!loading ? (
         _id ? (
-          <ShowQueez />
+          <ShowQuiz />
         ) : (
-          <Typography>Queez not found</Typography>
+          <Typography className="quiz-not-found">Quiz not found</Typography>
         )
       ) : (
-        <CircularProgress />
+        <CircularProgress variant="indeterminate" />
       )}
     </>
   );

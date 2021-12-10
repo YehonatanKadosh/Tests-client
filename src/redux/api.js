@@ -1,12 +1,12 @@
 import { API_Call } from "./middlewares/api";
-import { setQueez } from "./reducers/queez";
+import { setQuiz } from "./reducers/quiz";
 import {
-  loadQueezs,
-  removeQueez,
-  setNewQueez,
-  setQueezs,
-  updateQueez,
-} from "./reducers/queezs";
+  loadquizs,
+  removeQuiz,
+  setNewquiz,
+  setQuizs,
+  updatequiz,
+} from "./reducers/quizs";
 import {
   loadQuestions,
   removeQuestion,
@@ -67,13 +67,13 @@ export const getQuestionsByTopic = (topic) =>
     onSuccess: setQuestions,
   });
 
-export const getQueezByTopic = (topic) =>
+export const getQuizByTopic = (topic) =>
   API_Call({
-    url: "queez/byTopic",
+    url: "quiz/byTopic",
     method: "get",
     params: { topic: topic._id },
-    beforeAll: loadQueezs,
-    onSuccess: setQueezs,
+    beforeAll: loadquizs,
+    onSuccess: setQuizs,
   });
 
 export const getQuestionsByTopicAndTag = (topic, tag) =>
@@ -95,13 +95,13 @@ export const deleteQuestion = (_id) =>
     afterAll: requestAnswered,
   });
 
-export const deleteQueez = (_id) =>
+export const deleteQuiz = (_id) =>
   API_Call({
-    url: "queez",
+    url: "quiz",
     method: "delete",
     data: { _id },
     beforeAll: requestSent,
-    onSuccess: removeQueez,
+    onSuccess: removeQuiz,
     afterAll: requestAnswered,
   });
 
@@ -116,13 +116,13 @@ export const createUpdateQuestion = (oldQ, newQ, update, callback) =>
     callback,
   });
 
-export const createUpdateQueez = (oldQ, newQ, update, callback) =>
+export const createUpdateQuiz = (oldQ, newQ, update, callback) =>
   API_Call({
-    url: "queez",
+    url: "quiz",
     method: oldQ && !update ? "put" : "post",
     data: newQ,
     beforeAll: requestSent,
-    onSuccess: oldQ && !update ? updateQueez : setNewQueez,
+    onSuccess: oldQ && !update ? updatequiz : setNewquiz,
     afterAll: requestAnswered,
     callback,
   });
@@ -155,12 +155,12 @@ export const tryLogin = API_Call({
   onSuccess: setUser,
 });
 
-export const tryGettingQueez = (id) =>
+export const tryGettingQuiz = (id) =>
   API_Call({
-    url: "queez",
+    url: "quiz",
     method: "get",
     params: { id },
     beforeAll: requestSent,
-    onSuccess: setQueez,
+    onSuccess: setQuiz,
     afterAll: requestAnswered,
   });

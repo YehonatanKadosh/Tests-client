@@ -25,7 +25,7 @@ function AppSlider({ items }) {
 
   return (
     <div className="app-slider">
-      <div className="queez-slider-main">
+      <div className="quiz-slider-main">
         {index > 0 && (
           <Arrow direction="left" clickFunction={() => onArrowClick("left")} />
         )}
@@ -41,7 +41,7 @@ function AppSlider({ items }) {
           />
         )}
       </div>
-      <div className="queez-stepper">
+      <div className="quiz-stepper">
         <Stepper
           sx={{ mt: 3, width: "100%" }}
           nonLinear

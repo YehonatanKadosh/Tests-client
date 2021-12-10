@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { questionTypes } from "queezy-common";
+import { questionTypes } from "quizy-yk-common";
 
 const slice = createSlice({
-  name: "queez",
+  name: "quiz",
   initialState: {},
   reducers: {
-    setQueez: (state, action) => {
+    setQuiz: (state, action) => {
       if (action.payload) Object.assign(state, action.payload);
       else state = {};
     },
@@ -24,13 +24,13 @@ const slice = createSlice({
     },
   },
 });
-export const { setQueez, changeAnswer } = slice.actions;
+export const { setQuiz, changeAnswer } = slice.actions;
 
 export default slice.reducer;
-export const get_queez = (state) => state.queez;
-export const get_queez_introduction = (state) => state.queez.introduction;
+export const get_quiz = (state) => state.quiz;
+export const get_quiz_introduction = (state) => state.quiz.introduction;
 export const get_answered_questions_amount = (state) => {
-  const questions = state.queez.questions;
+  const questions = state.quiz.questions;
   let counter = 0;
   if (questions)
     for (let i = 0, answered = false; i < questions.length; i++) {

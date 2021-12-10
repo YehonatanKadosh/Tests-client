@@ -4,12 +4,16 @@ import React from "react";
 import { useSelector } from "react-redux";
 import {
   get_answered_questions_amount,
-  get_queez,
-} from "../../../redux/reducers/queez";
+  get_quiz,
+} from "../../../redux/reducers/quiz";
 
 function SummaryPage({ forShow }) {
-  const { questions, passingScore } = useSelector(get_queez);
+  const { questions, passingScore } = useSelector(get_quiz);
   const answeredQuestions = useSelector(get_answered_questions_amount);
+
+  const handleSubmit = () => {
+    console.log(questions);
+  };
 
   return (
     <div>
@@ -31,7 +35,9 @@ function SummaryPage({ forShow }) {
       {forShow ? (
         <Typography>This exam is for show only</Typography>
       ) : (
-        <Button variant="contained">Submit</Button>
+        <Button onClick={handleSubmit} variant="contained">
+          Submit
+        </Button>
       )}
     </div>
   );

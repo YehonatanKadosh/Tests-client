@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { FieldArray, useFormikContext } from "formik";
 import React from "react";
-import { questionTypes } from "queezy-common";
+import { questionTypes } from "quizy-yk-common";
 
 function AppFormAnswerListBuilder(props) {
   const { values, errors, touched } = useFormikContext();

@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.queez-slider-main {
+.quiz-slider-main {
   flex: 1;
   display: flex;
 }
@@ -22,7 +22,7 @@
   transform: translateX(-50%);
 }
 
-.queez-stepper {
+.quiz-stepper {
   width: 100%;
 }
 

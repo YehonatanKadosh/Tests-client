@@ -1,10 +1,10 @@
-.queez-show-container {
+.quiz-show-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.queez-slider {
+.quiz-slider {
   flex: 1;
 }

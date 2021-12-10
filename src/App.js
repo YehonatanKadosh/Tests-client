@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
-import { roles } from "queezy-common";
+import { roles } from "quizy-yk-common";
 import { get_user_logged, get_user_role } from "./redux/reducers/user";
 import { AdminRouts, LoginRouts, UserRouts } from "./routes";
 import { tryLogin } from "./redux/api";

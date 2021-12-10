@@ -1,18 +1,18 @@
 import React from "react";
 import { Route, Routes, useNavigate } from "react-router";
-import { CreateQueezPage, SearchQueezPage } from "../../pages";
+import { CreateQuizPage, SearchQuizPage } from "../../pages";
 
-function QueezRouts() {
+function QuizRouts() {
   const navigate = useNavigate();
   return (
     <Routes>
       <Route
         path="Create"
-        element={<CreateQueezPage navigate={() => navigate("/Queezes")} />}
+        element={<CreateQuizPage navigate={() => navigate("/Quizes")} />}
       />
-      <Route path="*" element={<SearchQueezPage />} />
+      <Route path="*" element={<SearchQuizPage />} />
     </Routes>
   );
 }
 
-export default QueezRouts;
+export default QuizRouts;

@@ -1,8 +1,11 @@
-import { question_validator } from "queezy-common";
+import {
+  question_validator,
+  orientationTypes,
+  questionTypes,
+} from "quizy-yk-common";
 import { useDispatch } from "react-redux";
 import { FieldArray, Formik } from "formik";
 import React, { useState } from "react";
-import { orientationTypes, questionTypes } from "queezy-common";
 
 import {
   AppFormChoiceList,

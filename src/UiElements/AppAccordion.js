@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useContext } from "react";
-import { AccordionContext } from "../pages/Queez/Create/CreateQueez";
+import { AccordionContext } from "../pages/Quiz/Create/CreateQuiz";
 
 function AppAccordion({ icon, title, errors, children }) {
   const context = useContext(AccordionContext);

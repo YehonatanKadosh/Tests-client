@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { signup_validator } from "queezy-common";
+import { signup_validator } from "quizy-yk-common";
 import React from "react";
 
 import {

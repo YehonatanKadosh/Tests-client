@@ -21,8 +21,8 @@ export { default as QuestionSearchPage } from "./Admin/Question/Search/QuestionS
 export { default as QuestionShowPage } from "./Admin/Question/Show/QuestionShow";
 // --Report
 export { default as ReportPage } from "./Admin/Report/Reports";
-// --Queez
+// --quiz
 //   ---Create
-export { default as CreateQueezPage } from "./Queez/Create/CreateQueez";
+export { default as CreateQuizPage } from "./Quiz/Create/CreateQuiz";
 //   ---Search
-export { default as SearchQueezPage } from "./Queez/Search/SearchQueez";
+export { default as SearchQuizPage } from "./Quiz/Search/SearchQuiz";

@@ -1,25 +1,24 @@
-import { LinearProgress, Typography, Button } from "@mui/material";
-import { typography } from "@mui/system";
+import { LinearProgress, Typography } from "@mui/material";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionShowPage } from "../..";
 import {
   changeAnswer,
   get_answered_questions_amount,
-  get_queez,
-} from "../../../redux/reducers/queez";
+  get_quiz,
+} from "../../../redux/reducers/quiz";
 import { AppSlider } from "../../../UiElements";
 import IntroductionPage from "./IntroductionPage";
-import "./queez.css";
+import "./quiz.css";
 import SummaryPage from "./SummaryPage";
 
-function ShowQueez({ forShow }) {
-  const { questions, name } = useSelector(get_queez);
+function ShowQuiz({ forShow }) {
+  const { questions, name } = useSelector(get_quiz);
   const dispatch = useDispatch();
   const answeredQuestions = useSelector(get_answered_questions_amount);
 
   return questions || name ? (
-    <div className="queez-show-container">
+    <div className="quiz-show-container">
       {name && (
         <Typography
           variant="h5"
@@ -29,7 +28,7 @@ function ShowQueez({ forShow }) {
           {name}
         </Typography>
       )}
-      <div className="queez-slider">
+      <div className="quiz-slider">
         <AppSlider
           items={[
             <IntroductionPage />,
@@ -61,4 +60,4 @@ function ShowQueez({ forShow }) {
   );
 }
 
-export default ShowQueez;
+export default ShowQuiz;

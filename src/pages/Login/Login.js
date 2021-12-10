@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { login_validator } from "queezy-common";
+import { login_validator } from "quizy-yk-common";
 import { useDispatch, useSelector } from "react-redux";
 
 import {

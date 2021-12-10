@@ -4,23 +4,23 @@ import { Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CreateQueezPage } from "../..";
-import { addTopic, deleteQueez, getQueezByTopic } from "../../../redux/api";
-import { setQueez } from "../../../redux/reducers/queez";
+import { CreateQuizPage } from "../..";
+import { addTopic, deleteQuiz, getQuizByTopic } from "../../../redux/api";
+import { setQuiz } from "../../../redux/reducers/quiz";
 import {
-  get_queezs,
-  get_queezs_loading,
-  wipeAllQueezs,
-} from "../../../redux/reducers/queezs";
+  get_quizs,
+  get_quizs_loading,
+  wipeAllQuizs,
+} from "../../../redux/reducers/quizs";
 import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 import { AppSelector, AppTable } from "../../../UiElements";
-import ShowQueez from "../Show/ShowQueez";
+import ShowQuiz from "../Show/ShowQuiz";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-function SearchQueez() {
+function SearchQuiz() {
   const dispatch = useDispatch();
-  const queezes = useSelector(get_queezs);
-  const queezesLoading = useSelector(get_queezs_loading);
+  const quizes = useSelector(get_quizs);
+  const loading = useSelector(get_quizs_loading);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   return (
@@ -35,24 +35,24 @@ function SearchQueez() {
               apiCall={(topic) =>
                 addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
               }
-              onChange={(topic) => dispatch(getQueezByTopic(topic))}
-              onEmpty={() => dispatch(wipeAllQueezs())}
+              onChange={(topic) => dispatch(getQuizByTopic(topic))}
+              onEmpty={() => dispatch(wipeAllQuizs())}
             />
           </div>
 
-          {queezes.length ? (
+          {quizes.length ? (
             <>
               <div className="row questions_list">
                 <AppTable
-                  collection={queezes}
-                  loading={queezesLoading}
+                  collection={quizes}
+                  loading={loading}
                   onShow={(Q) => {
-                    dispatch(setQueez(Q));
-                    return <ShowQueez forShow />;
+                    dispatch(setQuiz(Q));
+                    return <ShowQuiz forShow />;
                   }}
-                  onEdit={(Q) => <CreateQueezPage Q={Q} />}
-                  onUpdate={(Q) => <CreateQueezPage update Q={Q} />}
-                  onDelete={(Q) => dispatch(deleteQueez(Q._id))}
+                  onEdit={(Q) => <CreateQuizPage Q={Q} />}
+                  onUpdate={(Q) => <CreateQuizPage update Q={Q} />}
+                  onDelete={(Q) => dispatch(deleteQuiz(Q._id))}
                   headerCells={["Name", "Topic", "Language", "Link"]}
                   bodyCells={[
                     "name",
@@ -98,4 +98,4 @@ function SearchQueez() {
   );
 }
 
-export default SearchQueez;
+export default SearchQuiz;

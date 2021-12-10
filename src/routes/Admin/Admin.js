@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router";
 
-import { QueezRouts, QuestionRouts, ReportRouts } from "..";
+import { QuizRouts, QuestionRouts, ReportRouts } from "..";
 import { AdminPage } from "../../pages";
 import { getTopics } from "../../redux/api";
 import { AppNavBar } from "../../UiElements";
@@ -20,7 +20,7 @@ function AdminRouts() {
       <Routes>
         <Route path="*" element={<AdminPage />} />
         <Route path="Questions/*" element={<QuestionRouts />} />
-        <Route path="Queezes/*" element={<QueezRouts />} />
+        <Route path="Quizes/*" element={<QuizRouts />} />
         <Route path="Reports/*" element={<ReportRouts />} />
       </Routes>
     </div>

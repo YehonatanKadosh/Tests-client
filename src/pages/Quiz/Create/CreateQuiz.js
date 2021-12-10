@@ -7,7 +7,7 @@ import {
 } from "@mui/icons-material";
 import { Button, Checkbox, Dialog } from "@mui/material";
 import { FieldArray, Formik } from "formik";
-import { queez_validator, languages } from "queezy-common";
+import { quiz_validator, languages } from "quizy-yk-common";
 import React, { createContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
@@ -16,9 +16,9 @@ import {
   QuestionShowPage,
   QuestionSearchPage,
 } from "../..";
-import { createUpdateQueez } from "../../../redux/api";
-import { setQueez } from "../../../redux/reducers/queez";
-import { removeQueez } from "../../../redux/reducers/queezs";
+import { createUpdateQuiz } from "../../../redux/api";
+import { setQuiz } from "../../../redux/reducers/quiz";
+import { removeQuiz } from "../../../redux/reducers/quizs";
 import {
   AppFormChoiceList,
   AppFormError,
@@ -27,11 +27,11 @@ import {
   AppTable,
 } from "../../../UiElements";
 import AppAccordion from "../../../UiElements/AppAccordion";
-import ShowQueez from "../Show/ShowQueez";
+import ShowQuiz from "../Show/ShowQuiz";
 
 export const AccordionContext = createContext();
 
-function CreateQueez({ Q, update, navigate }) {
+function CreateQuiz({ Q, update, navigate }) {
   const location = useLocation();
   const [expanded, setExpanded] = useState("Formalities");
   const [dialogContent, setDialogContent] = useState(undefined);
@@ -41,17 +41,17 @@ function CreateQueez({ Q, update, navigate }) {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const submitQueez = (queez) => {
-    queez.version = update ? Q?.version + 1 : Q?.version || 1;
+  const submitQuiz = (quiz) => {
+    quiz.version = update ? Q?.version + 1 : Q?.version || 1;
     dispatch(
-      createUpdateQueez(
+      createUpdateQuiz(
         Q,
-        queez,
+        quiz,
         update,
         navigate ? navigate : () => setDialogContent(undefined)
       )
     );
-    if (update) dispatch(removeQueez({ _id: Q._id }));
+    if (update) dispatch(removeQuiz({ _id: Q._id }));
   };
 
   return (
@@ -62,7 +62,7 @@ function CreateQueez({ Q, update, navigate }) {
           name: "",
           introduction: "",
           questions: [],
-          queezenerEmail: "",
+          quizenerEmail: "",
           passingScore: 0,
           answersReview: true,
           topic: "",
@@ -76,8 +76,8 @@ function CreateQueez({ Q, update, navigate }) {
           version: 1,
         }
       }
-      onSubmit={submitQueez}
-      validationSchema={queez_validator}
+      onSubmit={submitQuiz}
+      validationSchema={quiz_validator}
     >
       {({ values, setFieldValue, errors }) => (
         <AccordionContext.Provider value={{ handleChange, expanded }}>
@@ -94,7 +94,7 @@ function CreateQueez({ Q, update, navigate }) {
             >
               <AppFormField
                 name="name"
-                label="Queez Name"
+                label="quiz Name"
                 className="w-100"
                 rows={1}
               />
@@ -241,7 +241,7 @@ function CreateQueez({ Q, update, navigate }) {
             </AppAccordion>
             <AppAccordion
               errors={
-                errors.queezenerEmail ||
+                errors.quizenerEmail ||
                 errors.successEmailSubject ||
                 errors.successEmailMessage ||
                 errors.failEmailSubject ||
@@ -251,13 +251,13 @@ function CreateQueez({ Q, update, navigate }) {
               title="Email"
             >
               <AppFormField
-                name="queezenerEmail"
-                label="Queezener Email"
+                name="quizenerEmail"
+                label="quizener Email"
                 className="w-100"
                 rows={1}
                 type="email"
               />
-              <AppFormError name="queezenerEmail" />
+              <AppFormError name="quizenerEmail" />
 
               <AppFormField
                 name="successEmailSubject"
@@ -294,11 +294,11 @@ function CreateQueez({ Q, update, navigate }) {
               <AppFormError name="failEmailMessage" />
             </AppAccordion>
             <div className="row">
-              <AppFormSubmitButton title="Save Queez" />
+              <AppFormSubmitButton title="Save Quiz" />
               <Button
                 onClick={() => {
-                  dispatch(setQueez(values));
-                  setDialogContent(<ShowQueez forShow />);
+                  dispatch(setQuiz(values));
+                  setDialogContent(<ShowQuiz forShow />);
                 }}
                 variant="contained"
               >
@@ -320,4 +320,4 @@ function CreateQueez({ Q, update, navigate }) {
     </Formik>
   );
 }
-export default CreateQueez;
+export default CreateQuiz;
