@@ -98,8 +98,10 @@ function QuestionSearch({ onSelected, onAdd }) {
             loading={questionsLoading}
             onSelected={onSelected}
             onShow={(Q) => <QuestionShowPage forShow {...Q} />}
-            onEdit={(Q) => <QuestionCreatePage Q={Q} />}
-            onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
+            onEdit={(Q, onSave) => <QuestionCreatePage onSave={onSave} Q={Q} />}
+            onUpdate={(Q, onSave) => (
+              <QuestionCreatePage update onSave={onSave} Q={Q} />
+            )}
             onDelete={(Q) => dispatch(deleteQuestion(Q._id))}
             headerCells={[
               "Question",

@@ -50,8 +50,12 @@ function SearchQuiz() {
                     dispatch(setQuiz(Q));
                     return <ShowQuiz forShow />;
                   }}
-                  onEdit={(Q) => <CreateQuizPage Q={Q} />}
-                  onUpdate={(Q) => <CreateQuizPage update Q={Q} />}
+                  onEdit={(Q, onSave) => (
+                    <CreateQuizPage onSave={onSave} Q={Q} />
+                  )}
+                  onUpdate={(Q, onSave) => (
+                    <CreateQuizPage onSave={onSave} update Q={Q} />
+                  )}
                   onDelete={(Q) => dispatch(deleteQuiz(Q._id))}
                   headerCells={["Name", "Topic", "Language", "Link"]}
                   bodyCells={[

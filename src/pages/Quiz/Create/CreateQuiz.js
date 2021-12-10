@@ -31,7 +31,7 @@ import ShowQuiz from "../Show/ShowQuiz";
 
 export const AccordionContext = createContext();
 
-function CreateQuiz({ Q, update, navigate }) {
+function CreateQuiz({ Q, update, onSave }) {
   const location = useLocation();
   const [expanded, setExpanded] = useState("Formalities");
   const [dialogContent, setDialogContent] = useState(undefined);
@@ -42,13 +42,12 @@ function CreateQuiz({ Q, update, navigate }) {
   };
 
   const submitQuiz = (quiz) => {
-    quiz.version = update ? Q?.version + 1 : Q?.version || 1;
     dispatch(
       createUpdateQuiz(
         Q,
-        quiz,
+        { ...quiz, version: update ? Q?.version + 1 : Q?.version || 1 },
         update,
-        navigate ? navigate : () => setDialogContent(undefined)
+        onSave ? onSave : () => setDialogContent(undefined)
       )
     );
     if (update) dispatch(removeQuiz({ _id: Q._id }));
@@ -160,7 +159,7 @@ function CreateQuiz({ Q, update, navigate }) {
                       onAdd={() =>
                         setDialogContent(
                           <QuestionCreatePage
-                            navigate={() => setDialogContent(undefined)}
+                            onSave={() => setDialogContent(undefined)}
                           />
                         )
                       }
@@ -177,8 +176,12 @@ function CreateQuiz({ Q, update, navigate }) {
                         <AppTable
                           collection={values.questions}
                           onShow={(Q) => <QuestionShowPage forShow {...Q} />}
-                          onEdit={(Q) => <QuestionCreatePage Q={Q} />}
-                          onUpdate={(Q) => <QuestionCreatePage update Q={Q} />}
+                          onEdit={(Q, onSave) => (
+                            <QuestionCreatePage onSave={onSave} Q={Q} />
+                          )}
+                          onUpdate={(Q, onSave) => (
+                            <QuestionCreatePage onSave={onSave} update Q={Q} />
+                          )}
                           onDelete={(question) => {
                             const Q = values.questions.find(
                               (q) => q._id === question._id

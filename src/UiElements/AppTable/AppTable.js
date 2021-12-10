@@ -75,14 +75,26 @@ function AppTable({
               )}
               {onEdit && (
                 <TableCell>
-                  <IconButton onClick={() => setSelectedItem(onEdit(item))}>
+                  <IconButton
+                    onClick={() =>
+                      setSelectedItem(
+                        onEdit(item, () => setSelectedItem(undefined))
+                      )
+                    }
+                  >
                     <Edit />
                   </IconButton>
                 </TableCell>
               )}
               {onUpdate && (
                 <TableCell>
-                  <IconButton onClick={() => setSelectedItem(onUpdate(item))}>
+                  <IconButton
+                    onClick={() =>
+                      setSelectedItem(
+                        onUpdate(item, () => setSelectedItem(undefined))
+                      )
+                    }
+                  >
                     <Upgrade />
                   </IconButton>
                 </TableCell>

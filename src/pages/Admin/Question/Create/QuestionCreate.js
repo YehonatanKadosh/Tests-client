@@ -33,7 +33,7 @@ import {
 import { get_all_tags, get_tags_loading } from "../../../../redux/reducers/tag";
 import { QuestionShowPage } from "../../..";
 
-function QuestionCreate({ update, Q, navigate }) {
+function QuestionCreate({ update, Q, onSave }) {
   const [open, setOpen] = useState(false);
   const [contextVisable, setContextVisable] = useState(
     Q?.context ? true : false
@@ -49,9 +49,18 @@ function QuestionCreate({ update, Q, navigate }) {
     if (!answered) setError("At least one answer must be marked");
     else {
       setError("");
-      question.lastUpdated = new Date();
-      question.version = update ? Q?.version + 1 : Q?.version || 1;
-      dispatch(createUpdateQuestion(Q, question, update, navigate));
+      dispatch(
+        createUpdateQuestion(
+          Q,
+          {
+            ...question,
+            lastUpdated: new Date(),
+            version: update ? Q?.version + 1 : Q?.version || 1,
+          },
+          update,
+          onSave
+        )
+      );
       if (update) dispatch(removeQuestion({ _id: Q._id }));
     }
   };
