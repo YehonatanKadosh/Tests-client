@@ -108,25 +108,23 @@ function AppFormAnswerListBuilder(props) {
     <FieldArray
       name={props.name}
       render={({ push, remove, replace }) => (
-        <div className="row">
-          <div className="text-center">
-            {SingleChoice
-              ? singleChoiceRadioBox(replace, remove)
-              : multipleChoiceCheckBox(replace, remove)}
+        <div className="row text-center">
+          {SingleChoice
+            ? singleChoiceRadioBox(replace, remove)
+            : multipleChoiceCheckBox(replace, remove)}
 
-            <Button
-              onClick={() => push({ content: "", isRight: false })}
-              variant="contained"
-              sx={{ width: "fit-content", my: 1 }}
-            >
-              <Add /> {props.placeHolder}
-            </Button>
-            {touched[props.name] && typeof errors[props.name] === "string" && (
-              <FormHelperText className="text-center" error={true}>
-                {errors[props.name]}
-              </FormHelperText>
-            )}
-          </div>
+          <Button
+            onClick={() => push({ content: "", isRight: false })}
+            variant="contained"
+            sx={{ width: "fit-content", my: 1 }}
+          >
+            <Add /> {props.placeHolder}
+          </Button>
+          {touched[props.name] && typeof errors[props.name] === "string" && (
+            <FormHelperText className="text-center" error={true}>
+              {errors[props.name]}
+            </FormHelperText>
+          )}
         </div>
       )}
     />

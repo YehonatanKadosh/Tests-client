@@ -1,4 +1,5 @@
 import { API_Call } from "./middlewares/api";
+import { setQueez } from "./reducers/queez";
 import {
   loadQueezs,
   removeQueez,
@@ -68,7 +69,7 @@ export const getQuestionsByTopic = (topic) =>
 
 export const getQueezByTopic = (topic) =>
   API_Call({
-    url: "queez",
+    url: "queez/byTopic",
     method: "get",
     params: { topic: topic._id },
     beforeAll: loadQueezs,
@@ -153,3 +154,13 @@ export const tryLogin = API_Call({
   beforeAll: setLogin,
   onSuccess: setUser,
 });
+
+export const tryGettingQueez = (id) =>
+  API_Call({
+    url: "queez",
+    method: "get",
+    params: { id },
+    beforeAll: requestSent,
+    onSuccess: setQueez,
+    afterAll: requestAnswered,
+  });

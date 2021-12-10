@@ -8,7 +8,6 @@ function AppNavBar() {
   const dispatch = useDispatch();
   const handleLogOut = () => dispatch({ type: "log-out" });
   const navigate = useNavigate();
-  const location = useLocation().pathname.split("/").at(-1);
 
   return (
     <AppBar position="static">
@@ -24,7 +23,7 @@ function AppNavBar() {
           <Home />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {`Queezy${location && `'s ${location}`}`}
+          Queezy
         </Typography>
         <Button color="inherit" onClick={handleLogOut}>
           Log Out

@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { orientationTypes, questionTypes } from "queezy-common";
 import React from "react";
+import "./QuestionShow.css";
 
 function QuestionShow({
   _id,
@@ -84,13 +85,9 @@ function QuestionShow({
         {context}
       </Typography>
       {answers && (
-        <>
-          <div className="row">
-            <div className="text-center">
-              {SingleChoice ? singleChoiceRadioBox() : multipleChoiceCheckBox()}
-            </div>
-          </div>
-        </>
+        <div className="row text-center">
+          {SingleChoice ? singleChoiceRadioBox() : multipleChoiceCheckBox()}
+        </div>
       )}
     </div>
   );

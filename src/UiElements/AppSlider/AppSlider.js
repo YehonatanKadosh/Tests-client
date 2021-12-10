@@ -24,8 +24,8 @@ function AppSlider({ items }) {
   };
 
   return (
-    <div className="Slider">
-      <div className="row">
+    <div className="app-slider">
+      <div className="row queez-slider-main">
         <div className="col">
           {index > 0 && (
             <Arrow
@@ -34,7 +34,7 @@ function AppSlider({ items }) {
             />
           )}
         </div>
-        <div className="col">
+        <div className="col slider-main">
           <Slide in={slideIn} direction={slideDirection}>
             <div>{items[index]}</div>
           </Slide>
@@ -48,15 +48,22 @@ function AppSlider({ items }) {
           )}
         </div>
       </div>
-      <Stepper sx={{ mt: 3 }} nonLinear activeStep={index} alternativeLabel>
-        {[...Array(numSlides)].map((V, i) => (
-          <Step onClick={() => setIndex(i)} key={i}>
-            <StepButton>
-              {i === 0 ? "Intro" : i === numSlides - 1 ? "Finish" : `${i}st`}
-            </StepButton>
-          </Step>
-        ))}
-      </Stepper>
+      <div className="queez-stepper">
+        <Stepper
+          sx={{ mt: 3, width: "100%" }}
+          nonLinear
+          activeStep={index}
+          alternativeLabel
+        >
+          {[...Array(numSlides)].map((V, i) => (
+            <Step onClick={() => setIndex(i)} key={i}>
+              <StepButton>
+                {i === 0 ? "Intro" : i === numSlides - 1 ? "Finish" : `${i}st`}
+              </StepButton>
+            </Step>
+          ))}
+        </Stepper>
+      </div>
     </div>
   );
 }
