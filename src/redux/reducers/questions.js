@@ -13,7 +13,7 @@ const slice = createSlice({
     },
     updateQuestion: (state, action) => {
       let Question = state.items.find((Q) => Q._id === action.payload._id);
-      if (Question) Question = action.payload;
+      if (Question) Object.assign(Question, action.payload);
     },
     loadQuestions: (state, action) => {
       state.loading = true;

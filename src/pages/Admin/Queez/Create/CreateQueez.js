@@ -40,7 +40,14 @@ function CreateQueez({ Q, update, navigate }) {
 
   const submitQueez = (queez) => {
     queez.version = update ? Q?.version + 1 : Q?.version || 1;
-    dispatch(createUpdateQueez(Q, queez, update, navigate));
+    dispatch(
+      createUpdateQueez(
+        Q,
+        queez,
+        update,
+        navigate ? navigate : () => setDialogContent(undefined)
+      )
+    );
     if (update) dispatch(removeQueez({ _id: Q._id }));
   };
 
@@ -287,7 +294,7 @@ function CreateQueez({ Q, update, navigate }) {
               <AppFormSubmitButton title="Save Queez" />
               <Button
                 onClick={() => {
-                  dispatch(setQueez(Q || values));
+                  dispatch(setQueez(values));
                   setDialogContent(<ShowQueez forShow />);
                 }}
                 variant="contained"

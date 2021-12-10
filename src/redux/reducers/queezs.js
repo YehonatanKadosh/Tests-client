@@ -13,7 +13,7 @@ const slice = createSlice({
     },
     updateQueez: (state, action) => {
       let Queez = state.items.find((q) => q._id === action.payload._id);
-      if (Queez) Queez = action.payload;
+      if (Queez) Object.assign(Queez, action.payload);
     },
     loadQueezs: (state, action) => {
       state.loading = true;
