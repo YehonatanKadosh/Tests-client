@@ -108,7 +108,7 @@ function AppFormAnswerListBuilder(props) {
     <FieldArray
       name={props.name}
       render={({ push, remove, replace }) => (
-        <div className="row text-center">
+        <div className="row text-center justify-content-center">
           {SingleChoice
             ? singleChoiceRadioBox(replace, remove)
             : multipleChoiceCheckBox(replace, remove)}
