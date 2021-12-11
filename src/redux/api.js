@@ -76,29 +76,20 @@ export const getTags = (params) =>
     onSuccess: setTags,
   });
 
-export const getQuestionsByTopic = (topic) =>
+export const getQuizzes = ({ topic, partialName }) =>
   API_Call({
-    url: "question",
+    url: "quiz/withParams",
     method: "get",
-    params: { topic: topic._id },
-    beforeAll: loadQuestions,
-    onSuccess: setQuestions,
-  });
-
-export const getQuizByTopic = (topic) =>
-  API_Call({
-    url: "quiz/byTopic",
-    method: "get",
-    params: { topic: topic._id },
+    params: { topic: topic?._id, partialName },
     beforeAll: loadquizs,
     onSuccess: setQuizs,
   });
 
-export const getQuestionsByTopicAndTag = (topic, tag) =>
+export const getQuestions = ({ topic, tag, partialQuestion }) =>
   API_Call({
     url: "question",
     method: "get",
-    params: { topic: topic._id, tag: tag._id },
+    params: { topic: topic?._id, tag: tag?._id, partialQuestion },
     beforeAll: loadQuestions,
     onSuccess: setQuestions,
   });

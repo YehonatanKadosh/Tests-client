@@ -1,11 +1,11 @@
 import { Add, ContentCopy } from "@mui/icons-material";
-import { Button, IconButton, Snackbar } from "@mui/material";
+import { Button, IconButton, Snackbar, TextField } from "@mui/material";
 import { Formik } from "formik";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { CreateQuizPage } from "../..";
-import { addTopic, deleteQuiz, getQuizByTopic } from "../../../redux/api";
+import { addTopic, deleteQuiz, getQuizzes } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
 import {
   get_quizs,
@@ -24,20 +24,40 @@ function SearchQuiz() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   return (
-    <Formik initialValues={{ topic: "" }}>
+    <Formik initialValues={{ topic: "", partialName: "" }}>
       {({ setFieldValue, values }) => (
         <div className="container-fluid questions_container p-3">
           <div className="row">
-            <AppSelector
-              name="topic"
-              valuesSelector={get_topics}
-              valuesStatusSelector={get_topics_loading}
-              apiCall={(topic) =>
-                addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
-              }
-              onChange={(topic) => dispatch(getQuizByTopic(topic))}
-              onEmpty={() => dispatch(wipeAllQuizs())}
-            />
+            <div className="col">
+              <TextField
+                label="name"
+                sx={{ width: "100%" }}
+                variant="outlined"
+                value={values.partialName || ""}
+                onChange={(e) => setFieldValue("partialName", e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && values.partialName?.trim().length)
+                    dispatch(
+                      getQuizzes({
+                        topic: values.topic,
+                        partialName: values.partialName.trim(),
+                      })
+                    );
+                }}
+              />
+            </div>
+            <div className="col">
+              <AppSelector
+                name="topic"
+                valuesSelector={get_topics}
+                valuesStatusSelector={get_topics_loading}
+                apiCall={(topic) =>
+                  addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
+                }
+                onChange={(topic) => dispatch(getQuizzes({ topic }))}
+                onEmpty={() => dispatch(wipeAllQuizs())}
+              />
+            </div>
           </div>
 
           {quizzes.length ? (

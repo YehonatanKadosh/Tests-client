@@ -1,4 +1,4 @@
-import { CircularProgress, Snackbar, Typography } from "@mui/material";
+import { CircularProgress, Snackbar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTopics, getTopicsWithStats } from "../../../redux/api";

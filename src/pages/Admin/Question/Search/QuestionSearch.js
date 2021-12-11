@@ -8,8 +8,7 @@ import {
   addTag,
   addTopic,
   deleteQuestion,
-  getQuestionsByTopic,
-  getQuestionsByTopicAndTag,
+  getQuestions,
   getTags,
 } from "../../../../redux/api";
 import "./QuestionSearch.css";
@@ -28,7 +27,7 @@ import {
   get_topics_loading,
 } from "../../../../redux/reducers/topic";
 
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { QuestionCreatePage, QuestionShowPage } from "../../..";
 
@@ -45,10 +44,9 @@ function QuestionSearch({ onSelected, onAdd }) {
 
   const onTopicChange = (topic) => {
     dispatch(getTags({ topics: [topic._id] }));
-    dispatch(getQuestionsByTopic(topic));
+    dispatch(getQuestions({ topic }));
     setFieldValue("tag", "");
   };
-
   const onTopicEmpty = () => {
     dispatch(wipeAllTags());
     dispatch(wipeAllQuestions());
@@ -59,6 +57,25 @@ function QuestionSearch({ onSelected, onAdd }) {
   return (
     <div className="container-fluid questions_container p-3">
       <div className="row">
+        <div className="col">
+          <TextField
+            label="question"
+            sx={{ width: "100%" }}
+            variant="outlined"
+            value={values.partialQuestion || ""}
+            onChange={(e) => setFieldValue("partialQuestion", e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && values.partialQuestion?.trim().length)
+                dispatch(
+                  getQuestions({
+                    topic: values.topic,
+                    tag: values.tag,
+                    partialQuestion: values.partialQuestion.trim(),
+                  })
+                );
+            }}
+          />
+        </div>
         <div className="col">
           <AppSelector
             name="topic"
@@ -81,10 +98,10 @@ function QuestionSearch({ onSelected, onAdd }) {
                 addTag(tag, values.topic, (Ntag) => setFieldValue("tag", Ntag))
               }
               onChange={(tag) =>
-                dispatch(getQuestionsByTopicAndTag(values.topic, tag))
+                dispatch(getQuestions({ topic: values.topic, tag }))
               }
               onEmpty={() => {
-                dispatch(getQuestionsByTopic(values.topic));
+                dispatch(getQuestions({ topic: values.topic }));
                 if (!onSelected) setFieldValue("questions", []);
               }}
             />
