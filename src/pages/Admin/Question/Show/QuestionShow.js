@@ -38,7 +38,7 @@ function QuestionShow({
               <Checkbox
                 checked={answer.isRight}
                 onChange={
-                  !rightAnswers
+                  !rightAnswers && onAnswersChange
                     ? () =>
                         onAnswersChange({
                           questionId: _id,
@@ -75,7 +75,7 @@ function QuestionShow({
               <Radio
                 checked={answer.isRight}
                 onChange={
-                  !rightAnswers
+                  !rightAnswers && onAnswersChange
                     ? () =>
                         onAnswersChange({
                           questionId: _id,

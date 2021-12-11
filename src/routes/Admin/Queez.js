@@ -8,7 +8,7 @@ function QuizRouts() {
     <Routes>
       <Route
         path="Create"
-        element={<CreateQuizPage navigate={() => navigate("/Quizes")} />}
+        element={<CreateQuizPage navigate={() => navigate("/Quizzes")} />}
       />
       <Route path="*" element={<SearchQuizPage />} />
     </Routes>

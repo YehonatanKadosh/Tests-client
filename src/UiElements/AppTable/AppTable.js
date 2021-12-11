@@ -38,9 +38,10 @@ function AppTable({
         <TableHead>
           <TableRow>
             {onSelected && <TableCell>Add</TableCell>}
-            {headerCells.map((name, index) => (
-              <TableCell key={index}>{name}</TableCell>
-            ))}
+            {headerCells &&
+              headerCells.map((name, index) => (
+                <TableCell key={index}>{name}</TableCell>
+              ))}
             {onShow && <TableCell>Show</TableCell>}
             {onEdit && <TableCell>Edit</TableCell>}
             {onUpdate && <TableCell>Clone</TableCell>}
@@ -48,66 +49,68 @@ function AppTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {collection?.map((item) => (
-            <TableRow
-              sx={selections ? { backgroundColor: "lightgreen" } : {}}
-              key={item._id}
-              hover={selections ? false : true}
-            >
-              {onSelected && (
-                <TableCell>
-                  <IconButton onClick={() => onSelected(item)}>
-                    <Add />
-                  </IconButton>
-                </TableCell>
-              )}
-              {bodyCells.map((cell, index) => (
-                <TableCell key={index}>
-                  {typeof cell === "string" ? item[cell] : cell(item)}
-                </TableCell>
-              ))}
-              {onShow && (
-                <TableCell>
-                  <IconButton onClick={() => setSelectedItem(onShow(item))}>
-                    <DocumentScanner />
-                  </IconButton>
-                </TableCell>
-              )}
-              {onEdit && (
-                <TableCell>
-                  <IconButton
-                    onClick={() =>
-                      setSelectedItem(
-                        onEdit(item, () => setSelectedItem(undefined))
-                      )
-                    }
-                  >
-                    <Edit />
-                  </IconButton>
-                </TableCell>
-              )}
-              {onUpdate && (
-                <TableCell>
-                  <IconButton
-                    onClick={() =>
-                      setSelectedItem(
-                        onUpdate(item, () => setSelectedItem(undefined))
-                      )
-                    }
-                  >
-                    <Upgrade />
-                  </IconButton>
-                </TableCell>
-              )}
-              {onDelete && (
-                <TableCell>
-                  <IconButton onClick={() => onDelete(item)}>
-                    <Delete />
-                  </IconButton>
-                </TableCell>
-              )}
-            </TableRow>
-          ))}
+          {collection &&
+            collection?.map((item) => (
+              <TableRow
+                sx={selections ? { backgroundColor: "lightgreen" } : {}}
+                key={item._id}
+                hover={selections ? false : true}
+              >
+                {onSelected && (
+                  <TableCell>
+                    <IconButton onClick={() => onSelected(item)}>
+                      <Add />
+                    </IconButton>
+                  </TableCell>
+                )}
+                {bodyCells &&
+                  bodyCells.map((cell, index) => (
+                    <TableCell key={index}>
+                      {typeof cell === "string" ? item[cell] : cell(item)}
+                    </TableCell>
+                  ))}
+                {onShow && (
+                  <TableCell>
+                    <IconButton onClick={() => setSelectedItem(onShow(item))}>
+                      <DocumentScanner />
+                    </IconButton>
+                  </TableCell>
+                )}
+                {onEdit && (
+                  <TableCell>
+                    <IconButton
+                      onClick={() =>
+                        setSelectedItem(
+                          onEdit(item, () => setSelectedItem(undefined))
+                        )
+                      }
+                    >
+                      <Edit />
+                    </IconButton>
+                  </TableCell>
+                )}
+                {onUpdate && (
+                  <TableCell>
+                    <IconButton
+                      onClick={() =>
+                        setSelectedItem(
+                          onUpdate(item, () => setSelectedItem(undefined))
+                        )
+                      }
+                    >
+                      <Upgrade />
+                    </IconButton>
+                  </TableCell>
+                )}
+                {onDelete && (
+                  <TableCell>
+                    <IconButton onClick={() => onDelete(item)}>
+                      <Delete />
+                    </IconButton>
+                  </TableCell>
+                )}
+              </TableRow>
+            ))}
         </TableBody>
         {selectedItem && (
           <Dialog

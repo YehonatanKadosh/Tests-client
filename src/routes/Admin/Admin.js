@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router";
 
 import { QuizRouts, QuestionRouts, ReportRouts } from "..";
 import { AdminPage } from "../../pages";
+import TopicsPage from "../../pages/Admin/Topics/TopicsPage";
 import { getTopics } from "../../redux/api";
 import { AppNavBar } from "../../UiElements";
 
@@ -20,8 +21,9 @@ function AdminRouts() {
       <Routes>
         <Route path="*" element={<AdminPage />} />
         <Route path="Questions/*" element={<QuestionRouts />} />
-        <Route path="Quizes/*" element={<QuizRouts />} />
+        <Route path="Quizzes/*" element={<QuizRouts />} />
         <Route path="Reports/*" element={<ReportRouts />} />
+        <Route path="Topics/*" element={<TopicsPage />} />
       </Routes>
     </div>
   );

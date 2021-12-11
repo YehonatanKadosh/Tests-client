@@ -32,6 +32,7 @@ import {
 } from "../../../../redux/reducers/topic";
 import { get_all_tags, get_tags_loading } from "../../../../redux/reducers/tag";
 import { QuestionShowPage } from "../../..";
+import { useNavigate } from "react-router";
 
 function QuestionCreate({ update, Q, onSave }) {
   const [open, setOpen] = useState(false);
@@ -40,6 +41,7 @@ function QuestionCreate({ update, Q, onSave }) {
   );
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitQuestion = (question) => {
     let answered = false;
@@ -58,7 +60,7 @@ function QuestionCreate({ update, Q, onSave }) {
             version: update ? Q?.version + 1 : Q?.version || 1,
           },
           update,
-          onSave
+          onSave ? onSave : () => navigate("Questions")
         )
       );
       if (update) dispatch(removeQuestion({ _id: Q._id }));
@@ -171,9 +173,12 @@ function QuestionCreate({ update, Q, onSave }) {
                 Enum={questionTypes}
                 onChange={(newType) => {
                   if (newType === questionTypes.SingleChoice)
-                    values.answers.forEach((answer) => {
-                      answer.isRight = false;
-                    });
+                    setFieldValue(
+                      "answers",
+                      values.answers.map((answer) => {
+                        return { ...answer, isRight: false };
+                      })
+                    );
                 }}
               />
             </div>

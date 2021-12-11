@@ -33,7 +33,7 @@ function ShowQuiz({ forShow }) {
       <div className="quiz-slider">
         <AppSlider
           items={
-            answersReview
+            !quiz || answersReview
               ? [
                   <IntroductionPage />,
                   ...(questions
@@ -52,7 +52,7 @@ function ShowQuiz({ forShow }) {
                     : []),
                   <SummaryPage forShow={forShow} />,
                 ]
-              : [<SummaryPage />]
+              : [<SummaryPage forShow={forShow} />]
           }
         />
       </div>

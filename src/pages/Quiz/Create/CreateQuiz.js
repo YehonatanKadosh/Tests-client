@@ -28,6 +28,7 @@ import {
 } from "../../../UiElements";
 import AppAccordion from "../../../UiElements/AppAccordion";
 import ShowQuiz from "../Show/ShowQuiz";
+import { useNavigate } from "react-router-dom";
 
 export const AccordionContext = createContext();
 
@@ -36,6 +37,7 @@ function CreateQuiz({ Q, update, onSave }) {
   const [expanded, setExpanded] = useState("Formalities");
   const [dialogContent, setDialogContent] = useState(undefined);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
@@ -47,7 +49,7 @@ function CreateQuiz({ Q, update, onSave }) {
         Q,
         { ...quiz, version: update ? Q?.version + 1 : Q?.version || 1 },
         update,
-        onSave ? onSave : () => setDialogContent(undefined)
+        onSave ? onSave : () => navigate("Quizzes")
       )
     );
     if (update) dispatch(removeQuiz({ _id: Q._id }));
@@ -93,7 +95,7 @@ function CreateQuiz({ Q, update, onSave }) {
             >
               <AppFormField
                 name="name"
-                label="quiz Name"
+                label="Quiz Name"
                 className="w-100"
                 rows={1}
               />

@@ -14,9 +14,13 @@ const slice = createSlice({
     loadTopics: (state, action) => {
       state.loading = true;
     },
+    removeTopic: (state, action) => {
+      const removedT = state.items.find((t) => t._id === action.payload._id);
+      if (removedT) state.items.splice(state.items.indexOf(removedT), 1);
+    },
   },
 });
-export const { setTopics, newTopic, loadTopics } = slice.actions;
+export const { setTopics, newTopic, loadTopics, removeTopic } = slice.actions;
 
 export default slice.reducer;
 export const get_topics = (state) => state.topics.items;

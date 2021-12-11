@@ -19,7 +19,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function SearchQuiz() {
   const dispatch = useDispatch();
-  const quizes = useSelector(get_quizs);
+  const quizzes = useSelector(get_quizs);
   const loading = useSelector(get_quizs_loading);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
@@ -40,11 +40,11 @@ function SearchQuiz() {
             />
           </div>
 
-          {quizes.length ? (
+          {quizzes.length ? (
             <>
               <div className="row questions_list">
                 <AppTable
-                  collection={quizes}
+                  collection={quizzes}
                   loading={loading}
                   onShow={(Q) => {
                     dispatch(setQuiz(Q));

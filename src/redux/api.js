@@ -17,7 +17,7 @@ import {
 import { requestAnswered, requestSent } from "./reducers/request";
 import { setLogin, setLoginError, setSignupError } from "./reducers/signInUp";
 import { loadTags, newTag, setTags } from "./reducers/tag";
-import { loadTopics, newTopic, setTopics } from "./reducers/topic";
+import { loadTopics, newTopic, removeTopic, setTopics } from "./reducers/topic";
 import { setUser } from "./reducers/user";
 import { setQuizRecord } from "./reducers/quizRecord";
 
@@ -45,6 +45,23 @@ export const addTag = (name, topics, callback) =>
 
 export const getTopics = API_Call({
   url: "topic",
+  method: "get",
+  beforeAll: loadTopics,
+  onSuccess: setTopics,
+});
+
+export const deleteTopics = (_id) =>
+  API_Call({
+    url: "topic",
+    method: "delete",
+    data: { _id },
+    beforeAll: requestSent,
+    onSuccess: removeTopic,
+    afterAll: requestAnswered,
+  });
+
+export const getTopicsWithStats = API_Call({
+  url: "topic/withStats",
   method: "get",
   beforeAll: loadTopics,
   onSuccess: setTopics,
