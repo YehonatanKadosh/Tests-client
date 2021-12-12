@@ -59,7 +59,7 @@ function QuestionSearch({ onSelected, onAdd }) {
       <div className="row">
         <div className="col">
           <TextField
-            label="question"
+            label="partial question"
             sx={{ width: "100%" }}
             variant="outlined"
             value={values.partialQuestion || ""}

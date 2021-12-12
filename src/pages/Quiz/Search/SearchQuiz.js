@@ -30,7 +30,7 @@ function SearchQuiz() {
           <div className="row">
             <div className="col">
               <TextField
-                label="name"
+                label="partial name"
                 sx={{ width: "100%" }}
                 variant="outlined"
                 value={values.partialName || ""}
