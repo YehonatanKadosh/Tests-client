@@ -6,7 +6,7 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import { orientationTypes, questionTypes } from "quizy-yk-common";
+import { languages, orientationTypes, questionTypes } from "quizy-yk-common";
 import React from "react";
 import "./QuestionShow.css";
 
@@ -19,12 +19,18 @@ function QuestionShow({
   question,
   context,
   onAnswersChange,
+  language,
 }) {
   const SingleChoice = type === questionTypes.SingleChoice;
   const isVertical = orientation === orientationTypes.Vertical;
+  const isHebrew = language === languages.Hebrew;
+
+  const className = `${isVertical ? "vertical" : "horizontal"} ${
+    isHebrew ? "hebrew" : "english"
+  }`;
 
   const multipleChoiceCheckBox = (replace) => (
-    <FormGroup className={isVertical ? "vertical" : "horizontal"}>
+    <FormGroup className={className}>
       {answers.map((answer, index) => (
         <React.Fragment key={index}>
           <FormControlLabel
@@ -58,7 +64,7 @@ function QuestionShow({
 
   const singleChoiceRadioBox = (replace) => (
     <RadioGroup
-      className={isVertical ? "vertical" : "horizontal"}
+      className={className}
       aria-label="answers"
       name="radio-buttons-group"
     >

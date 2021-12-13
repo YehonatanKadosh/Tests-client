@@ -14,7 +14,7 @@ import "./quiz.css";
 import SummaryPage from "./SummaryPage";
 
 function ShowQuiz({ forShow }) {
-  const { questions, name, answersReview } = useSelector(get_quiz);
+  const { questions, name, answersReview, language } = useSelector(get_quiz);
   const dispatch = useDispatch();
   const answeredQuestions = useSelector(get_answered_questions_amount);
   const { quiz } = useSelector(get_quizRecord);
@@ -47,6 +47,7 @@ function ShowQuiz({ forShow }) {
                             quiz ? quiz.questions[index].answers : undefined
                           }
                           {...question}
+                          language={language}
                         />
                       ))
                     : []),

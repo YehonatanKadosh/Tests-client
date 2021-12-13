@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import { ReportPage } from "../../pages";
+import { ReportPage } from "../pages";
 
 function ReportRouts() {
   return (

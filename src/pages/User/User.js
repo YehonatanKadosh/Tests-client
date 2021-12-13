@@ -6,7 +6,7 @@ import { tryGettingQuiz } from "../../redux/api";
 import { get_quiz } from "../../redux/reducers/quiz";
 import { get_request_loading } from "../../redux/reducers/request";
 import { AppNavBar } from "../../UiElements";
-import ShowQuiz from "../Quiz/Show/ShowQuiz";
+import { QuizCreatePage } from "..";
 import "./User.css";
 
 function User() {
@@ -19,19 +19,14 @@ function User() {
     dispatch(tryGettingQuiz(location.pathname.substr(1)));
   }, [dispatch, location.pathname]);
 
-  return (
-    <>
-      <AppNavBar />
-      {!loading ? (
-        _id ? (
-          <ShowQuiz />
-        ) : (
-          <Typography className="quiz-not-found">Quiz not found</Typography>
-        )
-      ) : (
-        <CircularProgress variant="indeterminate" />
-      )}
-    </>
+  return !loading ? (
+    _id ? (
+      <QuizCreatePage />
+    ) : (
+      <Typography className="quiz-not-found">Quiz not found</Typography>
+    )
+  ) : (
+    <CircularProgress variant="indeterminate" />
   );
 }
 

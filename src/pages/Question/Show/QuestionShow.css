@@ -1,11 +1,18 @@
 .vertical {
   display: flex !important;
   flex-direction: column !important;
-  align-items: center;
 }
 
 .horizontal {
   display: flex !important;
   flex-direction: row !important;
   place-content: space-around;
+}
+
+.english {
+  align-items: flex-start;
+}
+
+.hebrew {
+  align-items: flex-end;
 }

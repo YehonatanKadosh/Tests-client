@@ -14,24 +14,21 @@ import {
   AppFormAnswerListBuilder,
   AppFormSubmitButton,
   AppSelector,
-} from "../../../../UiElements";
+} from "../../../UiElements";
 import {
   addTag,
   addTopic,
   createUpdateQuestion,
   getTags,
-} from "../../../../redux/api";
+} from "../../../redux/api";
 
 import { Button, Dialog, FormHelperText } from "@mui/material";
 
 import "./QuestionCreate.css";
-import { removeQuestion } from "../../../../redux/reducers/questions";
-import {
-  get_topics,
-  get_topics_loading,
-} from "../../../../redux/reducers/topic";
-import { get_all_tags, get_tags_loading } from "../../../../redux/reducers/tag";
-import { QuestionShowPage } from "../../..";
+import { removeQuestion } from "../../../redux/reducers/questions";
+import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
+import { get_all_tags, get_tags_loading } from "../../../redux/reducers/tag";
+import { QuestionShowPage } from "../..";
 import { useNavigate } from "react-router";
 
 function QuestionCreate({ update, Q, onSave }) {

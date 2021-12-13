@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import React from "react";
 import { Route, Routes, useNavigate } from "react-router";
-import { QuestionCreatePage, QuestionSearchPage } from "../../pages";
+import { QuestionCreatePage, QuestionSearchPage } from "../pages";
 
 function QuestionRouts() {
   const navigate = useNavigate();

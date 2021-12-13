@@ -1,35 +1,31 @@
 import { Link } from "react-router-dom";
 import { useFormikContext } from "formik";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { AppSelector, AppTable } from "../../../../UiElements";
+import { AppSelector, AppTable } from "../../../UiElements";
 import {
   addTag,
   addTopic,
   deleteQuestion,
   getQuestions,
   getTags,
-} from "../../../../redux/api";
+} from "../../../redux/api";
 import "./QuestionSearch.css";
 import {
   get_questions,
   get_questions_loading,
   wipeAllQuestions,
-} from "../../../../redux/reducers/questions";
+} from "../../../redux/reducers/questions";
 import {
   get_tags_loading,
   get_all_tags,
   wipeAllTags,
-} from "../../../../redux/reducers/tag";
-import {
-  get_topics,
-  get_topics_loading,
-} from "../../../../redux/reducers/topic";
+} from "../../../redux/reducers/tag";
+import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 
 import { Button, TextField } from "@mui/material";
-import { Add } from "@mui/icons-material";
-import { QuestionCreatePage, QuestionShowPage } from "../../..";
+import { QuestionCreatePage, QuestionShowPage } from "../..";
 
 function QuestionSearch({ onSelected, onAdd }) {
   const dispatch = useDispatch();
@@ -47,6 +43,7 @@ function QuestionSearch({ onSelected, onAdd }) {
     dispatch(getQuestions({ topic }));
     setFieldValue("tag", "");
   };
+
   const onTopicEmpty = () => {
     dispatch(wipeAllTags());
     dispatch(wipeAllQuestions());
@@ -54,28 +51,13 @@ function QuestionSearch({ onSelected, onAdd }) {
     if (!onSelected) setFieldValue("questions", []);
   };
 
+  useEffect(() => {
+    return () => dispatch(wipeAllQuestions());
+  }, [dispatch]);
+
   return (
     <div className="container-fluid questions_container p-3">
       <div className="row">
-        <div className="col">
-          <TextField
-            label="partial question"
-            sx={{ width: "100%" }}
-            variant="outlined"
-            value={values.partialQuestion || ""}
-            onChange={(e) => setFieldValue("partialQuestion", e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && values.partialQuestion?.trim().length)
-                dispatch(
-                  getQuestions({
-                    topic: values.topic,
-                    tag: values.tag,
-                    partialQuestion: values.partialQuestion.trim(),
-                  })
-                );
-            }}
-          />
-        </div>
         <div className="col">
           <AppSelector
             name="topic"
@@ -107,6 +89,25 @@ function QuestionSearch({ onSelected, onAdd }) {
             />
           </div>
         )}
+        <div className="col">
+          <TextField
+            label="partial question"
+            sx={{ width: "100%" }}
+            variant="outlined"
+            value={values.partialQuestion || ""}
+            onChange={(e) => setFieldValue("partialQuestion", e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && values.partialQuestion?.trim().length)
+                dispatch(
+                  getQuestions({
+                    topic: values.topic,
+                    tag: values.tag,
+                    partialQuestion: values.partialQuestion.trim(),
+                  })
+                );
+            }}
+          />
+        </div>
       </div>
       {questions.length ? (
         <div className="row questions_list justify-content-center">
@@ -143,12 +144,12 @@ function QuestionSearch({ onSelected, onAdd }) {
         {!onAdd ? (
           <Link to="Create">
             <Button variant="contained" sx={{ width: "100%" }}>
-              <Add />
+              Create Question
             </Button>
           </Link>
         ) : (
           <Button variant="contained" onClick={onAdd} sx={{ width: "100%" }}>
-            <Add />
+            Create Question
           </Button>
         )}
       </div>

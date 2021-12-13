@@ -15,6 +15,7 @@ import {
   QuestionCreatePage,
   QuestionShowPage,
   QuestionSearchPage,
+  QuizCreatePage,
 } from "../..";
 import { createUpdateQuiz } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
@@ -27,7 +28,6 @@ import {
   AppTable,
 } from "../../../UiElements";
 import AppAccordion from "../../../UiElements/AppAccordion";
-import ShowQuiz from "../Show/ShowQuiz";
 import { useNavigate } from "react-router-dom";
 
 export const AccordionContext = createContext();
@@ -303,7 +303,7 @@ function CreateQuiz({ Q, update, onSave }) {
               <Button
                 onClick={() => {
                   dispatch(setQuiz(values));
-                  setDialogContent(<ShowQuiz forShow />);
+                  setDialogContent(<QuizCreatePage forShow />);
                 }}
                 variant="contained"
               >

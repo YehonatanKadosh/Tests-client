@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes, useNavigate } from "react-router";
-import { CreateQuizPage, SearchQuizPage } from "../../pages";
+import { QuizCreatePage, QuizSearchPage } from "../pages";
 
 function QuizRouts() {
   const navigate = useNavigate();
@@ -8,9 +8,9 @@ function QuizRouts() {
     <Routes>
       <Route
         path="Create"
-        element={<CreateQuizPage navigate={() => navigate("/Quizzes")} />}
+        element={<QuizCreatePage navigate={() => navigate("/Quizzes")} />}
       />
-      <Route path="*" element={<SearchQuizPage />} />
+      <Route path="*" element={<QuizSearchPage />} />
     </Routes>
   );
 }

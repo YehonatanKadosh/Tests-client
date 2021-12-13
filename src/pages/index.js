@@ -11,18 +11,26 @@ export { default as PasswordRecoveryPage } from "./Login/PasswordRecovery";
 export { default as UserPage } from "./User/User";
 
 // Admin
-export { default as AdminPage } from "./Admin/Actions/ActionBar/ActionBar";
-// --Question
-//   ---Create
-export { default as QuestionCreatePage } from "./Admin/Question/Create/QuestionCreate";
-//   ---Search
-export { default as QuestionSearchPage } from "./Admin/Question/Search/QuestionSearch";
-//   ---Show
-export { default as QuestionShowPage } from "./Admin/Question/Show/QuestionShow";
-// --Report
-export { default as ReportPage } from "./Admin/Report/Reports";
-// --quiz
-//   ---Create
-export { default as CreateQuizPage } from "./Quiz/Create/CreateQuiz";
-//   ---Search
-export { default as SearchQuizPage } from "./Quiz/Search/SearchQuiz";
+export { default as AdminPage } from "./Admin/ActionBar/ActionBar";
+
+// Question
+//   -Create
+export { default as QuestionCreatePage } from "./Question/Create/QuestionCreate";
+//   -Search
+export { default as QuestionSearchPage } from "./Question/Search/QuestionSearch";
+//   -Show
+export { default as QuestionShowPage } from "./Question/Show/QuestionShow";
+
+// Report
+export { default as ReportPage } from "./Report/Reports";
+
+// quiz
+//   -Create
+export { default as QuizCreatePage } from "./Quiz/Create/CreateQuiz";
+//   -Search
+export { default as QuizSearchPage } from "./Quiz/Search/SearchQuiz";
+//   -Show
+export { default as QuizShowPage } from "./Quiz/Show/ShowQuiz";
+
+// Topic
+export { default as TopicsPage } from "./Topics/TopicsPage";

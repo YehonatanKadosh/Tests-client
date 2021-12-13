@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router";
-import { LoginPage, PasswordRecoveryPage, SignUpPage } from "../../pages";
+import { LoginPage, PasswordRecoveryPage, SignUpPage } from "../pages";
 
 function LoginRouts() {
   return (

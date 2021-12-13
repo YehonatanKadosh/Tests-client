@@ -1,10 +1,10 @@
 import { Add, ContentCopy } from "@mui/icons-material";
 import { Button, IconButton, Snackbar, TextField } from "@mui/material";
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CreateQuizPage } from "../..";
+import { QuizCreatePage } from "../..";
 import { addTopic, deleteQuiz, getQuizzes } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
 import {
@@ -14,7 +14,6 @@ import {
 } from "../../../redux/reducers/quizzes";
 import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 import { AppSelector, AppTable } from "../../../UiElements";
-import ShowQuiz from "../Show/ShowQuiz";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function SearchQuiz() {
@@ -23,11 +22,27 @@ function SearchQuiz() {
   const loading = useSelector(get_quizzes_loading);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
+  useEffect(() => {
+    return () => dispatch(wipeAllQuizzes());
+  }, [dispatch]);
+
   return (
     <Formik initialValues={{ topic: "", partialName: "" }}>
       {({ setFieldValue, values }) => (
         <div className="container-fluid questions_container p-3">
           <div className="row">
+            <div className="col">
+              <AppSelector
+                name="topic"
+                valuesSelector={get_topics}
+                valuesStatusSelector={get_topics_loading}
+                apiCall={(topic) =>
+                  addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
+                }
+                onChange={(topic) => dispatch(getQuizzes({ topic }))}
+                onEmpty={() => dispatch(wipeAllQuizzes())}
+              />
+            </div>
             <div className="col">
               <TextField
                 label="partial name"
@@ -46,18 +61,6 @@ function SearchQuiz() {
                 }}
               />
             </div>
-            <div className="col">
-              <AppSelector
-                name="topic"
-                valuesSelector={get_topics}
-                valuesStatusSelector={get_topics_loading}
-                apiCall={(topic) =>
-                  addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
-                }
-                onChange={(topic) => dispatch(getQuizzes({ topic }))}
-                onEmpty={() => dispatch(wipeAllQuizzes())}
-              />
-            </div>
           </div>
 
           {quizzes.length ? (
@@ -68,13 +71,13 @@ function SearchQuiz() {
                   loading={loading}
                   onShow={(Q) => {
                     dispatch(setQuiz(Q));
-                    return <ShowQuiz forShow />;
+                    return <QuizCreatePage forShow />;
                   }}
                   onEdit={(Q, onSave) => (
-                    <CreateQuizPage onSave={onSave} Q={Q} />
+                    <QuizCreatePage onSave={onSave} Q={Q} />
                   )}
                   onUpdate={(Q, onSave) => (
-                    <CreateQuizPage onSave={onSave} update Q={Q} />
+                    <QuizCreatePage onSave={onSave} update Q={Q} />
                   )}
                   onDelete={(Q) => dispatch(deleteQuiz(Q._id))}
                   headerCells={["Name", "Topic", "Language", "Link"]}
