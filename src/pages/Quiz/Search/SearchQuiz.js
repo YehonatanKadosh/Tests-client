@@ -8,10 +8,10 @@ import { CreateQuizPage } from "../..";
 import { addTopic, deleteQuiz, getQuizzes } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
 import {
-  get_quizs,
-  get_quizs_loading,
-  wipeAllQuizs,
-} from "../../../redux/reducers/quizs";
+  get_quizzes,
+  get_quizzes_loading,
+  wipeAllQuizzes,
+} from "../../../redux/reducers/quizzes";
 import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 import { AppSelector, AppTable } from "../../../UiElements";
 import ShowQuiz from "../Show/ShowQuiz";
@@ -19,8 +19,8 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 
 function SearchQuiz() {
   const dispatch = useDispatch();
-  const quizzes = useSelector(get_quizs);
-  const loading = useSelector(get_quizs_loading);
+  const quizzes = useSelector(get_quizzes);
+  const loading = useSelector(get_quizzes_loading);
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   return (
@@ -55,7 +55,7 @@ function SearchQuiz() {
                   addTopic(topic, (Ntopic) => setFieldValue("topic", Ntopic))
                 }
                 onChange={(topic) => dispatch(getQuizzes({ topic }))}
-                onEmpty={() => dispatch(wipeAllQuizs())}
+                onEmpty={() => dispatch(wipeAllQuizzes())}
               />
             </div>
           </div>

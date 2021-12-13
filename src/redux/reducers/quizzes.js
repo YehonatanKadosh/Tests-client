@@ -1,43 +1,43 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const slice = createSlice({
-  name: "quizs",
+  name: "quizzes",
   initialState: { items: [], loading: false },
   reducers: {
-    setNewquiz: (state, action) => {
+    setNewQuiz: (state, action) => {
       state.items.push(action.payload);
     },
-    setQuizs: (state, action) => {
+    setQuizzes: (state, action) => {
       state.items = action.payload;
       state.loading = false;
     },
-    updatequiz: (state, action) => {
+    updateQuiz: (state, action) => {
       let quiz = state.items.find((q) => q._id === action.payload._id);
       if (quiz) Object.assign(quiz, action.payload);
     },
-    loadquizs: (state, action) => {
+    loadQuizzes: (state, action) => {
       state.loading = true;
     },
     removeQuiz: (state, action) => {
       const removedQ = state.items.find((q) => q._id === action.payload._id);
       if (removedQ) state.items.splice(state.items.indexOf(removedQ), 1);
     },
-    wipeAllQuizs: (state, action) => {
+    wipeAllQuizzes: (state, action) => {
       state.items = [];
     },
   },
 });
 export const {
-  updatequiz,
-  setNewquiz,
-  setQuizs,
-  loadquizs,
+  updateQuiz,
+  setNewQuiz,
+  setQuizzes,
+  loadQuizzes,
   removeQuiz,
-  wipeAllQuizs,
+  wipeAllQuizzes,
 } = slice.actions;
 
 export default slice.reducer;
-export const get_quizs = (state) => state.quizs.items;
-export const get_quizs_loading = (state) => state.quizs.loading;
+export const get_quizzes = (state) => state.quizzes.items;
+export const get_quizzes_loading = (state) => state.quizzes.loading;
 export const get_quiz_by_id = (id) => (state) =>
-  state.quizs.items.filter((q) => q._id === id);
+  state.quizzes.items.filter((q) => q._id === id);

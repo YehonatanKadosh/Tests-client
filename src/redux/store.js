@@ -7,7 +7,7 @@ import questions from "./reducers/questions";
 import topics from "./reducers/topic";
 import tags from "./reducers/tag";
 import request from "./reducers/request";
-import quizs from "./reducers/quizs";
+import quizzes from "./reducers/quizzes";
 import quiz from "./reducers/quiz";
 import quizRecord from "./reducers/quizRecord";
 
@@ -18,7 +18,7 @@ const appReducer = combineReducers({
   topics,
   tags,
   request,
-  quizs,
+  quizzes,
   quiz,
   quizRecord,
 });

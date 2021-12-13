@@ -1,12 +1,12 @@
 import { API_Call } from "./middlewares/api";
 import { setQuiz } from "./reducers/quiz";
 import {
-  loadquizs,
+  loadQuizzes,
   removeQuiz,
-  setNewquiz,
-  setQuizs,
-  updatequiz,
-} from "./reducers/quizs";
+  setNewQuiz,
+  setQuizzes,
+  updateQuiz,
+} from "./reducers/quizzes";
 import {
   loadQuestions,
   removeQuestion,
@@ -81,8 +81,8 @@ export const getQuizzes = ({ topic, partialName }) =>
     url: "quiz/withParams",
     method: "get",
     params: { topic: topic?._id, partialName },
-    beforeAll: loadquizs,
-    onSuccess: setQuizs,
+    beforeAll: loadQuizzes,
+    onSuccess: setQuizzes,
   });
 
 export const getQuestions = ({ topic, tag, partialQuestion }) =>
@@ -131,7 +131,7 @@ export const createUpdateQuiz = (oldQ, newQ, update, callback) =>
     method: oldQ && !update ? "put" : "post",
     data: newQ,
     beforeAll: requestSent,
-    onSuccess: oldQ && !update ? updatequiz : setNewquiz,
+    onSuccess: oldQ && !update ? updateQuiz : setNewQuiz,
     afterAll: requestAnswered,
     callback,
   });

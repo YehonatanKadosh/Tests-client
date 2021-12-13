@@ -18,7 +18,7 @@ import {
 } from "../..";
 import { createUpdateQuiz } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
-import { removeQuiz } from "../../../redux/reducers/quizs";
+import { removeQuiz } from "../../../redux/reducers/quizzes";
 import {
   AppFormChoiceList,
   AppFormError,
