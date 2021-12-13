@@ -5,7 +5,7 @@ import { useLocation } from "react-router";
 import { tryGettingQuiz } from "../../redux/api";
 import { get_quiz } from "../../redux/reducers/quiz";
 import { get_request_loading } from "../../redux/reducers/request";
-import { QuizCreatePage } from "..";
+import { QuizShowPage } from "..";
 import "./User.css";
 
 function User() {
@@ -20,7 +20,7 @@ function User() {
 
   return !loading ? (
     _id ? (
-      <QuizCreatePage />
+      <QuizShowPage />
     ) : (
       <Typography className="quiz-not-found">Quiz not found</Typography>
     )

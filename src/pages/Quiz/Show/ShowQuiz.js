@@ -1,13 +1,14 @@
 import { LinearProgress, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionShowPage } from "../..";
 import {
   changeAnswer,
   get_answered_questions_amount,
   get_quiz,
+  wipeQuiz,
 } from "../../../redux/reducers/quiz";
-import { get_quizRecord } from "../../../redux/reducers/quizRecord";
+import { get_quizRecord, wipeRecord } from "../../../redux/reducers/quizRecord";
 import { AppSlider } from "../../../UiElements";
 import IntroductionPage from "./IntroductionPage";
 import "./quiz.css";
@@ -17,8 +18,14 @@ function ShowQuiz({ forShow }) {
   const { questions, name, answersReview, language } = useSelector(get_quiz);
   const dispatch = useDispatch();
   const answeredQuestions = useSelector(get_answered_questions_amount);
-  const { quiz } = useSelector(get_quizRecord);
+  const { quiz: storedQuiz } = useSelector(get_quizRecord);
 
+  useEffect(() => {
+    return () => {
+      dispatch(wipeQuiz());
+      dispatch(wipeRecord());
+    };
+  }, [dispatch]);
   return questions || name ? (
     <div className="quiz-show-container">
       {name && (
@@ -33,7 +40,7 @@ function ShowQuiz({ forShow }) {
       <div className="quiz-slider">
         <AppSlider
           items={
-            !quiz || answersReview
+            !storedQuiz || answersReview || storedQuiz?.questions
               ? [
                   <IntroductionPage />,
                   ...(questions
@@ -44,7 +51,9 @@ function ShowQuiz({ forShow }) {
                             dispatch(changeAnswer(payload))
                           }
                           rightAnswers={
-                            quiz ? quiz.questions[index].answers : undefined
+                            storedQuiz
+                              ? storedQuiz.questions[index].answers
+                              : undefined
                           }
                           {...question}
                           language={language}
@@ -60,7 +69,7 @@ function ShowQuiz({ forShow }) {
       {questions && answeredQuestions ? (
         <LinearProgress
           variant="determinate"
-          value={(answeredQuestions / questions.length) * 100}
+          value={(answeredQuestions / questions?.length) * 100}
         />
       ) : (
         ""

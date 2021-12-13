@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { get_user } from "../../redux/reducers/user";
 import { roles } from "quizy-yk-common";
 
@@ -47,9 +47,11 @@ function AppNavBar() {
   const dispatch = useDispatch();
   const handleLogOut = () => dispatch({ type: "log-out" });
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector(get_user);
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const userLocation = location.pathname.split("/")[1];
 
   return (
     <AppBar position="static">
@@ -67,7 +69,7 @@ function AppNavBar() {
           </IconButton>
         )}
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Quizy
+          {`Quizy${userLocation ? `'s ${userLocation}` : ""}`}
         </Typography>
         <IconButton
           onClick={(e) => {

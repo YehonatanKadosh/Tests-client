@@ -8,9 +8,12 @@ const slice = createSlice({
       if (action.payload) Object.assign(state, action.payload);
       else state = {};
     },
+    wipeRecord: (state, action) => {
+      state = {};
+    },
   },
 });
-export const { setQuizRecord } = slice.actions;
+export const { setQuizRecord, wipeRecord } = slice.actions;
 
 export default slice.reducer;
 export const get_quizRecord = (state) => state.quizRecord;

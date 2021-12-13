@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { QuizCreatePage } from "../..";
+import { QuizCreatePage, QuizShowPage } from "../..";
 import { addTopic, deleteQuiz, getQuizzes } from "../../../redux/api";
 import { setQuiz } from "../../../redux/reducers/quiz";
 import {
@@ -46,7 +46,7 @@ function SearchQuiz() {
             <div className="col">
               <TextField
                 label="partial name"
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", mt: 1 }}
                 variant="outlined"
                 value={values.partialName || ""}
                 onChange={(e) => setFieldValue("partialName", e.target.value)}
@@ -71,7 +71,7 @@ function SearchQuiz() {
                   loading={loading}
                   onShow={(Q) => {
                     dispatch(setQuiz(Q));
-                    return <QuizCreatePage forShow />;
+                    return <QuizShowPage forShow />;
                   }}
                   onEdit={(Q, onSave) => (
                     <QuizCreatePage onSave={onSave} Q={Q} />

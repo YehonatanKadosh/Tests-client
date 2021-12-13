@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
-import API_Middleware from "./middlewares/api";
+import API_Middleware from "./api/middleware";
 import user from "./reducers/user";
 import signInUp from "./reducers/signInUp";
 import questions from "./reducers/questions";
@@ -10,6 +10,7 @@ import request from "./reducers/request";
 import quizzes from "./reducers/quizzes";
 import quiz from "./reducers/quiz";
 import quizRecord from "./reducers/quizRecord";
+import students from "./reducers/students";
 
 const appReducer = combineReducers({
   user,
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   quizzes,
   quiz,
   quizRecord,
+  students,
 });
 
 const rootReducer = (state, action) => {

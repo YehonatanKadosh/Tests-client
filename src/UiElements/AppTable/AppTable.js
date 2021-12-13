@@ -4,10 +4,13 @@ import {
   Delete,
   DocumentScanner,
   Edit,
+  KeyboardArrowDown,
+  KeyboardArrowUp,
   Upgrade,
 } from "@mui/icons-material";
 import {
   CircularProgress,
+  Collapse,
   Dialog,
   IconButton,
   Table,
@@ -29,14 +32,18 @@ function AppTable({
   onEdit,
   onUpdate,
   onDelete,
+  collapsable,
+  collapsedContent,
 }) {
   const [selectedItem, setSelectedItem] = useState(undefined);
+  const [open, setOpen] = useState(undefined);
 
   return !loading ? (
     <TableContainer className="h-100">
       <Table stickyHeader aria-label="sticky table">
         <TableHead>
           <TableRow>
+            {collapsable && <TableCell />}
             {onSelected && <TableCell>Add</TableCell>}
             {headerCells &&
               headerCells.map((name, index) => (
@@ -51,65 +58,90 @@ function AppTable({
         <TableBody>
           {collection &&
             collection?.map((item) => (
-              <TableRow
-                sx={selections ? { backgroundColor: "lightgreen" } : {}}
-                key={item._id}
-                hover={selections ? false : true}
-              >
-                {onSelected && (
-                  <TableCell>
-                    <IconButton onClick={() => onSelected(item)}>
-                      <Add />
-                    </IconButton>
-                  </TableCell>
-                )}
-                {bodyCells &&
-                  bodyCells.map((cell, index) => (
-                    <TableCell key={index}>
-                      {typeof cell === "string" ? item[cell] : cell(item)}
+              <React.Fragment key={item._id}>
+                <TableRow
+                  sx={selections ? { backgroundColor: "lightgreen" } : {}}
+                  hover={selections ? false : true}
+                >
+                  {collapsable && (
+                    <TableCell>
+                      <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => setOpen(open ? undefined : item)}
+                      >
+                        {open === item ? (
+                          <KeyboardArrowUp />
+                        ) : (
+                          <KeyboardArrowDown />
+                        )}
+                      </IconButton>
                     </TableCell>
-                  ))}
-                {onShow && (
-                  <TableCell>
-                    <IconButton onClick={() => setSelectedItem(onShow(item))}>
-                      <DocumentScanner />
-                    </IconButton>
-                  </TableCell>
+                  )}
+                  {onSelected && (
+                    <TableCell>
+                      <IconButton onClick={() => onSelected(item)}>
+                        <Add />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                  {bodyCells &&
+                    bodyCells.map((cell, index) => (
+                      <TableCell key={index}>
+                        {typeof cell === "string" ? item[cell] : cell(item)}
+                      </TableCell>
+                    ))}
+                  {onShow && (
+                    <TableCell>
+                      <IconButton onClick={() => setSelectedItem(onShow(item))}>
+                        <DocumentScanner />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                  {onEdit && (
+                    <TableCell>
+                      <IconButton
+                        onClick={() =>
+                          setSelectedItem(
+                            onEdit(item, () => setSelectedItem(undefined))
+                          )
+                        }
+                      >
+                        <Edit />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                  {onUpdate && (
+                    <TableCell>
+                      <IconButton
+                        onClick={() =>
+                          setSelectedItem(
+                            onUpdate(item, () => setSelectedItem(undefined))
+                          )
+                        }
+                      >
+                        <Upgrade />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                  {onDelete && (
+                    <TableCell>
+                      <IconButton onClick={() => onDelete(item)}>
+                        <Delete />
+                      </IconButton>
+                    </TableCell>
+                  )}
+                </TableRow>
+                {collapsable && (
+                  <TableRow>
+                    <TableCell sx={{ p: 0, border: 0 }} colSpan={6}>
+                      <Collapse in={open === item} timeout="auto" unmountOnExit>
+                        {collapsedContent(open)}
+                      </Collapse>
+                    </TableCell>
+                  </TableRow>
                 )}
-                {onEdit && (
-                  <TableCell>
-                    <IconButton
-                      onClick={() =>
-                        setSelectedItem(
-                          onEdit(item, () => setSelectedItem(undefined))
-                        )
-                      }
-                    >
-                      <Edit />
-                    </IconButton>
-                  </TableCell>
-                )}
-                {onUpdate && (
-                  <TableCell>
-                    <IconButton
-                      onClick={() =>
-                        setSelectedItem(
-                          onUpdate(item, () => setSelectedItem(undefined))
-                        )
-                      }
-                    >
-                      <Upgrade />
-                    </IconButton>
-                  </TableCell>
-                )}
-                {onDelete && (
-                  <TableCell>
-                    <IconButton onClick={() => onDelete(item)}>
-                      <Delete />
-                    </IconButton>
-                  </TableCell>
-                )}
-              </TableRow>
+              </React.Fragment>
             ))}
         </TableBody>
         {selectedItem && (

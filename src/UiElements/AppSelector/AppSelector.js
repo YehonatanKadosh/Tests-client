@@ -13,6 +13,7 @@ function AppSelector({
   apiCall,
   onEmpty,
   onChange,
+  howToDisplay,
 }) {
   const options = useSelector(valuesSelector);
   const loadingValues = useSelector(valuesStatusSelector);
@@ -59,10 +60,14 @@ function AppSelector({
       selectOnFocus
       value={values[name]}
       handleHomeEndKeys
-      renderOption={(props, option) => <li {...props}>{option.name}</li>}
+      renderOption={(props, option) => (
+        <li {...props}>{option.name || howToDisplay(option)}</li>
+      )}
       multiple={multiple}
       freeSolo
-      getOptionLabel={(option) => option.name || ""}
+      getOptionLabel={(option) =>
+        option ? option.name || howToDisplay(option) : ""
+      }
       renderInput={(params) => (
         <TextField
           error={touched[name] && errors[name] ? true : false}
@@ -70,6 +75,7 @@ function AppSelector({
           label={loadingValues ? "loading..." : name}
         />
       )}
+      sx={{ mt: 1 }}
     />
   );
 }
