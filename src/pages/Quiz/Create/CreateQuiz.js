@@ -299,16 +299,16 @@ function CreateQuiz({ Q, update, onSave }) {
               <AppFormError name="failEmailMessage" />
             </AppAccordion>
             <div className="row">
-              <AppFormSubmitButton title="Save Quiz" />
               <Button
                 onClick={() => {
                   dispatch(setQuiz(values));
                   setDialogContent(<QuizCreatePage forShow />);
                 }}
-                variant="contained"
+                sx={{ mt: 3 }}
               >
                 Preview
               </Button>
+              <AppFormSubmitButton title="Save Quiz" />
             </div>
           </div>
 

@@ -201,10 +201,12 @@ function QuestionCreate({ update, Q, onSave }) {
             </div>
           </div>
 
+          <Button sx={{ mt: 3 }} onClick={() => setOpen(true)}>
+            Preview
+          </Button>
           <div className="row px-3">
             <AppFormSubmitButton title="Save Question" />
           </div>
-          <Button onClick={() => setOpen(true)}>Preview</Button>
           {open && (
             <Dialog onClose={() => setOpen(false)} open={open}>
               <QuestionShowPage forShow {...values} />

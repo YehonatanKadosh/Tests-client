@@ -11,7 +11,7 @@ function AppFormSubmitButton({ title, className }) {
       type="submit"
       onClick={handleSubmit}
       variant="contained"
-      sx={{ mt: 3, mb: 1, alignSelf: "center" }}
+      sx={{ alignSelf: "center", mb: 3, mt: 2 }}
     >
       {title}
     </Button>
