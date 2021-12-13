@@ -1,4 +1,4 @@
-import { Add, ContentCopy } from "@mui/icons-material";
+import { ContentCopy } from "@mui/icons-material";
 import { Button, IconButton, Snackbar, TextField } from "@mui/material";
 import { Formik } from "formik";
 import React, { useEffect, useState } from "react";
@@ -115,7 +115,7 @@ function SearchQuiz() {
           <div className="row">
             <Link to="Create">
               <Button variant="contained" sx={{ width: "100%" }}>
-                <Add />
+                Create Quiz
               </Button>
             </Link>
           </div>

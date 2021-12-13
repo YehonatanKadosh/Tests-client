@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router";
 
-import { QuizRouts, QuestionRouts, ReportRouts } from "../pages";
-import { AdminPage, TopicsPage } from ".";
+import { QuizRouts, QuestionRouts, ReportRouts } from ".";
+import { AdminPage, TopicsPage } from "../pages";
 import { getTopics } from "../redux/api";
 import { AppNavBar } from "../UiElements";
 

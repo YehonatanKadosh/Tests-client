@@ -7,16 +7,12 @@ function ActionBar() {
   return (
     <div className="admin_page_actions row">
       <div className="row">
-        <ActionButton name="Quizzes" rout="Quizzes" icon={<MenuBook />} />
-        <ActionButton
-          name="Questions"
-          rout="Questions"
-          icon={<QuestionAnswer />}
-        />
+        <ActionButton name="Quizzes" icon={<MenuBook />} />
+        <ActionButton name="Questions" icon={<QuestionAnswer />} />
       </div>
       <div className="row">
-        <ActionButton name="Reports" rout="Reports" icon={<Report />} />
-        <ActionButton name="Topics" rout="Topics" icon={<Topic />} />
+        <ActionButton name="Reports" icon={<Report />} />
+        <ActionButton name="Topics" icon={<Topic />} />
       </div>
     </div>
   );

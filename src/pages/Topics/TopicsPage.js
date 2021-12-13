@@ -1,9 +1,9 @@
 import { CircularProgress, Snackbar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTopics, getTopicsWithStats } from "../../../redux/api";
-import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
-import { AppTable } from "../../../UiElements";
+import { deleteTopics, getTopicsWithStats } from "../../redux/api";
+import { get_topics, get_topics_loading } from "../../redux/reducers/topic";
+import { AppTable } from "../../UiElements";
 
 function TopicsPage() {
   const [snackBarOpen, setSnackBarOpen] = useState(undefined);

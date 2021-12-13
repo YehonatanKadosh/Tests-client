@@ -5,7 +5,6 @@ import { useLocation } from "react-router";
 import { tryGettingQuiz } from "../../redux/api";
 import { get_quiz } from "../../redux/reducers/quiz";
 import { get_request_loading } from "../../redux/reducers/request";
-import { AppNavBar } from "../../UiElements";
 import { QuizCreatePage } from "..";
 import "./User.css";
 
