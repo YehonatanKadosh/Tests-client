@@ -7,10 +7,7 @@ import {
   Typography,
 } from "@mui/material";
 import { languages, orientationTypes, questionTypes } from "quizy-yk-common";
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { wipeQuiz } from "../../../redux/reducers/quiz";
-import { wipeRecord } from "../../../redux/reducers/quizRecord";
+import React from "react";
 import "./QuestionShow.css";
 
 function QuestionShow({
@@ -27,7 +24,6 @@ function QuestionShow({
   const SingleChoice = type === questionTypes.SingleChoice;
   const isVertical = orientation === orientationTypes.Vertical;
   const isHebrew = language === languages.Hebrew;
-  const dispatch = useDispatch();
 
   const className = `${isVertical ? "vertical" : "horizontal"} ${
     isHebrew ? "hebrew" : "english"

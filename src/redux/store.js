@@ -10,6 +10,7 @@ import request from "./reducers/request";
 import quizzes from "./reducers/quizzes";
 import quiz from "./reducers/quiz";
 import quizRecord from "./reducers/quizRecord";
+import quizRecords from "./reducers/quizRecords";
 import students from "./reducers/students";
 
 const appReducer = combineReducers({
@@ -23,6 +24,7 @@ const appReducer = combineReducers({
   quiz,
   quizRecord,
   students,
+  quizRecords,
 });
 
 const rootReducer = (state, action) => {

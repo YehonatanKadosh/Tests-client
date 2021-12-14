@@ -12,7 +12,7 @@ function TabPanel({ children, value, index, ...other }) {
       role="tabpanel"
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
-      className="report-container"
+      className="report-container p-3"
       {...other}
     >
       {children}

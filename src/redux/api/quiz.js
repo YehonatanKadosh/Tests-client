@@ -1,5 +1,6 @@
 import { setQuiz } from "../reducers/quiz";
 import { setQuizRecord } from "../reducers/quizRecord";
+import { loadRecords, setQuizRecords } from "../reducers/quizRecords";
 import {
   loadQuizzes,
   removeQuiz,
@@ -58,4 +59,13 @@ export const submitQuiz = (data) =>
     beforeAll: requestSent,
     onSuccess: setQuizRecord,
     afterAll: requestAnswered,
+  });
+
+export const getReportsWithParams = (id, dateRange) =>
+  API_Call({
+    url: "quizRecord",
+    method: "get",
+    params: { id, dateRange },
+    beforeAll: loadRecords,
+    onSuccess: setQuizRecords,
   });

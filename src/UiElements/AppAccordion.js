@@ -8,12 +8,13 @@ import {
 import React, { useContext } from "react";
 import { AccordionContext } from "../pages/Quiz/Create/CreateQuiz";
 
-function AppAccordion({ icon, title, errors, children }) {
+function AppAccordion({ icon, title, errors, children, sx }) {
   const context = useContext(AccordionContext);
   return (
     <Accordion
       expanded={context.expanded === `${title}`}
       onChange={context.handleChange(`${title}`)}
+      sx={sx}
     >
       <AccordionSummary
         aria-controls={`${title}-content`}
