@@ -1,9 +1,18 @@
 import { MenuBook, QuestionAnswer, Report, Topic } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import ActionButton from "../ActionButton/ActionButton";
+import { setHeader, removeHeader } from "../../../redux/reducers/header";
 import "./ActionBar.css";
 
 function ActionBar() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setHeader("Actions Bar"));
+    return () => dispatch(removeHeader());
+  }, [dispatch]);
+
   return (
     <div className="admin_page_actions row">
       <div className="row">
