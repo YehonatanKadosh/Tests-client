@@ -15,6 +15,7 @@ import { QuizShowPage } from "../..";
 import { setQuizByRecord } from "../../../redux/reducers/quiz";
 import { setQuizRecord } from "../../../redux/reducers/quizRecord";
 import { Typography } from "@mui/material";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 function StudentReport() {
   const dispatch = useDispatch();
@@ -22,8 +23,10 @@ function StudentReport() {
   const loading = useSelector(get_students_loading);
 
   useEffect(() => {
+    dispatch(setHeader("Report By Student"));
     dispatch(getStudents);
     return () => {
+      dispatch(removeHeader());
       dispatch(wipeAllStudents());
     };
   }, [dispatch]);

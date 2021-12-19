@@ -30,6 +30,7 @@ import {
   QuestionMark,
   Receipt,
 } from "@mui/icons-material";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 function QuizReport() {
   const dispatch = useDispatch();
@@ -37,6 +38,15 @@ function QuizReport() {
   const records = useSelector(get_quizRecords);
   const loading = useSelector(get_quizRecords_loading);
   const [expanded, setExpanded] = useState("Records");
+
+  useEffect(() => {
+    dispatch(setHeader("Report By Quiz"));
+    return () => {
+      dispatch(wipeAllQuizzes());
+      dispatch(wipeRecords());
+      dispatch(removeHeader());
+    };
+  }, [dispatch]);
 
   const RecordSelected = (record) => {
     if (record) {
@@ -102,13 +112,6 @@ function QuizReport() {
     }
     return Questions;
   };
-
-  useEffect(() => {
-    return () => {
-      dispatch(wipeAllQuizzes());
-      dispatch(wipeRecords());
-    };
-  }, [dispatch]);
 
   return (
     <Formik

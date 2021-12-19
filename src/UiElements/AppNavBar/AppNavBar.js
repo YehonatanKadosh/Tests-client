@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 import { Home } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { get_user } from "../../redux/reducers/user";
 import { roles } from "quizy-yk-common";
+import { get_header } from "../../redux/reducers/header";
 
 function stringToColor(string) {
   let hash = 0;
@@ -47,11 +48,10 @@ function AppNavBar() {
   const dispatch = useDispatch();
   const handleLogOut = () => dispatch({ type: "log-out" });
   const navigate = useNavigate();
-  const location = useLocation();
+  const header = useSelector(get_header);
   const user = useSelector(get_user);
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const userLocation = location.pathname.split("/")[1];
 
   return (
     <AppBar position="static">
@@ -69,7 +69,7 @@ function AppNavBar() {
           </IconButton>
         )}
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          {`Quizy${userLocation ? `'s ${userLocation}` : ""}`}
+          {header || "Quizy"}
         </Typography>
         <IconButton
           onClick={(e) => {

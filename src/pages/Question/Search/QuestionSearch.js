@@ -26,6 +26,7 @@ import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 
 import { Button, TextField } from "@mui/material";
 import { QuestionCreatePage, QuestionShowPage } from "../..";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 function QuestionSearch({ onSelected, onAdd }) {
   const dispatch = useDispatch();
@@ -52,7 +53,11 @@ function QuestionSearch({ onSelected, onAdd }) {
   };
 
   useEffect(() => {
-    return () => dispatch(wipeAllQuestions());
+    dispatch(setHeader("Search For A Question"));
+    return () => {
+      dispatch(removeHeader());
+      dispatch(wipeAllQuestions());
+    };
   }, [dispatch]);
 
   return (

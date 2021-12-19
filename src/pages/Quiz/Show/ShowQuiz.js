@@ -2,6 +2,7 @@ import { LinearProgress, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { QuestionShowPage } from "../..";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 import {
   changeAnswer,
   get_answered_questions_amount,
@@ -21,11 +22,14 @@ function ShowQuiz({ forShow }) {
   const { quiz: storedQuiz } = useSelector(get_quizRecord);
 
   useEffect(() => {
+    dispatch(setHeader("Quiz"));
     return () => {
+      dispatch(removeHeader());
       dispatch(wipeQuiz());
       dispatch(wipeRecord());
     };
   }, [dispatch]);
+
   return questions || name ? (
     <div className="quiz-show-container">
       {name && (

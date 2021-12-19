@@ -2,6 +2,7 @@ import { CircularProgress, Snackbar } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTopics, getTopicsWithStats } from "../../redux/api";
+import { removeHeader, setHeader } from "../../redux/reducers/header";
 import { get_topics, get_topics_loading } from "../../redux/reducers/topic";
 import { AppTable } from "../../UiElements";
 
@@ -12,7 +13,9 @@ function TopicsPage() {
   const topics = useSelector(get_topics);
 
   useEffect(() => {
+    dispatch(setHeader("Topics"));
     dispatch(getTopicsWithStats);
+    return () => dispatch(removeHeader());
   }, [dispatch]);
 
   const handleTopicDeletion = (topic) => {

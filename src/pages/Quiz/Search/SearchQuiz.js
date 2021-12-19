@@ -15,6 +15,7 @@ import {
 import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 import { AppSelector, AppTable } from "../../../UiElements";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 function SearchQuiz() {
   const dispatch = useDispatch();
@@ -23,7 +24,11 @@ function SearchQuiz() {
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   useEffect(() => {
-    return () => dispatch(wipeAllQuizzes());
+    dispatch(setHeader("Search For A Quiz"));
+    return () => {
+      dispatch(removeHeader());
+      dispatch(wipeAllQuizzes());
+    };
   }, [dispatch]);
 
   return (

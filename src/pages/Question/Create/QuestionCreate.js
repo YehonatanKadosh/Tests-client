@@ -5,7 +5,7 @@ import {
 } from "quizy-yk-common";
 import { useDispatch } from "react-redux";
 import { FieldArray, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   AppFormChoiceList,
@@ -30,6 +30,7 @@ import { get_topics, get_topics_loading } from "../../../redux/reducers/topic";
 import { get_all_tags, get_tags_loading } from "../../../redux/reducers/tag";
 import { QuestionShowPage } from "../..";
 import { useNavigate } from "react-router";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 function QuestionCreate({ update, Q, onSave }) {
   const [open, setOpen] = useState(false);
@@ -63,6 +64,11 @@ function QuestionCreate({ update, Q, onSave }) {
       if (update) dispatch(removeQuestion({ _id: Q._id }));
     }
   };
+
+  useEffect(() => {
+    dispatch(setHeader("Create New Question"));
+    return () => dispatch(removeHeader());
+  }, [dispatch]);
 
   return (
     <Formik

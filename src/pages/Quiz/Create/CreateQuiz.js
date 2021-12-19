@@ -8,7 +8,7 @@ import {
 import { Button, Checkbox, Dialog } from "@mui/material";
 import { FieldArray, Formik } from "formik";
 import { quiz_validator, languages } from "quizy-yk-common";
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router";
 import {
@@ -29,6 +29,7 @@ import {
 } from "../../../UiElements";
 import AppAccordion from "../../../UiElements/AppAccordion";
 import { useNavigate } from "react-router-dom";
+import { removeHeader, setHeader } from "../../../redux/reducers/header";
 
 export const AccordionContext = createContext();
 
@@ -54,6 +55,11 @@ function CreateQuiz({ Q, update, onSave }) {
     );
     if (update) dispatch(removeQuiz({ _id: Q._id }));
   };
+
+  useEffect(() => {
+    dispatch(setHeader("Create New Quiz"));
+    return () => dispatch(removeHeader());
+  }, [dispatch]);
 
   return (
     <Formik
