@@ -75,7 +75,7 @@ function QuestionShow({
         <React.Fragment key={index}>
           <FormControlLabel
             sx={
-              rightAnswers
+              rightAnswers && rightAnswers[index]
                 ? { color: rightAnswers[index].isRight ? "green" : "red" }
                 : {}
             }

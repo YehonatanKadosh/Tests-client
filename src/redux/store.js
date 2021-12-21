@@ -13,6 +13,7 @@ import quizRecord from "./reducers/quizRecord";
 import quizRecords from "./reducers/quizRecords";
 import students from "./reducers/students";
 import header from "./reducers/header";
+import recovery from "./reducers/recovery";
 
 const appReducer = combineReducers({
   user,
@@ -27,6 +28,7 @@ const appReducer = combineReducers({
   students,
   quizRecords,
   header,
+  recovery,
 });
 
 const rootReducer = (state, action) => {

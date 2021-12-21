@@ -38,3 +38,10 @@ html,
 .css-binzgt {
   margin-top: 1rem !important;
 }
+
+.center {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+}
