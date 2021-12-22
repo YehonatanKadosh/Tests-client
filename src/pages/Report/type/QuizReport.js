@@ -31,6 +31,7 @@ import {
   Receipt,
 } from "@mui/icons-material";
 import { removeHeader, setHeader } from "../../../redux/reducers/header";
+import getQuestionsStats from "../questionsStats";
 
 function QuizReport() {
   const dispatch = useDispatch();
@@ -38,6 +39,16 @@ function QuizReport() {
   const records = useSelector(get_quizRecords);
   const loading = useSelector(get_quizRecords_loading);
   const [expanded, setExpanded] = useState("Records");
+  const [questionsWithStats, setQuestionsWithStats] = useState([]);
+
+  useEffect(() => {
+    if (records.length)
+      setQuestionsWithStats(
+        getQuestionsStats(records[0].quiz.questions, records)
+      );
+  }, [records]);
+
+  // = getQuestionsStats(records);
 
   useEffect(() => {
     dispatch(setHeader("Report By Quiz"));
@@ -67,60 +78,14 @@ function QuizReport() {
         bodyCells={[
           "content",
           (q) => (q.isRight ? <CheckBox /> : <CheckBoxOutlineBlank />),
-          (a) => `${a.answeredPrecentage}%`,
+          (a) => `${a.answeredPrecentage.toFixed(2)}%`,
         ]}
       />
     );
   };
 
-  // best logic ever
-  const getQuestionsStats = (questions) => {
-    const Questions = [];
-    const answersInRecord = records.map((r) => r.answers);
-    for (let i = 0; i < questions.length; i++) {
-      let answered = false;
-      let answeredTimes = 0;
-      let answeredCorrectly = true;
-      let answeredCorrectlyTimes = 0;
-      const savedAnswers = questions[i].answers.map((a) => {
-        return { ...a, answeredPrecentage: 0 };
-      });
-      for (let recordI = 0; recordI < answersInRecord.length; recordI++) {
-        const answersForQuestion = answersInRecord[0].find(
-          (answer) => answer.question === questions[i]._id
-        );
-        for (let answersI = 0; answersI < savedAnswers.length; answersI++) {
-          const savedAnswer = savedAnswers[answersI];
-          const answeredAnswer = answersForQuestion.answers.find(
-            (a) => a === savedAnswer._id
-          );
-          if (answeredAnswer) {
-            answered = true;
-            savedAnswer.answeredPrecentage += 100 / records.length;
-            if (!savedAnswer.isRight) answeredCorrectly = false;
-          } else if (savedAnswer.isRight) answeredCorrectly = false;
-        }
-        if (answered) answeredTimes += 1;
-        if (answeredCorrectly) answeredCorrectlyTimes += 1;
-      }
-      Questions.push({
-        ...questions[i],
-        answered: answeredTimes,
-        answeredCorrectly: (answeredCorrectlyTimes / records.length) * 100,
-        answers: savedAnswers,
-      });
-    }
-    return Questions;
-  };
-
   return (
-    <Formik
-      initialValues={{
-        topic: "",
-        quiz: "",
-        range: [null, null],
-      }}
-    >
+    <Formik initialValues={{ topic: "", quiz: "", range: [null, null] }}>
       {({ values, setFieldValue }) => (
         <>
           <div className="row px-2">
@@ -215,12 +180,12 @@ function QuizReport() {
               </AppAccordion>
               <AppAccordion icon={<QuestionMark />} title="Questions">
                 <AppTable
-                  collection={getQuestionsStats(values.quiz.questions)}
+                  collection={questionsWithStats}
                   headerCells={["Question", "Answered", "Answered Correctly"]}
                   bodyCells={[
                     "question",
                     "answered",
-                    (q) => `${q.answeredCorrectly}%`,
+                    (q) => `${q.answeredCorrectly.toFixed(2)}%`,
                   ]}
                   collapsable
                   collapsedContent={QuestionsSelected}

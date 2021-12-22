@@ -48,15 +48,17 @@ function ShowQuiz({ forShow }) {
               ? [
                   <IntroductionPage />,
                   ...(questions
-                    ? questions.map((question, index) => (
+                    ? questions.map((question) => (
                         <QuestionShowPage
-                          key={index}
+                          key={question._id}
                           onAnswersChange={(payload) =>
                             dispatch(changeAnswer(payload))
                           }
                           rightAnswers={
                             storedQuiz
-                              ? storedQuiz.questions[index].answers
+                              ? storedQuiz.questions.find(
+                                  (q) => q._id === question._id
+                                ).answers
                               : undefined
                           }
                           {...question}

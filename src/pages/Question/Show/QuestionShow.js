@@ -35,13 +35,13 @@ function QuestionShow({
   const multipleChoiceCheckBox = (replace) => (
     <FormGroup className={className}>
       {answers.map((answer, index) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={answer._id || index}>
           <FormControlLabel
             className="justify-content-between"
             sx={
               rightAnswers
                 ? {
-                    color: rightAnswers.find((ra) => ra._id === answer._id)
+                    color: rightAnswers.find((a) => a._id === answer._id)
                       .isRight
                       ? "green"
                       : "red",
