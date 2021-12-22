@@ -1,4 +1,5 @@
 const getQuestionsStats = (questionsFromQuiz, records) => {
+  if (!questionsFromQuiz.length) return [];
   const Questions = questionsFromQuiz.map((question) => {
     return {
       ...question,
