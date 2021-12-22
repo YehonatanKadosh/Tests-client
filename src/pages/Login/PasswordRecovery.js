@@ -22,7 +22,6 @@ function PasswordRecovery() {
 
   const submitRecovery = ({ email }) => {
     dispatch(recoverPassword(email));
-    console.log(email);
   };
 
   return (
