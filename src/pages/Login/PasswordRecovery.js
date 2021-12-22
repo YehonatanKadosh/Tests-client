@@ -33,18 +33,20 @@ function PasswordRecovery() {
           onSubmit={submitRecovery}
           validationSchema={recovery_validator}
         >
-          <AppFormField
-            margin="normal"
-            autoComplete="email"
-            name="email"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-          />
-          <AppFormError name="email" />
-          <FormHelperText error={true}>{error}</FormHelperText>
-          <AppFormSubmitButton className="w-100" title="recover password" />
+          <>
+            <AppFormField
+              margin="normal"
+              autoComplete="email"
+              name="email"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+            />
+            <AppFormError name="email" />
+            <FormHelperText error={true}>{error}</FormHelperText>
+            <AppFormSubmitButton className="w-100" title="recover password" />
+          </>
         </Formik>
       ) : (
         <>
