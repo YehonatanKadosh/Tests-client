@@ -40,7 +40,12 @@ function QuestionShow({
             className="justify-content-between"
             sx={
               rightAnswers
-                ? { color: rightAnswers[index].isRight ? "green" : "red" }
+                ? {
+                    color: rightAnswers.find((ra) => ra._id === answer._id)
+                      .isRight
+                      ? "green"
+                      : "red",
+                  }
                 : {}
             }
             control={
